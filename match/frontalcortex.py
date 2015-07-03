@@ -2,7 +2,6 @@ import os
 import json
 import math
 import urllib2 as urll
-import matplotlib.pyplot as plt
 
 marcusshep = 42008349
 
