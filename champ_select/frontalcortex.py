@@ -1,17 +1,22 @@
+# Frontal Cortext of this Thinking Machine.
+# Communicates with League Server and retrieves Information for its user.
+# Author: Marcus Shepherd
+
 import os
 import json
 import math
 import urllib2 as urll
 
-marcusshep = 42008349
 
 class LeagueStats(object):
-    """ This obj retreives match history information for League of Legends. """
+    """ 
+    This obj retreives match history information for Marcus Shepherd. 
+    Current Account: marcusshep
+    """
 
-    def __init__(self, api_key, summoner):
-        """ Creates an instance of `LeagueStats`. """
-        self.api_key = api_key
-        self.summoner = summoner
+    def __unicode__(self, summoner=42008349):
+        """ Useful for displaying `LeagueStats` as on obj. """
+        return u"{}".format(summoner)
 
     def server_request(self):
         """ Makes a request to League servers and returns parsed JSON data."""
@@ -42,8 +47,8 @@ class LeagueStats(object):
 
     def get_stat(self, game_number, stat_name):
         """ Returns a stat """
-    	# parsed = self.server_request()
-        parsed = self.read_data_from_file()
+    	parsed = self.server_request()
+        # parsed = self.read_data_from_file()
     	return parsed['matches'][game_number]['participants'][0]['stats'][stat_name]
 
     def get_average_creep_score(self):

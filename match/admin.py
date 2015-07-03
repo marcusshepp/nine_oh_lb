@@ -2,9 +2,13 @@ from django.contrib import admin
 
 from .models import Match
 
-class MatchAdmin(admin.ModelAdmin):
 
-	model = Match
-
-
-admin.site.register(Match, MatchAdmin)
+# @admin.register(Match)
+# class HubAdmin(admin.ModelAdmin):
+#     date_hierarchy = 'date_created'
+#     list_display = (
+#     	'champion',
+#     	'lane',
+#     	'cs',
+#     	'date_created',
+# 	)

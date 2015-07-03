@@ -1,0 +1,7 @@
+*.ipynb
+*.pyc
+.idea
+notes.txt
+*.sqlite3
+.ipynb_checkpoints
+/champ_select/migrations/
