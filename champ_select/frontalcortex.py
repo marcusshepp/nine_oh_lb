@@ -13,32 +13,36 @@ class League(object):
     This obj retreives match history information for Marcus Shepherd. 
     Current Account: marcusshep
     """
+    marcusshep = 42008349
+    summoner = marcusshep
 
-    def __unicode__(self, summoner=42008349):
+    def __unicode__(self, summoner=marcusshep):
         """ Useful for displaying `LeagueStats` as on obj. """
         return u"{}".format(summoner)
 
     def server_request(self):
         """ Makes a request to League servers and returns parsed JSON data."""
         api_key = "8a9d2c2d-f00d-406b-87b1-810c2312a1ae"
-        url = "https://na.api.pvp.net/api/lol/na/v2.2/matchhistory/%s?api_key=%s" % (marcusshep, api_key)
+        url = "https://na.api.pvp.net/api/lol/na/v2.2/matchhistory/%s?api_key=%s" % (self.summoner, api_key)
         request = urll.urlopen(url)
         parsed = json.loads(request.read())
         return parsed
     
-    def stats_to_file(self):
-        """ Writes a Python dictionary of League Stats to a file. """
+    def stats_to_file(self, relative_path, file_name):
+        """ Writes match history to a file in a given location. """
         parsed = self.server_request()
-        if os.path.isfile(mh):
-                os.remove(mh)
-                with open(mh, "w") as text:
-                    text.write(json.dumps(parsed, indent=4, sort_keys=True))
+        file_name = date.today()
+        complete_path = os.path.abspath("%s%s.json") % (relative_path, refile_name)
+        with open(complete_path, "w") as text:
+            text.write(json.dumps(parsed, indent=4, sort_keys=True))
+        return str(complete_path)
     
     def read_data_from_file(self):
         """ Returns parsed data from a file. """
-        with open("match_history.json", "r") as data_file:
-            parsed = json.load(data_file)
-        return parsed
+        # with open("match_history.json", "r") as data_file:
+        #     parsed = json.load(data_file)
+        # return parsed
+        return
 
     def pretty_stats(self):
         """ Returns a pretty formatted dict. """
