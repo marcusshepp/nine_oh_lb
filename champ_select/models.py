@@ -1,8 +1,9 @@
+from __future__ import division
 from datetime import date
 
 from django.db import models
 
-from .frontalcortex import LeagueStats
+from .frontalcortex import League
 
 
 class Champion(models.Model):
@@ -19,31 +20,20 @@ class Champion(models.Model):
 		""" Display `name`. """
 		return u"{}".format(self.name)
 
-	# def get_stat_from_server(self, stat, *args, **kwargs):
-	# 	ls = LeagueStats()
-	# 	return ls.get_stat(stat)
+	def get_games(self):
+		games = Game.objects.filter(champion=self.id)
+		return games
 
-	# def create_objects(self):
-	# 	exist = self.objects.all()
+	def number_of_games(self):
+		return len(self.get_games())
 
-	# 	for e in exist:
-	# 		if 
-
-	# def get_win_booleans(self):
-	# 	""" 
-	# 	Returns all `games` played by a perticular `champion`. 
-	# 	"""
-	# 	return "\n".join([g.win for g in self.games.all()])
-
-	# def get_average_cs(self):
-	# 	"""
-	# 	Returns average creepscore(cs).
-	# 	"""
-	# 	total_cs = 0
-	# 	games = self.games.objects.all()
-	# 	for g in games:
-	# 		total_cs += g.cs
-	# 	return total_cs / games
+	def average_cs(self):
+		v = 0
+		i = self.get_games()
+		for _ in i:
+			v += _.cs
+		j = v / self.number_of_games()
+		return j	
 
 
 class Game(models.Model):

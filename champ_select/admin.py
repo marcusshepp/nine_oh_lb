@@ -5,6 +5,7 @@ from .models import Game, Champion
 
 @admin.register(Game)
 class GameAdmin(admin.ModelAdmin):
+    
     date_hierarchy = 'date_played'
     list_display = (
         '__unicode__',
@@ -13,12 +14,27 @@ class GameAdmin(admin.ModelAdmin):
     	'date_played',
 	)
 
+
 @admin.register(Champion)
-class GameAdmin(admin.ModelAdmin):
+class ChampionAdmin(admin.ModelAdmin):
+    
     date_hierarchy = 'date_created'
+    fields = ['name']
     list_display = (
     	'name',
-        # 'get_average_cs',
+        'number_of_games',
+        'average_cs'
 	)
-    fields = ['name']
+
+    def get_average_cs(self, **kwargs):
+        """
+        Returns average creepscore(cs).
+        """
+        total_cs = 0
+        champ = Champion.objects.get()
+        games = champ.games.all()
+        for g in games:
+            total_cs += g.cs
+        value = total_cs / len(games)
+        return value
 

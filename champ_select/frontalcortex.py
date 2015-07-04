@@ -8,7 +8,7 @@ import math
 import urllib2 as urll
 
 
-class LeagueStats(object):
+class League(object):
     """ 
     This obj retreives match history information for Marcus Shepherd. 
     Current Account: marcusshep
