@@ -9,11 +9,11 @@ class GameForm(forms.ModelForm):
 		model = Game
 		fields = [
 			'champion',
+			'enemy_laner',
 			'lane',
 			'win',
 			'cs',
 			'first_blood',
-			'confidence_level'
 		]
 
 

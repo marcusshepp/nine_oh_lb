@@ -1,39 +1,48 @@
+# Frontal Cortext of this Thinking Machine.
+# Communicates with League Server and retrieves Information for its user.
+# Author: Marcus Shepherd
+
 import os
 import json
 import math
 import urllib2 as urll
 
-marcusshep = 42008349
 
-class LeagueStats(object):
-    """ This obj retreives match history information for League of Legends. """
+class League(object):
+    """ 
+    This obj retreives match history information for Marcus Shepherd. 
+    Current Account: marcusshep
+    """
+    marcusshep = 42008349
+    summoner = marcusshep
 
-    def __init__(self, api_key, summoner):
-        """ Creates an instance of `LeagueStats`. """
-        self.api_key = api_key
-        self.summoner = summoner
+    def __unicode__(self, summoner=marcusshep):
+        """ Useful for displaying `LeagueStats` as on obj. """
+        return u"{}".format(summoner)
 
     def server_request(self):
         """ Makes a request to League servers and returns parsed JSON data."""
         api_key = "8a9d2c2d-f00d-406b-87b1-810c2312a1ae"
-        url = "https://na.api.pvp.net/api/lol/na/v2.2/matchhistory/%s?api_key=%s" % (marcusshep, api_key)
+        url = "https://na.api.pvp.net/api/lol/na/v2.2/matchhistory/%s?api_key=%s" % (self.summoner, api_key)
         request = urll.urlopen(url)
         parsed = json.loads(request.read())
         return parsed
     
-    def stats_to_file(self):
-        """ Writes a Python dictionary of League Stats to a file. """
+    def stats_to_file(self, relative_path, file_name):
+        """ Writes match history to a file in a given location. """
         parsed = self.server_request()
-        if os.path.isfile(mh):
-                os.remove(mh)
-                with open(mh, "w") as text:
-                    text.write(json.dumps(parsed, indent=4, sort_keys=True))
+        file_name = date.today()
+        complete_path = os.path.abspath("%s%s.json") % (relative_path, refile_name)
+        with open(complete_path, "w") as text:
+            text.write(json.dumps(parsed, indent=4, sort_keys=True))
+        return str(complete_path)
     
     def read_data_from_file(self):
         """ Returns parsed data from a file. """
-        with open("match_history.json", "r") as data_file:
-            parsed = json.load(data_file)
-        return parsed
+        # with open("match_history.json", "r") as data_file:
+        #     parsed = json.load(data_file)
+        # return parsed
+        return
 
     def pretty_stats(self):
         """ Returns a pretty formatted dict. """
@@ -42,8 +51,8 @@ class LeagueStats(object):
 
     def get_stat(self, game_number, stat_name):
         """ Returns a stat """
-    	# parsed = self.server_request()
-        parsed = self.read_data_from_file()
+    	parsed = self.server_request()
+        # parsed = self.read_data_from_file()
     	return parsed['matches'][game_number]['participants'][0]['stats'][stat_name]
 
     def get_average_creep_score(self):
