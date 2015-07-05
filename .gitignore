@@ -5,3 +5,5 @@ notes.txt
 *.sqlite3
 .ipynb_checkpoints
 /champ_select/migrations/
+/champ_select/fixtures/
+
