@@ -1,5 +1,5 @@
 # Frontal Cortext of this Thinking Machine.
-# Communicates with League Server and retrieves Information for its user.
+# Communicates with League Server and retrieves information for its user.
 # Author: Marcus Shepherd
 
 import os
