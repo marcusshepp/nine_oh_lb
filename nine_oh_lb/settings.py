@@ -15,6 +15,8 @@ import os
 
 from champion_names import CHAMPION_BASE
 
+CHAMPION_NAMES = CHAMPION_BASE
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -87,5 +89,4 @@ STATIC_URL = '/static/'
 
 MATCH_FIXTURES_URL = "champ_select/fixtures/"
 
-CHAMPION_NAMES = CHAMPION_BASE
 
