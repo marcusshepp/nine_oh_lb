@@ -38,7 +38,7 @@ class ChampionView(G.View):
 	def get(self, request, *args, **kwargs):
 		form = self.form_class
 		champions = self.model.objects.all()
-		# games_played = self.get_games_played(self.o)
+		# games_played = 
 		template_data = {
 			'form': form,
 			'objects': champions,
@@ -49,7 +49,13 @@ class ChampionView(G.View):
 		form = self.form_class(request.POST)
 		if form.is_valid():
 			form.save()
-		return render(request, self.template_create)
+
+		template_data = {
+			'form': form,
+			'objects': champions,
+		}
+
+		return render(request, self.template_create, template_data)
 
 	def get_games_played(self, champion):
 		""" Returns the number of games played for a champion. """

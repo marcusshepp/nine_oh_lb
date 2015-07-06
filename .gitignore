@@ -4,4 +4,4 @@
 notes.txt
 *.sqlite3
 .ipynb_checkpoints
-/champ_select/migrations/
+*.json

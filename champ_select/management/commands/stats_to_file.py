@@ -17,4 +17,4 @@ class Command(BaseCommand):
 		possible_file = "{0}{1}.json".format(MATCH_FIXTURES_URL, self.td)
 		if path.isfile(possible_file):
 			return self.error_message
-		return l.stats_to_file(self.relative_path, self.td) # works!
+		return "Created file at: {0}".format(self.l.stats_to_file(MATCH_FIXTURES_URL, self.td))

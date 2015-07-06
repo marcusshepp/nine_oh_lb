@@ -6,6 +6,7 @@ import os
 import json
 import math
 import urllib2 as urll
+from datetime import date
 
 
 class League(object):
@@ -15,24 +16,32 @@ class League(object):
     """
     marcusshep = 42008349
     summoner = marcusshep
+    api_key = "8a9d2c2d-f00d-406b-87b1-810c2312a1ae"
 
     def __unicode__(self, summoner=marcusshep):
         """ Useful for displaying `LeagueStats` as on obj. """
         return u"{}".format(summoner)
 
-    def server_request(self):
-        """ Makes a request to League servers and returns parsed JSON data."""
-        api_key = "8a9d2c2d-f00d-406b-87b1-810c2312a1ae"
-        url = "https://na.api.pvp.net/api/lol/na/v2.2/matchhistory/%s?api_key=%s" % (self.summoner, api_key)
+    def get_request(self, url, api_key=api_key):
+        url += "?api_key=%s" % api_key
         request = urll.urlopen(url)
         parsed = json.loads(request.read())
         return parsed
-    
+
+    def match_history_request(self, summoner):
+        """ Makes a request to League servers and returns parsed JSON data."""
+        url = "https://na.api.pvp.net/api/lol/na/v2.2/matchhistory/%s" % (self.summoner)
+        return self.get_request(url)
+
+    def champion_list(self):
+        url = "https://na.api.pvp.net/api/lol/na/v1.2/champion"
+        return self.get_request(url)
+
     def stats_to_file(self, relative_path, file_name):
         """ Writes match history to a file in a given location. """
-        parsed = self.server_request()
+        parsed = self.match_history_request(self.summoner)
         file_name = date.today()
-        complete_path = os.path.abspath("%s%s.json") % (relative_path, refile_name)
+        complete_path = os.path.abspath("%s%s.json") % (relative_path, file_name)
         with open(complete_path, "w") as text:
             text.write(json.dumps(parsed, indent=4, sort_keys=True))
         return str(complete_path)
@@ -46,14 +55,14 @@ class League(object):
 
     def pretty_stats(self):
         """ Returns a pretty formatted dict. """
-        parsed = self.server_request()
+        parsed = self.match_history_request()
         return json.dumps(parsed, indent=4, sort_keys=True)
 
     def get_stat(self, game_number, stat_name):
         """ Returns a stat """
-    	parsed = self.server_request()
+        parsed = self.match_history_request()
         # parsed = self.read_data_from_file()
-    	return parsed['matches'][game_number]['participants'][0]['stats'][stat_name]
+        return parsed['matches'][game_number]['participants'][0]['stats'][stat_name]
 
     def get_average_creep_score(self):
         """ Returns the average creep score for the last ten games. """
@@ -81,3 +90,4 @@ class League(object):
             else:
                 num_of_lose += 1
         return math.ceil(num_of_lose/num_of_wins)
+

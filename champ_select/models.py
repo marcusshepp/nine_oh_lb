@@ -3,6 +3,7 @@ from datetime import date
 
 from django.db import models
 
+from nine_oh_lb.settings import CHAMPION_NAMES
 from .frontalcortex import League
 
 
@@ -11,7 +12,10 @@ class Champion(models.Model):
 	Dished to `User` during `champ_select` depending on `Game`.
 	"""
 
-	name = models.CharField(max_length=25)
+	class Meta:
+		ordering = ['name']
+
+	name = models.CharField(max_length=25, choices=CHAMPION_NAMES)
 	notes = models.TextField(max_length=1000)
 	games = models.ManyToManyField("Game", related_name="games_played_with")
 	date_created = models.DateField(("Date"), default=date.today)
@@ -28,6 +32,7 @@ class Champion(models.Model):
 	def number_of_games(self):
 		if self.games:
 			return len(self.get_games())
+		return 0
 
 	def average_cs(self):
 		if self.number_of_games() > 0:
@@ -73,8 +78,7 @@ class Game(models.Model):
 
 	def __unicode__(self):
 		""" Display `Champion` name. """
-		display = self.champion
-		return u"{}".format(display)
+		return u"{0} vs {1}".format(self.champion, self.enemy_laner)
 
 	def game_quick_info(self):
 		""" Returns a str of information about the game. """
