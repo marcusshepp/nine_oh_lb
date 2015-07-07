@@ -8,13 +8,10 @@ import math
 import urllib2 as urll
 from datetime import date
 
+marcusshep = 42008349
 
 class League(object):
-    """ 
-    This obj retreives match history information for Marcus Shepherd. 
-    Current Account: marcusshep
-    """
-    marcusshep = 42008349
+
     summoner = marcusshep
     api_key = "8a9d2c2d-f00d-406b-87b1-810c2312a1ae"
 
@@ -30,7 +27,7 @@ class League(object):
 
     def match_history_request(self, summoner):
         """ Makes a request to League servers and returns parsed JSON data."""
-        url = "https://na.api.pvp.net/api/lol/na/v2.2/matchhistory/%s" % (self.summoner)
+        url = "https://na.api.pvp.net/api/lol/na/v2.2/matchhistory/%s" % (summoner)
         return self.get_request(url)
 
     def champion_list(self):
@@ -48,23 +45,28 @@ class League(object):
     
     def read_data_from_file(self):
         """ Returns parsed data from a file. """
-        # with open("match_history.json", "r") as data_file:
-        #     parsed = json.load(data_file)
-        # return parsed
-        return
+        with open("match_history.json", "r") as data_file:
+            parsed = json.load(data_file)
+        return parsed
 
-    def pretty_stats(self):
+    def stats_to_pretty(self):
         """ Returns a pretty formatted dict. """
         parsed = self.match_history_request()
         return json.dumps(parsed, indent=4, sort_keys=True)
 
     def get_stat(self, game_number, stat_name):
         """ Returns a stat """
-        parsed = self.match_history_request()
-        # parsed = self.read_data_from_file()
+        parsed = self.match_history_request(marcusshep)
         return parsed['matches'][game_number]['participants'][0]['stats'][stat_name]
+    
+    def stat_all_minions_killed(self):
+        """ Returns an array that can be used for data visualization. """
+        scores = []
+        for i in range(0, 10):
+            scores.append(self.get_stat(int(i), "minionsKilled"))
+        return scores
 
-    def get_average_creep_score(self):
+    def stat_average_cs(self):
         """ Returns the average creep score for the last ten games. """
         total = []
         total_creep_count = 0
@@ -73,15 +75,8 @@ class League(object):
         for j in range(0, len(total)):
             total_creep_count+=total[j]
         return total_creep_count/10
-    
-    def get_creep_plt_data(self):
-        """ Returns an array that can be used with matplotlib for data visualization. """
-        scores = []
-        for i in range(0, 10):
-            scores.append(self.get_stat(int(i), "minionsKilled"))
-        return scores
-    
-    def get_win_lose(self):
+
+    def stat_winoverlose(self):
         """ Returns the win/lose ratio. """ 
         counter, num_of_wins, num_of_lose = 0, 0, 0
         for i in range(0, 10):
@@ -90,4 +85,39 @@ class League(object):
             else:
                 num_of_lose += 1
         return math.ceil(num_of_lose/num_of_wins)
-
+    
+    def get_champion_id(self, game_number):
+        parsed = self.match_history_request(marcusshep)
+        return parsed['matches'][game_number]['participants'][0]['championId']
+    
+    def all_champion_ids(self):
+        list_of_champion_ids = []
+        for game_number in range(10):
+            list_of_champion_ids.append(self.get_champion_id(game_number))
+        return list_of_champion_ids
+    
+    def get_timeline(self, game_number, stat_name, *args, **kwargs):
+        """ Returns the `timeline` data, type: dict. """
+        parsed = self.match_history_request(marcusshep)
+        return parsed['matches'][game_number]['participants'][0]['timeline'][stat_name]
+    
+    def timeline_lane(self, game_number):
+        """ Returns game lane value for `game_number`.  """
+        lane = str(self.get_timeline(game_number, "lane"))
+        return lane
+    
+    def timeline_all_lanes(self):
+        """ Last ten games played. """
+        list_of_lanes = []
+        for game_number in range(10):
+            list_of_lanes.append(self.timeline_lane(game_number))
+        return list_of_lanes
+    
+    def timeline_cspermin(self, game_number):
+        """ Returns one dict of creeps killed per minute. """
+        dict_of_values = self.get_timeline(game_number, "creepsPerMinDeltas")
+        return dict_of_values
+    
+    def timeline_xppermin(self, game_number):
+        dict_of_values = self.get_timeline(game_number, "xpPerMinDeltas")
+        return dict_of_values

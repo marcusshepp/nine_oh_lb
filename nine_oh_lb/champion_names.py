@@ -130,7 +130,7 @@ CHAMPION_BASE = [
 
 	(Aatrox, "Aatrox"),
 	(Ahri, "Ahri"),
-	(Akali, ", Akali"),
+	(Akali, "Akali"),
 	(Alistar, "Alistar"),
 	(Amumu, "Amumu"),
 	(Anivia, "Anivia"),
