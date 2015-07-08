@@ -12,5 +12,5 @@ class MatchHistoryView(TemplateView):
 
 	def get_context_data(self, *args, **kwargs):
 		context = super(MatchHistoryView, self).get_context_data(**kwargs)
-		context["cspermin"] = self.model.timeline_cspermin_all()
+		context["cspermin"] = self.model.timeline_cspermin("zeroToTen")
 		return context

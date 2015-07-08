@@ -57,33 +57,19 @@ class LeagueFile(League):
     
     path_to_data = "../../projects/nine_oh_lb/champ_select/fixtures/"
     
-    def read_data_from_file(self, path):
-        """ Returns parsed data from a file. """
+    def stats_from_file(self, path):
+        """ Returns numpy array of data from a file. """
         # an absolute path to folder containing JSON.
         path = r'{}'.format(path)  
-        data = {}
         for dir_entry in os.listdir(path):
             dir_entry_path = os.path.join(path, dir_entry)
             if os.path.isfile(dir_entry_path):
-                with open(dir_entry_path, 'r') as my_file:
-                    data[dir_entry] = my_file.read()
+                with open(dir_entry_path) as my_file:
+                    data = json.load(my_file)
         if data:
-            matches = data.itervalues()
-            l = []
-            for match in matches:
-                l.append(match)
-            return l
+            return data['matches'] # rid myself of this layer
         return None
 
-    def timeline_file_all(self, stat_name, *args, **kwargs):
-        """ Returns the `timeline` data, type: dict. """
-        parsed = self.read_data_from_file("{}".format(self.path_to_data))
-        data = []
-        for game_number in range(len(parsed)):
-            data.append(parsed['matches'])
-            #[game_number]['participants'][0]['timeline'])
-        return data
-    
     def stats_to_file(self, relative_path):
         """ Writes match history to a file in a given location. """
         parsed, file_name = self.match_history_request(self.summoner), date.today()
@@ -102,12 +88,12 @@ class LeagueStat(League):
     """ 
     Handles the `Stat` data field. 
     Available methods:
-    get_stat
-    all_minions_killed
-    average_cs
-    winoverlose
-    get_champion_id
-    all_champion_ids
+        get_stat
+        all_minions_killed
+        average_cs
+        winoverlose
+        get_champion_id
+        all_champion_ids
     """
      
     def get_stat(self, game_number, stat_name):
@@ -155,36 +141,56 @@ class LeagueStat(League):
 
 class LeagueTimeline(LeagueFile):
 
-    def get_timeline_request(self, game_number, stat_name, *args, **kwargs):
+    """
+    Handles the `timeline` dict.
+    Available methods:
+        timeline_request
+        timeline_file
+        timeline_lanes
+        timeline_cspermin
+        timeline_cspermin_bytime
+        timeline_xppermin
+    """
+
+    def timeline_request(self, game_number, stat_name, *args, **kwargs):
         """ Returns the `timeline` data, type: dict. """
         parsed = self.match_history_request(marcusshep)
         return parsed['matches'][game_number]['participants'][0]['timeline'][stat_name]    
+
+    def timeline_file(self, stat_name, *args, **kwargs):
+        """ Returns the `timeline` data for a given stat, type: dict. """
+        matches = self.stats_from_file("{}".format(self.path_to_data))
+        timeline = {}
+        for n in range(len(matches)):
+            timeline[n] = matches[n]['participants'][0]['timeline'][stat_name]
+        return timeline
     
-    
-    def timeline_lane(self, game_number):
+    def timeline_lanes(self):
         """ Returns game lane value for `game_number`.  """
-        lane = str(self.get_timeline_file(game_number, "lane"))
-        return lane
-    
-    def timeline_all_lanes(self):
-        """ Last ten games played. """
-        list_of_lanes = []
-        for game_number in range(10):
-            list_of_lanes.append(self.timeline_lane(game_number))
-        return list_of_lanes
-    
-    def timeline_cspermin(self, game_number):
-        """ Returns one dict of creeps killed per minute. """
-        dict_of_values = self.timeline_file_all(game_number, "creepsPerMinDeltas")
+        lanes = self.timeline_file("lane")
+        for g, l in lanes.iteritems():
+            lanes[g] = str(l) # from unicode to str
+        return lanes # {game_num: 'lane'}
+      
+    def timeline_cspermin(self, time_value=None):
+        """ 
+        cspermin from zero to ten min. 
+        `time_value` can be: 
+        zeroToTen
+        tenToTwenty
+        twentyToThirty
+        """
+        a, pika = self.timeline_file("creepsPerMinDeltas"), {}
+        if time_value:
+            for i, j in a.iteritems():
+                for num in range(len(i))
+                    pika[i] = a[i][time_value]
+                    return pika # {game_num: cs}
+        return a
+
+    def timeline_xppermin(self):
+        dict_of_values = self.timeline_file("xpPerMinDeltas")
         return dict_of_values
 
-    def timeline_cspermin_all(self):
-        all_values = []
-        for i in range(10):
-            all_values.append(self.timeline_file_all("creepsPerMinDeltas"))
-        return all_values
-    
-    def timeline_xppermin(self, game_number):
-        dict_of_values = self.timeline_file_all(game_number, "xpPerMinDeltas")
-        return dict_of_values
+
     

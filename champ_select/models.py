@@ -4,7 +4,7 @@ from datetime import date
 from django.db import models
 
 from nine_oh_lb.settings import CHAMPION_NAMES
-from .frontalcortex import League
+from .frontalcortex import LeagueTimeline
 
 
 class Champion(models.Model):
@@ -94,8 +94,7 @@ class Game(models.Model):
 			return u"{0} vs. {1}".format(self.champion, self.enemy_laner)
 
 
-class MatchHistory(League):
+class MatchHistory(LeagueTimeline):
 	""" Business Logic Here. """
 
-	def cspermin_topretty(self):
-		data = self.timeline_cspermin_all()
+

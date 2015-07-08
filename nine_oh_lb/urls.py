@@ -20,7 +20,7 @@ from django.contrib import admin
 from champ_select import urls as champ_select_urls
 
 urlpatterns = [
-	url(r'^$', RedirectView.as_view(url="/lasttengames", permanent=True)),
+	url(r'^$', RedirectView.as_view(url="nine_oh_lb/match_history/", permanent=False)),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^nine_oh_lb/', include(champ_select_urls)),
 ]
