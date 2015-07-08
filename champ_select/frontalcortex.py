@@ -70,7 +70,16 @@ class LeagueFile(League):
             return data['matches'] # rid myself of this layer
         return None
 
-    def stats_to_file(self, relative_path):
+    def timeline_file_all(self, stat_name, *args, **kwargs):
+        """ Returns the `timeline` data, type: dict. """
+        parsed = self.read_data_from_file("{}".format(self.path))
+        data = []
+        for game_number in range(len(parsed)):
+            data.append(parsed['matches'])
+            #[game_number]['participants'][0]['timeline'])
+        return data
+    
+    def stats_to_file(self, relative_path, file_name):
         """ Writes match history to a file in a given location. """
         parsed, file_name = self.match_history_request(self.summoner), date.today()
         complete_path = os.path.abspath("{0}{1}.json".format(relative_path, file_name))
