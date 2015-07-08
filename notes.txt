@@ -1,3 +1,5 @@
 lane opponent(s)? champion selected? lane?
 
 http://loldevelopers.de.vu/
+
+http://www.highcharts.com/docs/getting-started/how-to-set-options # also in techops.CDN

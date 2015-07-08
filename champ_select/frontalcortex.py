@@ -13,25 +13,32 @@ import numpy as np
 
 class League(object):
 
+    """
+    Do NOT instantiate this class itself.
+    Only instantiate League's subclasses.
+    """
+
     marcusshep = 42008349
     summoner = marcusshep
     api_key = "8a9d2c2d-f00d-406b-87b1-810c2312a1ae"
     settings = {}
 
-    def __init__(self, settings):
+    def __init__(self, settings=True):
         """ Initialize obj with debug = False """
         self.settings['debug'] = settings
         
     def __unicode__(self, summoner=marcusshep):
         """ Useful for displaying `LeagueStats` as on obj. """
         return u"{}".format(summoner)
-        
-    def get_request(self, url, api_key=api_key):
+
+    @staticmethod
+    def get_request(url, api_key=api_key):
         url += "?api_key={0}".format(api_key)
         request = urll.urlopen(url)
         parsed = json.loads(request.read())
         return parsed
 
+    @classmethod
     def match_history_request(self, summoner):
         """ Makes a request to League servers and returns parsed JSON data."""
         url = "https://na.api.pvp.net/api/lol/na/v2.2/matchhistory/{0}".format(summoner)
@@ -41,19 +48,17 @@ class League(object):
         url = "https://na.api.pvp.net/api/lol/na/v1.2/champion"
         return self.get_request(url)
     
-    def print_stats(self):
-        """ Returns a pretty formatted dict. """
-        parsed = self.match_history_request()
-        return json.dumps(parsed, indent=4, sort_keys=True)
-
 
 class LeagueFile(League):
+
+    """
+    Class for reading/writing League stats to/from files.
+    """
     
-    path_to_data = ""
+    path_to_data = "../../projects/nine_oh_lb/champ_select/fixtures/"
     
     def read_data_from_file(self, path):
         """ Returns parsed data from a file. """
-        import os
         # an absolute path to folder containing JSON.
         path = r'{}'.format(path)  
         data = {}
@@ -72,25 +77,38 @@ class LeagueFile(League):
 
     def timeline_file_all(self, stat_name, *args, **kwargs):
         """ Returns the `timeline` data, type: dict. """
-        path = "../../projects/nine_oh_lb/champ_select/fixtures/"
-        parsed = self.read_data_from_file("{}".format(path))
+        parsed = self.read_data_from_file("{}".format(self.path_to_data))
         data = []
         for game_number in range(len(parsed)):
             data.append(parsed['matches'])
             #[game_number]['participants'][0]['timeline'])
         return data
     
-    def stats_to_file(self, relative_path, file_name):
+    def stats_to_file(self, relative_path):
         """ Writes match history to a file in a given location. """
-        parsed = self.match_history_request(self.summoner)
-        file_name = date.today()
+        parsed, file_name = self.match_history_request(self.summoner), date.today()
         complete_path = os.path.abspath("{0}{1}.json".format(relative_path, file_name))
-        with open(complete_path, "w") as text:
-            text.write(json.dumps(parsed, indent=4, sort_keys=True))
+        if os.path.isfile(complete_path):
+            file_name = "{}-duplicate".format(date.today())
+            complete_path = os.path.abspath("{0}{1}.json".format(relative_path, file_name))
+        with open(complete_path, "w") as f:
+            f.write(json.dumps(parsed))
+            f.close()
         return str(complete_path)
     
 
 class LeagueStat(League):
+
+    """ 
+    Handles the `Stat` data field. 
+    Available methods:
+    get_stat
+    all_minions_killed
+    average_cs
+    winoverlose
+    get_champion_id
+    all_champion_ids
+    """
      
     def get_stat(self, game_number, stat_name):
         """ Returns a stat """
