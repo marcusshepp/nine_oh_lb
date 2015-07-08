@@ -16,9 +16,8 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 
-from .views import GameView, ChampionView
+from .views import MatchHistoryView
 
 urlpatterns = [
-    url(r'^champ_select/', GameView.as_view(), name="game"),
-    url(r'^champion/', ChampionView.as_view(), name="champ"),
+    url(r'^match_history/', MatchHistoryView.as_view(), name="games"),
 ]

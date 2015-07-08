@@ -92,3 +92,10 @@ class Game(models.Model):
 		""" Returns a str of information about the game. """
 		if self.enemy_laner:
 			return u"{0} vs. {1}".format(self.champion, self.enemy_laner)
+
+
+class MatchHistory(League):
+	""" Business Logic Here. """
+
+	def cspermin_topretty(self):
+		data = self.timeline_cspermin_all()
