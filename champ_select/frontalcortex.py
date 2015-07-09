@@ -8,6 +8,7 @@ import math
 import urllib2 as urll
 from datetime import date
 
+import pandas as pd
 import numpy as np
 
 
@@ -55,12 +56,13 @@ class LeagueFile(League):
     Class for reading/writing League stats to/from files.
     """
     
-    path_to_data = "../../projects/nine_oh_lb/champ_select/fixtures/"
-    
-    def stats_from_file(self, path):
+    # path_to_data = "champ_select/fixtures/" # relativate to django's manage.py
+    path_to_data = "fixtures/" # relativate to pycharm interperter
+
+    def stats_from_file(self):
         """ Returns numpy array of data from a file. """
         # an absolute path to folder containing JSON.
-        path = r'{}'.format(path)  
+        path = r'{}'.format(self.path_to_data)  
         for dir_entry in os.listdir(path):
             dir_entry_path = os.path.join(path, dir_entry)
             if os.path.isfile(dir_entry_path):
@@ -69,17 +71,8 @@ class LeagueFile(League):
         if data:
             return data['matches'] # rid myself of this layer
         return None
-
-    def timeline_file_all(self, stat_name, *args, **kwargs):
-        """ Returns the `timeline` data, type: dict. """
-        parsed = self.read_data_from_file("{}".format(self.path))
-        data = []
-        for game_number in range(len(parsed)):
-            data.append(parsed['matches'])
-            #[game_number]['participants'][0]['timeline'])
-        return data
     
-    def stats_to_file(self, relative_path, file_name):
+    def stats_to_file(self, relative_path):
         """ Writes match history to a file in a given location. """
         parsed, file_name = self.match_history_request(self.summoner), date.today()
         complete_path = os.path.abspath("{0}{1}.json".format(relative_path, file_name))
@@ -113,7 +106,7 @@ class LeagueStat(League):
     def all_minions_killed(self):
         """ Returns an array that can be used for data visualization. """
         scores = []
-        for i in range(0, 10):
+        for i in xrange(10):
             scores.append(self.get_stat(int(i), "minionsKilled"))
         return scores
 
@@ -121,7 +114,7 @@ class LeagueStat(League):
         """ Returns the average creep score for the last ten games. """
         total = []
         total_creep_count = 0
-        for i in range(0, 10):
+        for i in xrange(10):
             total.append(self.get_stat(int(i), "minionsKilled"))
         for j in range(0, len(total)):
             total_creep_count+=total[j]
@@ -130,7 +123,7 @@ class LeagueStat(League):
     def winoverlose(self):
         """ Returns the win/lose ratio. """ 
         counter, num_of_wins, num_of_lose = 0, 0, 0
-        for i in range(0, 10):
+        for i in xrange(10):
             if self.get_stat(int(i), "winner") == True:
                 num_of_wins += 1
             else:
@@ -143,12 +136,21 @@ class LeagueStat(League):
     
     def all_champion_ids(self):
         list_of_champion_ids = []
-        for game_number in range(10):
+        for game_number in xrange(10):
             list_of_champion_ids.append(self.get_champion_id(game_number))
         return list_of_champion_ids
 
 
-class LeagueTimeline(LeagueFile):
+class LeagueTimelineR(League):
+
+
+    def timeline_request(self, game_number, stat_name, *args, **kwargs):
+        """ Returns the `timeline` data, type: dict. """
+        parsed = self.match_history_request(marcusshep)
+        return parsed['matches'][game_number]['participants'][0]['timeline'][stat_name]
+
+
+class Timeline(LeagueFile):
 
     """
     Handles the `timeline` dict.
@@ -161,16 +163,11 @@ class LeagueTimeline(LeagueFile):
         timeline_xppermin
     """
 
-    def timeline_request(self, game_number, stat_name, *args, **kwargs):
-        """ Returns the `timeline` data, type: dict. """
-        parsed = self.match_history_request(marcusshep)
-        return parsed['matches'][game_number]['participants'][0]['timeline'][stat_name]    
-
     def timeline_file(self, stat_name, *args, **kwargs):
         """ Returns the `timeline` data for a given stat, type: dict. """
-        matches = self.stats_from_file("{}".format(self.path_to_data))
+        matches = self.stats_from_file()
         timeline = {}
-        for n in range(len(matches)):
+        for n in xrange(10):
             timeline[n] = matches[n]['participants'][0]['timeline'][stat_name]
         return timeline
     
@@ -180,26 +177,30 @@ class LeagueTimeline(LeagueFile):
         for g, l in lanes.iteritems():
             lanes[g] = str(l) # from unicode to str
         return lanes # {game_num: 'lane'}
-      
-    def timeline_cspermin(self, time_value=None):
-        """ 
-        cspermin from zero to ten min. 
-        `time_value` can be: 
-        zeroToTen
-        tenToTwenty
-        twentyToThirty
-        """
-        a, pika = self.timeline_file("creepsPerMinDeltas"), {}
-        if time_value:
-            for i, j in a.iteritems():
-                for num in range(len(i)):
-                    pika[i] = a[i][time_value]
-                    return pika # {game_num: cs}
-        return a
 
     def timeline_xppermin(self):
         dict_of_values = self.timeline_file("xpPerMinDeltas")
         return dict_of_values
 
+    def timeline_cspermin(self, time_value=None):
+        """ 
+        cspermin from 0 to 30 min.
+        `time_value` can be: 
+        zeroToTen
+        tenToTwenty
+        twentyToThirty
+        """
+        time_value = str(time_value)
+        data = self.timeline_file("creepsPerMinDeltas")
+        series = pd.DataFrame(data) # pandas
+        return series
 
-    
+    def average_cs(self):
+        """
+        :return:
+        list of float64 containing average cspermin.
+        """
+        series = self.timeline_cspermin()
+        series = series.apply(lambda x: x.max() - x.min())
+        return series
+
