@@ -192,7 +192,7 @@ class LeagueTimeline(LeagueFile):
         a, pika = self.timeline_file("creepsPerMinDeltas"), {}
         if time_value:
             for i, j in a.iteritems():
-                for num in range(len(i))
+                for num in range(len(i)):
                     pika[i] = a[i][time_value]
                     return pika # {game_num: cs}
         return a
