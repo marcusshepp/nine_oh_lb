@@ -24,13 +24,12 @@ class League(object):
     api_key = "8a9d2c2d-f00d-406b-87b1-810c2312a1ae"
     settings = {}
 
-    def __init__(self, settings=True):
+    def __init__(self):
         """ Initialize obj with debug = False """
-        self.settings['debug'] = settings
         
-    def __unicode__(self, summoner=marcusshep):
+    def __unicode__(self):
         """ Useful for displaying `LeagueStats` as on obj. """
-        return u"{}".format(summoner)
+        return u"{}".format(self.summoner)
 
     @staticmethod
     def get_request(url, api_key=api_key):
@@ -40,9 +39,9 @@ class League(object):
         return parsed
 
     @classmethod
-    def match_history_request(self, summoner):
+    def match_history_request(self):
         """ Makes a request to League servers and returns parsed JSON data."""
-        url = "https://na.api.pvp.net/api/lol/na/v2.2/matchhistory/{0}".format(summoner)
+        url = "https://na.api.pvp.net/api/lol/na/v2.2/matchhistory/{0}".format(self.summoner)
         return self.get_request(url)
 
     def champion_list(self):
@@ -56,8 +55,8 @@ class LeagueFile(League):
     Class for reading/writing League stats to/from files.
     """
     
-    # path_to_data = "champ_select/fixtures/" # relativate to django's manage.py
-    path_to_data = "fixtures/" # relativate to pycharm interperter
+    path_to_data = "champ_select/fixtures/" # relativate to django's manage.py
+    # path_to_data = "fixtures/" # relativate to pycharm interperter
 
     def stats_from_file(self):
         """ Returns numpy array of data from a file. """
@@ -74,7 +73,7 @@ class LeagueFile(League):
     
     def stats_to_file(self, relative_path):
         """ Writes match history to a file in a given location. """
-        parsed, file_name = self.match_history_request(self.summoner), date.today()
+        parsed, file_name = self.match_history_request(), date.today()
         complete_path = os.path.abspath("{0}{1}.json".format(relative_path, file_name))
         if os.path.isfile(complete_path):
             file_name = "{}-duplicate".format(date.today())
@@ -100,7 +99,7 @@ class LeagueStat(League):
      
     def get_stat(self, game_number, stat_name):
         """ Returns a stat """
-        parsed = self.match_history_request(marcusshep)
+        parsed = self.match_history_request()
         return parsed['matches'][game_number]['participants'][0]['stats'][stat_name]
         
     def all_minions_killed(self):
@@ -131,7 +130,7 @@ class LeagueStat(League):
         return math.ceil(num_of_lose/num_of_wins)
     
     def get_champion_id(self, game_number):
-        parsed = self.match_history_request(marcusshep)
+        parsed = self.match_history_request()
         return parsed['matches'][game_number]['participants'][0]['championId']
     
     def all_champion_ids(self):
@@ -153,7 +152,7 @@ class LeagueTimelineR(League):
 class Timeline(LeagueFile):
 
     """
-    Handles the `timeline` dict.
+    Handles the `timeline` dict. Data is per minute.
     Available methods:
         timeline_request
         timeline_file
@@ -178,11 +177,11 @@ class Timeline(LeagueFile):
             lanes[g] = str(l) # from unicode to str
         return lanes # {game_num: 'lane'}
 
-    def timeline_xppermin(self):
+    def timeline_xp(self):
         dict_of_values = self.timeline_file("xpPerMinDeltas")
         return dict_of_values
 
-    def timeline_cspermin(self, time_value=None):
+    def timeline_cs(self, time_value=None):
         """ 
         cspermin from 0 to 30 min.
         `time_value` can be: 
@@ -192,15 +191,55 @@ class Timeline(LeagueFile):
         """
         time_value = str(time_value)
         data = self.timeline_file("creepsPerMinDeltas")
-        series = pd.DataFrame(data) # pandas
-        return series
+        df = pd.DataFrame(data) # pandas
+        return df
 
-    def average_cs(self):
+    def timeline_averagecs(self):
         """
         :return:
         list of float64 containing average cspermin.
         """
-        series = self.timeline_cspermin()
-        series = series.apply(lambda x: x.max() - x.min())
-        return series
+        df = self.timeline_cs()
+        df = df.apply(lambda x: x.max() - x.min())
+        return df
 
+    def judge_cs(self):
+        df = self.timeline_averagecs()
+        maxx = df.max()
+        choices = [
+            "challenger",
+            "master",
+            "diamond",
+            "platinum",
+            "gold",
+            "silver"
+            "bronze",
+        ]
+        v = ""
+        # if  7 <= maxx <= 8:
+        #     v += choices[0]
+        # elif  6 <= maxx <= 7:
+        #     v += choices[1]
+        # elif  5 <= maxx <= 6:
+        #     v += choices[2]
+        # elif  4 <= maxx <= 5:
+        #     v += choices[3]
+        # elif  3 <= maxx <= 4:
+        #     v += choices[4]
+        # elif  2 <= maxx <= 3:
+        #     v += choices[5]
+        # elif  0 <= maxx <= 2:
+        #     v += choices[6]
+
+        
+#         return pd.DataFrame(df, index=choices)
+
+
+
+
+
+# tl = Timeline()
+# print tl.judge_cs()
+
+# ls = LeagueStat()
+# print ls.average_cs()
