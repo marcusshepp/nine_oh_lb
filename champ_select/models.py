@@ -90,5 +90,3 @@ class Game(models.Model):
 
 class MatchHistory(LeagueTimeline):
 	""" Business Logic Here. """
-
-

@@ -189,6 +189,19 @@ class Timeline(LeagueFile):
         tenToTwenty
         twentyToThirty
         """
+<<<<<<< HEAD
+        a, pika = self.timeline_file("creepsPerMinDeltas"), {}
+        if time_value:
+            for i, j in a.iteritems():
+                for num in range(i):
+                    pika[i] = a[i][time_value]
+                    return pika # {game_num: cs}
+        return a
+
+    def timeline_xppermin(self):
+        dict_of_values = self.timeline_file("xpPerMinDeltas")
+        return dict_of_values
+=======
         time_value = str(time_value)
         data = self.timeline_file("creepsPerMinDeltas")
         df = pd.DataFrame(data) # pandas
@@ -237,6 +250,7 @@ class Timeline(LeagueFile):
 
 
 
+>>>>>>> 57f2afca3c8c51359a6607e084e28f1d053751e8
 
 # tl = Timeline()
 # print tl.judge_cs()
