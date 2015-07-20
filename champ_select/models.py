@@ -24,9 +24,6 @@ class Champion(models.Model):
 		""" Display `name`. """
 		return u"{}".format(self.get_name_display())
 
-	def log_game(self):
-		champion 
-	
 	def get_games(self):
 		if self.games:
 			games = Game.objects.filter(champion=self.id)
@@ -57,10 +54,6 @@ class EnemyChampion(models.Model):
 		""" Display `name`. """
 		return u"{}".format(self.name)
 
-	# def create_self(self):
-	# 	for name in CHAMPION_NAMES:	
-	# 		EnemyChampion.objects.create(name=name[1])
-
 
 class Game(models.Model):
 	""" 
@@ -73,20 +66,21 @@ class Game(models.Model):
 	    ('jungle', 'Jungle'),
 	    ('top', 'Top'),
 	)
-	champion = models.ForeignKey(Champion, related_name="champion_used_for_game", null=True)
-	enemy_laner = models.ForeignKey(EnemyChampion, related_name="champion_played_against", null=True)
+	champion = models.ForeignKey(
+		Champion, related_name="champion_used_for_game", null=True)
+	enemy_laner = models.ForeignKey(
+		EnemyChampion, related_name="champion_played_against", null=True)
 	lane = models.CharField(max_length=6, choices=lanes)
 	win = models.BooleanField(default=False)
 	cs = models.PositiveIntegerField(null=True)
+	note = models.TextField(max_length=250, blank=True)
 	damage_done = models.PositiveIntegerField(null=True)
 	first_blood = models.BooleanField(default=False)
 	date_played = models.DateField(("Date"), default=date.today)
 
-	# def __unicode__(self):
-	# 	""" Display `Champion` name. """
-	# 	if not self.champion and self.enemy_laner:
-	# 		display = ""
-	# 	return u"{0} vs {1}".format(display)
+	def __unicode__(self):
+		""" Display `Champion` name. """
+		return self.game_quick_info()
 
 	def game_quick_info(self):
 		""" Returns a str of information about the game. """

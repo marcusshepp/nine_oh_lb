@@ -1,4 +1,8 @@
+from datetime import date
+
 from django.db import models
+
+from nine_oh_lb.settings import CHAMPION_NAMES as cn
 
 
 class Team(models.Model):
@@ -17,7 +21,7 @@ class Team(models.Model):
 
 
 class Match(models.Model):
-	""" Summoner. """
+	""" # """
 
 	lanes = (
 		('bottom', 'Bottom'),
@@ -42,3 +46,15 @@ class Match(models.Model):
 	items = models.CommaSeparatedIntegerField(max_length=1000)
 	lane = models.CharField(max_length=6, choices=lanes)
 	lane_opponent = models.PositiveIntegerField()
+
+
+class QuickGame(models.Model):
+
+	""" For quickly logging game info. """
+
+	user_played = models.CharField(max_length=25, choices=cn)
+	enemy_laner = models.CharField(max_length=25, choices=cn)
+	enemy_jungler = models.CharField(max_length=25, choices=cn)
+	winner = models.BooleanField(default=False)
+	date_played = models.DateField(("Date"), default=date.today, null=True)
+	note = models.TextField(max_length=250, blank=True)

@@ -43,6 +43,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.postgres',
     'champ_select',
+    'match',
 )
 
 MIDDLEWARE_CLASSES = (

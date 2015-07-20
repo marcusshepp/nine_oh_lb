@@ -1,14 +1,12 @@
 from django.contrib import admin
 
-from .models import Match
+from .models import QuickGame
 
 
-# @admin.register(Match)
-# class HubAdmin(admin.ModelAdmin):
-#     date_hierarchy = 'date_created'
-#     list_display = (
-#     	'champion',
-#     	'lane',
-#     	'cs',
-#     	'date_created',
-# 	)
+@admin.register(QuickGame)
+class HubAdmin(admin.ModelAdmin):
+    list_display = (
+    	'user_played',
+    	'enemy_laner',
+    	'winner',
+	)
