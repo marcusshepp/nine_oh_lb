@@ -7,3 +7,4 @@ notes.txt
 *.json
 /champ_select/migrations/
 /champ_select/fixtures/
+*/migrations/

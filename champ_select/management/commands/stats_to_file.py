@@ -9,7 +9,7 @@ from nine_oh_lb.settings_lite import MATCH_FIXTURES_URL
 
 class Command(BaseCommand):
 
-	lf = LeagueFile(settings=True)
+	lf = LeagueFile()
 	td = date.today()
 	error_message = "File exists, proceed? [y/n] "
 	abort = "Abort!"

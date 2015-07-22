@@ -4,7 +4,7 @@ from datetime import date
 from django.db import models
 
 from nine_oh_lb.settings import CHAMPION_NAMES
-from .frontalcortex import LeagueTimeline
+from .frontalcortex import Timeline
 
 
 class Champion(models.Model):
@@ -88,5 +88,5 @@ class Game(models.Model):
 			return u"{0} vs. {1}".format(self.champion, self.enemy_laner)
 
 
-class MatchHistory(LeagueTimeline):
+class MatchHistory(Timeline):
 	""" Business Logic Here. """

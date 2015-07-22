@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
-from champion_names import CHAMPION_BASE
+from champion_names import CHAMPION_BASE, CHAMPION_STRINGS
 
 CHAMPION_NAMES = CHAMPION_BASE
 

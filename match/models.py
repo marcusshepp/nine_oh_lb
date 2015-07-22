@@ -2,59 +2,68 @@ from datetime import date
 
 from django.db import models
 
-from nine_oh_lb.settings import CHAMPION_NAMES as cn
-
-
-class Team(models.Model):
-	""" 
-	Anything associated with the enemy team.
-	Opposite of `AllyTeam`. 
-	"""
-
-	class Meta:
-		abstract = True
-
-	kill = models.PositiveIntegerField()
-	dragon = models.PositiveIntegerField()
-	baron = models.PositiveIntegerField()
-	tower = models.PositiveIntegerField()
-
-
-class Match(models.Model):
-	""" # """
-
-	lanes = (
-		('bottom', 'Bottom'),
-	    ('mid', 'Mid'),
-	    ('jungle', 'Jungle'),
-	    ('top', 'Top'),
-	)
-	creeps = models.PositiveIntegerField()
-	kill = models.PositiveIntegerField()
-	death = models.PositiveIntegerField()
-	assist = models.PositiveIntegerField()
-	tower = models.PositiveIntegerField()
-	first_blood = models.BooleanField(default=False)
-	champion = models.PositiveIntegerField()	
-	gold_earned = models.PositiveIntegerField()
-	killing_spree = models.PositiveIntegerField()
-	largest_multikill = models.PositiveIntegerField()
-	dmg_to_champions  = models.PositiveIntegerField()
-	ward_placed = models.PositiveIntegerField()
-	winner = models.BooleanField(default=False)
-	creeps_per_min = models.DecimalField(decimal_places=1, max_digits=120)
-	items = models.CommaSeparatedIntegerField(max_length=1000)
-	lane = models.CharField(max_length=6, choices=lanes)
-	lane_opponent = models.PositiveIntegerField()
+from nine_oh_lb.settings import (
+	CHAMPION_NAMES,
+	CHAMPION_STRINGS,
+)
 
 
 class QuickGame(models.Model):
 
 	""" For quickly logging game info. """
 
-	user_played = models.CharField(max_length=25, choices=cn)
-	enemy_laner = models.CharField(max_length=25, choices=cn)
-	enemy_jungler = models.CharField(max_length=25, choices=cn)
+	user_played = models.CharField(
+		max_length=25, choices=CHAMPION_NAMES, blank=True)
+	user_played_fav = models.ForeignKey(
+		'FavoriteChampion', 
+		related_name="played_saved_champion", 
+		blank=True,
+		null=True,
+		)
+	enemy_laner = models.CharField(
+		max_length=25, choices=CHAMPION_NAMES, blank=True)
+	enemy_jungler = models.CharField(
+		max_length=25, choices=CHAMPION_NAMES, blank=True)
 	winner = models.BooleanField(default=False)
-	date_played = models.DateField(("Date"), default=date.today, null=True)
+	date_played = models.DateField(
+		("Date"), default=date.today, null=True)
 	note = models.TextField(max_length=250, blank=True)
+	
+	def __unicode__(self):
+		p = ""
+		if self.user_played:
+			p += self.user_played
+		else: p += self.user_played_fav.name
+		return u"{0} vs. {1}".format(
+			p, 
+			self.enemy_laner
+		)
+
+
+class FavoriteChampion(models.Model):
+
+	name = models.CharField(
+		max_length=25, choices=CHAMPION_NAMES)
+	games = models.ManyToManyField(
+		QuickGame, 
+		blank=True, 
+		)
+
+	def __unicode__(self):
+		return u"{}".format(
+			self.name,
+		)
+
+	def create_from_games(self):
+		games = QuickGame.objects.filter(user_played__icontains=self.name)
+		if games:
+			for g in games:
+				self.games.add(g)
+			return True
+		return False
+
+	def save(self):
+		self.save()
+		self.create_from_games()
+		self.save()
+		return self
