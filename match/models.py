@@ -61,9 +61,3 @@ class FavoriteChampion(models.Model):
 				self.games.add(g)
 			return True
 		return False
-
-	def save(self):
-		self.save()
-		self.create_from_games()
-		self.save()
-		return self

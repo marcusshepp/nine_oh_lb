@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>My League Notebook</title>
+	{% load static %}
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="{% static 'global.css' %}">
+	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+</head>
+<body>
+	<div class="container">
+		<center class="logo">My League Notebook</center>
+		<div class="user-util">
+			<!-- user account utility -->
+			<ul>
+				<div>User</div>
+				<li>
+					<a href="#">refer</a>
+				</li>
+				<li>
+					<a href="#">settings</a>
+				</li>
+				<li>
+					<a href="#">log out</a>
+				</li>
+			</ul>
+		</div>
+		<nav id="nav">
+			<a id="toggle" href="#"><span class="fa fa-navicon fa-3x"></span></a>
+			<ul>
+				<li>
+					<a href="#">Games</a>
+					<ul>
+						<li><a href="#">Add</a></li>
+						<li><a href="#">All</a></li>
+					</ul>
+				</li>
+				<li>
+					<a href="#">Champs</a>
+					<ul>
+						<li>
+							<a href="#">Add</a>	
+						</li>
+						<li>
+							<a href="#">All</a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="#">Genius</a>
+					<ul>
+						<li>
+							<a href="#">Stats</a>
+						</li>
+						<li>
+							<a href="#">Select</a>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</nav>
+	</div>
+</body>
+<style type="text/javascript">
+		$("#nav > a").click(function(){
+			console.log("hello");
+			$("nav ul").toggle();
+		});
+</style>
+</html>

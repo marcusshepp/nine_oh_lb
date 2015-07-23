@@ -8,3 +8,4 @@ notes.txt
 /champ_select/migrations/
 /champ_select/fixtures/
 */migrations/
+*.orig

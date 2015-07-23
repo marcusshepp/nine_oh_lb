@@ -1,0 +1,169 @@
+/* containter */
+.container{
+	width: 100%;
+}
+/* logo/banner */
+.logo{
+	position: absolute;
+	background-color: black;
+	color: white;
+	font-size: 2em;
+	font-family: Verdana, Geneva, sans-serif;
+	margin: 0 0 0 0;
+	top: -10px;
+	padding: 10px 0 10px 0;
+	width: 100%;
+}
+
+/* navigation */
+nav{
+	position: fixed;
+	background-color: #DBDBDB;
+	width: 4em;
+	top: 100px;
+	padding: 0 0px 0 0px;
+	text-align: center;
+}
+
+nav ul{
+	list-style: none;
+}
+
+nav a{
+	text-decoration: none;
+}
+
+nav > a{
+	color: inherit;
+}
+
+nav li{
+	text-align: center;
+}
+
+nav > ul{
+	position: relative;
+	left: 0em;
+	width: 4em;
+	height: 225px;
+	padding: 0000;
+	margin: 0000;
+}
+
+nav > ul > li{
+	position: relative;
+	display: block;
+	width: 4em;
+	height: 50px;
+	left: 0em;
+	padding-left: 0px;
+	padding-top: 25px
+}
+
+nav > ul > li > a{
+	position: relative;
+	text-decoration: none;
+	color: inherit;
+}
+
+nav > ul > li > ul{
+	position: relative;
+	display: none;
+}
+
+nav > ul > li:hover{
+	background-color: black;
+	color: white;
+}
+
+nav ul ul{
+	position: absolute;
+	height: 75px;
+	width: 25px;
+}
+
+nav ul li ul li{
+	height: 37.5px;
+	width: auto;
+	text-align: center;
+}
+
+nav ul li ul li a{
+	height: 37.5px;
+	width: auto;
+	text-align: center;
+	color: black;
+	float: right;
+}
+
+nav > ul > li:hover > ul{
+	position: absolute;
+	display: block;
+	background-color: #DBDBDB;
+	left: 4.0em;
+	top: 0em;
+}
+
+nav > ul > li > ul > li:hover{
+	position: absolute;
+	display: block;
+	background-color: black;
+	color: white;
+}
+
+nav > ul > li > ul > li{
+	position: relative;
+	width: inherit;
+}
+
+
+/* user account utility */
+.user-util{
+	position: absolute;
+	top: -5em;
+	right: -5em;
+	width: auto;
+	height: 200px;
+	padding-right: 25px;
+	z-index: 0;
+}
+
+.user-util > ul > div{
+	position: relative;
+	top: 0;
+	width: 200px;
+	height: 200px;
+	background-color: #00A33F;
+	border-radius: 50%;
+	color: white;
+	z-index: 2;
+}
+
+.user-util > ul > div:hover{
+	position: relative;
+	top: 0;
+	width: 225px;
+	height: 225px;
+	background-color: #00CC4E;
+	border-radius: 50%;
+}
+
+.user-util > ul > li{
+	display: none;
+}
+
+.user-util > ul > div:hover + li{
+	display: block;
+	position: relative;
+	background-color: #00CC4E;
+	height: auto;
+	width: 4em;
+	border-radius: 4em;
+	text-align: center;
+	color: white;
+	float: left;
+}
+
+.user-util > ul{
+	list-style: none;
+}
