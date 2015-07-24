@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>My League Notebook</title>
+	{% load static %}
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="{% static 'global.css' %}">
+	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+</head>
+<body>
+	<div class="container">
+		<header>
+				<div class="logo">My League Notebook</div>
+				<span class="chart fa fa-area-chart fa-4x"></span>
+		</header>
+		<div class="user-util">
+			<!-- user account utility -->
+			<h3>stuff</h3>
+			<div class="util-links">
+				<div id="top">
+					<div id="user">
+						<a href="#">User</a>
+					</div>
+					<div id="settings">
+						<a href="#">Settings</a>
+					</div>
+				</div>
+				<div id="bot">
+					<div id="coffeeme">
+						<a href="#">Coffee</a>
+					</div>
+					<div id="log">
+						<a href="#">Log Out</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<nav id="nav">
+			<a href="#"><span class="fa fa-navicon fa-3x"></span></a>
+			<ul>
+				<li>
+					<a href="#">Games</a>
+					<ul>
+						<li>
+							<a href="#">Add </a><i class="fa fa-plus"></i>
+						</li>
+						<li>
+							<a href="#">All </a><i class="fa fa-th"></i>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="#">Champs</a>
+					<ul>
+						<li>
+							<a href="#">Add <i class="fa fa-list"></i></a>	
+						</li>
+						<li>
+							<a href="#">All </a><i class="fa fa-th"></i>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="#">Genius</a>
+					<ul>
+						<li>
+							<a href="#">Stats</a>
+						</li>
+						<li>
+							<a href="#">Select</a>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</nav>
+	</div>
+</body>
+<style type="text/javascript">
+		$("#nav > a").click(function(){
+			console.log("hello");
+			$("nav ul").toggle();
+		});
+</style>
+</html>
