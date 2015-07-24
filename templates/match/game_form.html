@@ -1,0 +1,39 @@
+{% extends 'match/base_site.html' %}
+
+{% block content %}
+<form action="" method="POST">{% csrf_token %}
+		<fieldset>
+			<label for="user_played">Played:</label>
+			<select name="user_played">
+				{% for name in champ_names %}
+				<option value="{{ name }}">{{ name }}</option>
+				{% endfor %}
+			</select>
+		</fieldset>
+		<fieldset>
+			<label for="enemy_laner">Enemy Laner:</label>
+			<select name="enemy_laner">
+				{% for name in champ_names %}
+				<option value="{{ name }}">{{ name }}</option>
+				{% endfor %}
+			</select>
+		</fieldset>
+		<fieldset>
+			<label for="winner">Winner:</label>
+			<input type="checkbox" name="winner">			
+		</fieldset>
+		<fieldset>
+			<label for="enemy_jungler">Enemy Jungler:</label>
+			<select name="enemy_jungler">
+				{% for name in champ_names %}
+				<option value="{{ name }}">{{ name }}</option>
+				{% endfor %}
+			</select>			
+		</fieldset>
+		<fieldset>
+			<label for="note">Any Notes?</label>
+			<input type="textarea" name="notes">
+		</fieldset>
+
+</form>
+{% endblock %}

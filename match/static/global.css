@@ -1,13 +1,19 @@
+body{
+	position: absolute;
+	width: 100%;
+	background: url("carbon_fibre.png");
+}
+
 a{text-decoration: none; color: inherit;}
 
 /* containter */
 .container{
-	width: 100%;
+	width: 100%
 }
 /* logo/header */
 header{
 	position: absolute;
-	width: 90%
+	width: 60%
 }
 
 .chart{
@@ -38,7 +44,7 @@ nav{
 	position: fixed;
 	background-color: #DBDBDB;
 	width: 4em;
-	top: 100px;
+	top: 175px;
 	padding: 0 0px 0 0px;
 	text-align: center;
 	box-shadow: 1px 1px 1px 0px;
@@ -68,7 +74,7 @@ nav > ul > li:hover{
 }
 
 nav > ul > li:hover > ul > li{
-	animation: pulseul .1s linear;
+	animation: pulseul .3s linear;
 	animation-fill-mode: forwards;
 }
 
@@ -83,9 +89,18 @@ nav > ul > li > ul > li:hover > a{
 nav > ul > li:hover > ul{
 	position: absolute;
 	display: block;
-	left: 4.0em;
+	left: 4.1em;
 	top: 0em;
 }
+
+/*nav > ul > li:hover > ul > span{
+	position: absolute;
+	display: block;
+	left: -1.6em;
+	width: 25px;
+	height: 5px;
+	background-color: #9E9E9E;
+}*/
 
 nav li{
 	text-align: center;
@@ -153,7 +168,7 @@ nav > ul > li > ul > li{
 	position: absolute;
 	background-color: #00CC4E;
 	border-radius: 0px 0px 1px 5px;
-	top: 0;
+	top: -10px;
 	right: 0;
 	width: 105px;
 	height: 125px;
@@ -302,4 +317,12 @@ nav > ul > li > ul > li{
 #log:hover{
 	animation: pulselog .1s ;
 	animation-fill-mode: forwards;
+}
+
+/* content */
+.content{
+	position: absolute;
+	top: 200px;
+	left: 20%;
+	background-color: white;
 }
