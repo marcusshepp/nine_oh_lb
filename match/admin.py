@@ -1,14 +1,24 @@
 from django.contrib import admin
 
-from .models import Match
+from .models import QuickGame, FavoriteChampion
 
 
-# @admin.register(Match)
-# class HubAdmin(admin.ModelAdmin):
-#     date_hierarchy = 'date_created'
-#     list_display = (
-#     	'champion',
-#     	'lane',
-#     	'cs',
-#     	'date_created',
-# 	)
+class GamesInline(admin.TabularInline):
+
+    model = FavoriteChampion.games.through
+
+
+@admin.register(QuickGame)
+class GameAdmin(admin.ModelAdmin):
+
+    list_display = (
+    	'__unicode__',
+	)
+
+
+@admin.register(FavoriteChampion)
+class GameAdmin(admin.ModelAdmin):
+
+    list_display = (
+    	'__unicode__',
+	)

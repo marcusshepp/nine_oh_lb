@@ -7,8 +7,9 @@ from .models import Game, Champion
 class GameAdmin(admin.ModelAdmin):
     
     date_hierarchy = 'date_played'
+    fields = ['champion', 'enemy_laner', 'lane', 'cs', 'damage_done', 'win', 'date_played']
     list_display = (
-        '__unicode__',
+        'game_quick_info',
     	'lane',
     	'cs',
     	'date_played',
@@ -31,10 +32,10 @@ class ChampionAdmin(admin.ModelAdmin):
         Returns average creepscore(cs).
         """
         total_cs = 0
-        champ = Champion.objects.get()
-        games = champ.games.all()
-        for g in games:
-            total_cs += g.cs
-        value = total_cs / len(games)
-        return value
+        # champ = Champion.objects.get()
+        # games = champ.games.all()
+        # for g in games:
+        #     total_cs += g.cs
+        # value = total_cs / len(games)
+        # return value
 

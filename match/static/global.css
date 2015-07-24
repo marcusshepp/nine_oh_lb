@@ -1,0 +1,320 @@
+a{text-decoration: none; color: inherit;}
+
+/* containter */
+.container{
+	width: 100%;
+}
+/* logo/header */
+header{
+	position: absolute;
+	width: 90%
+}
+
+.chart{
+	position: relative;
+	left: -14%;
+	top: -11px;
+/*	margin-right: auto;
+	margin-left: 0px; */
+	float: right;
+}
+
+.logo{
+	float: left;
+	position: relative;
+	background-color: black;
+	color: white;
+	font-size: 2em;
+	font-family: Verdana, Geneva, sans-serif;
+	margin: 0 0 0 0;
+	top: -10px;
+	padding: 10px 0 10px 10px;
+	width: 70%;
+}
+
+/* navigation */
+nav{
+	position: fixed;
+	background-color: #DBDBDB;
+	width: 4em;
+	top: 100px;
+	padding: 0 0px 0 0px;
+	text-align: center;
+	box-shadow: 1px 1px 1px 0px;
+}
+
+nav ul{
+	list-style: none;
+}
+
+nav a{
+	text-decoration: none;
+}
+
+nav > a{
+	color: inherit;
+}
+
+@keyframes pulseul{
+	0%{
+		/* null */
+	}
+	100%{
+		border-radius: 1px 1px 1px 1px;
+		background-color: #00CC4E;
+	}
+}
+
+nav > ul > li:hover{
+	background-color: black;
+	color: white;
+}
+
+nav > ul > li:hover > ul > li{
+	animation: pulseul .1s linear;
+	animation-fill-mode: forwards;
+}
+
+nav > ul > li > ul > li:hover{
+	background-color: #9E9E9E;
+}
+
+nav > ul > li > ul > li:hover > a{
+	color: white;
+}
+
+nav > ul > li:hover > ul{
+	position: absolute;
+	display: block;
+	left: 4.0em;
+	top: 0em;
+}
+
+nav li{
+	text-align: center;
+}
+
+nav > ul{
+	position: relative;
+	left: 0em;
+	width: 4em;
+	height: 225px;
+	padding: 0000;
+	margin: 0000;
+	/*display: none;*/
+}
+
+nav > ul > li{
+	position: relative;
+	display: block;
+	width: 4em;
+	height: 50px;
+	left: 0em;
+	padding-left: 0px;
+	padding-top: 25px
+}
+
+nav > ul > li > a{
+	position: relative;
+	text-decoration: none;
+	color: inherit;
+}
+
+nav > ul > li > ul{
+	position: relative;
+	display: none;
+}
+
+nav ul ul{
+	position: absolute;
+	height: 75px;
+	width: 25px;
+}
+
+nav ul li ul li{
+	height: 37.5px;
+	width: 25px;
+	text-align: center;
+}
+
+nav ul li ul li a{
+	color: black;
+	font-size: 15px;
+	line-height: 250%;
+}
+
+nav > ul > li > ul > li{
+	position: relative;
+	width: 4.1em;
+	left: -40px;
+}
+
+
+/* user account utility */
+.user-util{
+	position: absolute;
+	background-color: #00CC4E;
+	border-radius: 0px 0px 1px 5px;
+	top: 0;
+	right: 0;
+	width: 105px;
+	height: 125px;
+	padding-right: 25px;
+	opacity: .4;
+}
+
+.user-util > h3{
+	position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    margin: 0;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}
+
+.user-util:hover > h3{
+	display: none;
+}
+
+@keyframes pulse{
+	0%{
+		/* null */
+	}
+	100%{
+	opacity: .5;
+	width: 110px;
+	height: 135px;
+	}
+}
+
+.user-util:hover{
+	animation: pulse .1s linear;
+	animation-fill-mode: forwards;
+	box-shadow: 2px 2px 2px 2px;
+}
+
+
+/* user utility links */
+.util-links{
+	position: relative;
+	height: auto;
+	width: 100%;
+	left: -10px;
+	border-radius: 0px 0px 1px 5px;
+	position: relative;
+	text-decoration: none;
+	display: none;
+}
+
+.user-util:hover > .util-links{
+	display: block;
+}
+
+.util-links div {
+	display: table;
+	position: ;
+	/* half of its parent user-util. */
+	width: 145px;
+	height: 72.5px;
+}
+
+.util-links div div{
+	float: right;
+	position: relative;
+	text-decoration: none;
+	/* half of its parent util-links. */
+	width: 67.5px; 
+	height: 67.5px;
+	text-align: center;
+	font-size: 15px;
+	line-height: 400%;
+}
+
+#top{
+	position: relative;
+	left: -1px;
+}
+
+#bot{
+	position: relative;
+	top: -4px;
+}
+
+@keyframes pulseuser{
+	0%{
+		/* null */
+	}
+	100%{
+		box-shadow: 0px 0px 5px 0px;
+		border-radius: 0px 0px 1px 5px;
+		background-color: #00BF49;
+	}
+}
+
+#user:hover{
+	animation: pulseuser .1s linear;
+	animation-fill-mode: forwards;
+}
+
+@keyframes pulsecoffeeme{
+	0%{
+		/* null */
+	}
+	100%{
+		box-shadow: 0px 0px 5px 0px;
+		border-radius: 5px 0px 1px 0px;
+		background-color: #00BF49;
+	}
+}
+
+#coffeeme:hover{
+	animation: pulsecoffeeme .1s linear;
+	animation-fill-mode: forwards;
+}
+
+@keyframes pulsesettings{
+	0%{
+		/* null */
+	}
+	100%{
+		box-shadow: 0px 0px 5px 0px;
+		border-radius: 3px 0px 1px 1px;
+		background-color: #00BF49;
+	}
+}
+
+#settings:hover{
+	animation: pulsesettings .1s ;
+	animation-fill-mode: forwards;
+}
+
+@keyframes pulselog{
+	0%{
+		/* null */
+	}
+	100%{
+		box-shadow: 0px 0px 5px 0px;
+		border-radius: 3px 0px 1px 1px;
+		background-color: #00BF49;
+	}
+}
+
+#log:hover{
+	animation: pulselog .1s ;
+	animation-fill-mode: forwards;
+}
+
+#settings{
+}
+
+#settings:hover{
+}
+
+#log{
+	
+}
+
+#log:hover{
+}

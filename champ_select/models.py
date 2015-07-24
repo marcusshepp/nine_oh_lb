@@ -3,7 +3,8 @@ from datetime import date
 
 from django.db import models
 
-from .frontalcortex import League
+from nine_oh_lb.settings import CHAMPION_NAMES
+from .frontalcortex import Timeline
 
 
 class Champion(models.Model):
@@ -11,15 +12,18 @@ class Champion(models.Model):
 	Dished to `User` during `champ_select` depending on `Game`.
 	"""
 
-	name = models.CharField(max_length=25)
+	class Meta:
+		ordering = ['name']
+
+	name = models.IntegerField(choices=CHAMPION_NAMES)
 	notes = models.TextField(max_length=1000)
 	games = models.ManyToManyField("Game", related_name="games_played_with")
 	date_created = models.DateField(("Date"), default=date.today)
 
 	def __unicode__(self):
 		""" Display `name`. """
-		return u"{}".format(self.name)
-	
+		return u"{}".format(self.get_name_display())
+
 	def get_games(self):
 		if self.games:
 			games = Game.objects.filter(champion=self.id)
@@ -28,6 +32,7 @@ class Champion(models.Model):
 	def number_of_games(self):
 		if self.games:
 			return len(self.get_games())
+		return 0
 
 	def average_cs(self):
 		if self.number_of_games() > 0:
@@ -43,7 +48,7 @@ class EnemyChampion(models.Model):
 	"""
 	Stores info about the enemy team.
 	"""
-	name = models.CharField(max_length=25)
+	name = models.CharField(max_length=15)
 
 	def __unicode__(self):
 		""" Display `name`. """
@@ -61,22 +66,27 @@ class Game(models.Model):
 	    ('jungle', 'Jungle'),
 	    ('top', 'Top'),
 	)
-	champion = models.ForeignKey(Champion, related_name="champion_used_for_game")
+	champion = models.ForeignKey(
+		Champion, related_name="champion_used_for_game", null=True)
 	enemy_laner = models.ForeignKey(
-		EnemyChampion, null=True, blank=True, related_name="champion_played_against")
+		EnemyChampion, related_name="champion_played_against", null=True)
 	lane = models.CharField(max_length=6, choices=lanes)
 	win = models.BooleanField(default=False)
 	cs = models.PositiveIntegerField(null=True)
+	note = models.TextField(max_length=250, blank=True)
 	damage_done = models.PositiveIntegerField(null=True)
 	first_blood = models.BooleanField(default=False)
 	date_played = models.DateField(("Date"), default=date.today)
 
 	def __unicode__(self):
 		""" Display `Champion` name. """
-		display = self.champion
-		return u"{}".format(display)
+		return self.game_quick_info()
 
 	def game_quick_info(self):
 		""" Returns a str of information about the game. """
 		if self.enemy_laner:
 			return u"{0} vs. {1}".format(self.champion, self.enemy_laner)
+
+
+class MatchHistory(Timeline):
+	""" Business Logic Here. """
