@@ -18,9 +18,11 @@ from django.views.generic import RedirectView
 from django.contrib import admin
 
 from champ_select import urls as champ_select_urls
+from match import urls as match_urls
 
 urlpatterns = [
-	url(r'^$', RedirectView.as_view(url="/nine_oh_lb/champion")),
+	url(r'^$', RedirectView.as_view(url="match/new-game", permanent=False)),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^nine_oh_lb/', include(champ_select_urls)),
+    url(r'^champ-select/', include(champ_select_urls)),
+    url(r'^match/', include(match_urls)),
 ]

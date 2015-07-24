@@ -3,18 +3,21 @@ from datetime import date
 
 from django.core.management.base import BaseCommand
 
-from champ_select.frontalcortex import League
+from champ_select.frontalcortex import LeagueFile
 from nine_oh_lb.settings_lite import MATCH_FIXTURES_URL
 
 
 class Command(BaseCommand):
 
-	l = League()
+	lf = LeagueFile()
 	td = date.today()
-	error_message = "Already have data for today."
+	error_message = "File exists, proceed? [y/n] "
+	abort = "Abort!"
 
 	def handle(self, *args, **kwargs):
-		possible_file = "{0}{1}.json".format(MATCH_FIXTURES_URL, self.td)
-		if path.isfile(possible_file):
-			return self.error_message
-		return l.stats_to_file(self.relative_path, self.td) # works!
+		complete_path = "{}{}.json".format(MATCH_FIXTURES_URL, self.td)
+		if path.isfile(complete_path):
+			boo = raw_input("{}".format(self.error_message))
+			if boo == "no" or boo == "n":
+				return "{}".format(self.abort)
+		return "Created file at: {}".format(self.lf.stats_to_file(MATCH_FIXTURES_URL))
