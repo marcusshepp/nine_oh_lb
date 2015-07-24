@@ -34,6 +34,7 @@ header{
 
 /* navigation */
 nav{
+	font-family: Verdana, Geneva, sans-serif;
 	position: fixed;
 	background-color: #DBDBDB;
 	width: 4em;
@@ -49,10 +50,6 @@ nav ul{
 
 nav a{
 	text-decoration: none;
-}
-
-nav > a{
-	color: inherit;
 }
 
 @keyframes pulseul{
@@ -152,6 +149,7 @@ nav > ul > li > ul > li{
 
 /* user account utility */
 .user-util{
+	font-family: Verdana, Geneva, sans-serif;
 	position: absolute;
 	background-color: #00CC4E;
 	border-radius: 0px 0px 1px 5px;
@@ -304,17 +302,4 @@ nav > ul > li > ul > li{
 #log:hover{
 	animation: pulselog .1s ;
 	animation-fill-mode: forwards;
-}
-
-#settings{
-}
-
-#settings:hover{
-}
-
-#log{
-	
-}
-
-#log:hover{
 }
