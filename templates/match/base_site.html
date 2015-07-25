@@ -3,9 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	{% block title %}
 	<title>My League Notebook</title>
-	{% endblock %}
 	{% load static %}
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="{% static 'global.css' %}">
@@ -13,7 +11,7 @@
 <body>
 	<div class="container">
 		<header>
-				<div class="logo">My League Notebook</div>
+				<div class="logo">My League Genius</div>
 				<!-- <span class="chart fa fa-area-chart fa-4x"></span> -->
 		</header>
 		<div class="user-util">
@@ -51,7 +49,7 @@
 						</li>
 						<span></span>
 						<li>
-							<a href="#">All </a><i class="fa fa-th"></i>
+							<a href="{% url 'games' %}">All </a><i class="fa fa-th"></i>
 						</li>
 					</ul>
 				</li>
@@ -80,6 +78,10 @@
 			</ul>
 		</nav>
 		<div class="content">
+			<center><h2 class="page-titles">
+				{% block title %}
+				{% endblock %}
+			</h2></center>
 			{% block content %}
 			{% endblock %}
 		</div>
