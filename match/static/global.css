@@ -51,9 +51,9 @@ header{
 nav{
 	font-family: Verdana, Geneva, sans-serif;
 	position: fixed;
-	background-color: #DBDBDB;
+	background-color: #8FC0EB;
 	width: 4em;
-	top: 175px;
+	top: 195px;
 	padding: 0 0px 0 0px;
 	text-align: center;
 	box-shadow: 1px 1px 1px 0px;
@@ -67,6 +67,8 @@ nav{
 	}
 	100%{
 		opacity: 1;
+		z-index: 2;
+		box-shadow: 2px 2px 2px 2px;
 	}
 }
 
@@ -169,8 +171,8 @@ nav ul li ul li{
 	text-align: center;
 }
 
-@keyframes pulseinnerli{
-	0%{
+/*@keyframes pulseinnerli{ /* innerli animations */
+/*	0%{
 		opacity: 1;
 	}
 	100%{
@@ -195,7 +197,7 @@ nav ul li ul li{
 nav ul li ul li:hover{
 	animation: innerlionnav .3s linear;
 	animation-fill-mode: forwards;
-}
+}*/
 
 nav ul li ul li a{
 	color: black;
@@ -214,14 +216,15 @@ nav > ul > li > ul > li{
 .user-util{
 	font-family: Verdana, Geneva, sans-serif;
 	position: absolute;
-	background-color: #00CC4E;
+	background-color: #8FC0EB;
 	border-radius: 0px 0px 1px 5px;
 	top: -10px;
 	right: 0;
-	width: 95px;
-	height: 125px;
+	width: 155px;
+	height: 85px;
 	padding-right: 25px;
 	opacity: .4;
+	z-index: 5;
 }
 
 .user-util > h3{
@@ -375,5 +378,104 @@ nav > ul > li > ul > li{
 	width: 75%;
 	top: 200px;
 	left: 20%;
-	background-color: white;
+}
+
+/* pagetitles */
+.page-titles{
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 35px;
+	position: fixed;
+	z-index: 5;
+	color: white;
+	top: 90px;
+}
+
+/* forms */
+.form-shaper{
+	position: fixed;
+	width: 65%;
+	height: 450px;
+	top: 195px;
+	left: 20%;
+	border-radius: 0px 55px 0px 0px !important;
+	opacity: 1;
+	background-color: #D9FFEB;
+}
+
+@keyframes formani{
+	0%{
+		opacity: 0;
+	}
+	100%{
+		/* null */
+	}
+}
+
+@keyframes displaynone{
+	0%{
+		display: none;
+	}
+	100%{
+		/* null */
+	}
+}
+
+form{
+	position: relative;
+	font-family: Verdana, Geneva, sans-serif;
+	height: 100%;
+	width: 90%;
+	left: 5%;
+	top: 20px;
+	font-size: 25px;
+	line-height: 205%;
+}
+
+form fieldset:first-of-type{
+	border-radius: 0px 100px 0px 0px !important;
+}
+
+fieldset{
+	background-color: #88BF9E;
+	font-size: ;
+	line-height:;
+	/*border-radius: 0px 20px 10px 20px !important;*/
+	animation: formani .9s linear;
+	box-shadow: 0px 0px 0px 0px;
+	/*animation-fill-mode: forwards;*/
+}
+
+fieldset label{
+	animation: displaynone 1s linear;
+}
+
+fieldset input{
+	animation: displaynone 1s linear;
+}
+
+fieldset select{
+	animation: displaynone 1s linear;
+}
+
+input{
+
+	margin:0px 1px;
+    padding:0px;
+    border:none;
+    background-color:#CCC;
+    height:36px;
+    width:137px;
+    vertical-align:bottom;
+    font-size:16px;
+}
+
+input[type="submit"]{
+	position: fixed;
+	right: 18%;
+	height: 35px;
+	width: 95px;
+	margin: 5px 0 0 0;
+	border-radius: 10px;
+	line-height: 18px;
+	box-shadow: 1px 0px 3px 1px;
 }
