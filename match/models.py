@@ -1,6 +1,7 @@
 from datetime import date
 
 from django.db import models
+from django.core.urlresolvers import reverse
 
 from nine_oh_lb.settings import (
 	CHAMPION_NAMES,
@@ -30,14 +31,18 @@ class QuickGame(models.Model):
 	note = models.TextField(max_length=250, blank=True)
 	
 	def __unicode__(self):
-		p = ""
-		if self.user_played:
-			p += self.user_played
-		else: p += self.user_played_fav.name
-		return u"{0} vs. {1}".format(
-			p, 
-			self.enemy_laner
-		)
+		return self.get_absolute_url()
+
+	def save(self, *args, **kwargs):
+		if self.user_played == "":
+			self.user_played == None
+			return super(QuickGame, self).save(*args, **kwargs)
+		else: return super(QuickGame, self).save(*args, **kwargs)
+	
+	def get_absolute_url(self):
+		return reverse('game', kwargs={'pk': self.pk})
+	
+	
 
 
 class FavoriteChampion(models.Model):

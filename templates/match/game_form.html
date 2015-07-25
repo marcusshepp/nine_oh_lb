@@ -7,6 +7,7 @@
 			<span class-"form-cutter"></span>
 			<label for="user_played">Played:</label>
 			<select name="user_played">
+				<option value="">-------</option>
 				{% for name in champ_names %}
 				<option value="{{ name }}">{{ name }}</option>
 				{% endfor %}
@@ -15,6 +16,7 @@
 		<fieldset>
 			<label for="enemy_laner">Enemy Laner:</label>
 			<select name="enemy_laner">
+				<option value="">-------</option>
 				{% for name in champ_names %}
 				<option value="{{ name }}">{{ name }}</option>
 				{% endfor %}
@@ -27,6 +29,7 @@
 		<fieldset>
 			<label for="enemy_jungler">Enemy Jungler:</label>
 			<select name="enemy_jungler">
+				<option value="">-------</option>
 				{% for name in champ_names %}
 				<option value="{{ name }}">{{ name }}</option>
 				{% endfor %}
@@ -39,4 +42,12 @@
 		<input type="submit">
 	</form>	
 </div>
+<script type="text/javascript">
+	var f = $("form");
+	var cb = $("input[type=checkbox]")
+	// f.submit(function(){
+	// 	if(!cb.is(":checked")){ // if checkbox not checked
+	// 	}
+	// });
+</script>
 {% endblock %}

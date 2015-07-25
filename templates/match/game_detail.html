@@ -1,0 +1,26 @@
+{% extends 'match/base_site.html' %}
+{% block title %}
+{{ object.user_played }} vs. {{ object.enemy_laner }}
+{% endblock %}
+{% block content %}
+<div class="game-shaper">
+	{% if object.enemy_jungler %}
+	<fieldset>
+		Enemy Jungler: {{ object.enemy_jungler }}
+	</fieldset>
+	{% endif %}
+	{% if object.winner %}<fieldset>{{ object.winner }}</fieldset>
+	{% else %}<fieldset>Win: False</fieldset>
+	{% endif %}
+	{% if object.date_played %}
+	<fieldset>
+		{{ object.date_played }}
+	</fieldset>
+	{% endif %}
+	{% if object.note %}
+	<fieldset>
+		{{ object.note }}
+	</fieldset>
+	{% endif %}
+</div>
+{% endblock %}

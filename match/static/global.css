@@ -50,6 +50,7 @@ nav{
 	padding: 0 0px 0 0px;
 	text-align: center;
 	box-shadow: 1px 1px 1px 0px;
+	border-radius: 7%;
 	animation: navstart .3s linear;
 	animation-fill-mode: forwards;
 }
@@ -393,6 +394,38 @@ nav > ul > li > ul > li{
 	border-radius: 0px 55px 0px 0px !important;
 	opacity: 1;
 	background-color: #D9FFEB;
+}
+
+.game-shaper{
+	position: fixed;
+	width: 65%;
+	height: 450px;
+	top: 195px;
+	left: 20%;
+	border-radius: 0px 55px 0px 0px !important;
+	opacity: 1;
+	background-color: #D9FFEB;
+}
+
+.game-shaper fieldset{
+	position: relative;
+	top: 25px;
+	width: 40%;
+	left: 35px;
+	height: 50px;
+}
+
+.game-shaper fieldset:first-of-type{
+	border-radius: 0px 55px 0px 0px;
+}
+
+.game{
+	position: relative;
+	font-size: 15px;
+	line-height: 50%;
+	width: 50%;
+	height: 15px;
+	z-index: 5;
 }
 
 @keyframes formani{

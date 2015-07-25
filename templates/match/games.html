@@ -1,26 +1,13 @@
 {% extends 'match/base_site.html' %}
 {% block title %}
-Games
+Games Inside Brain.
 {% endblock %}
 {% block content %}
-<div class="form-shaper">
-	
+<div class="game-shaper">
+	{% for g in games %}
 		<fieldset>
-			foo
+			<a href="{{ g.get_absolute_url }}">{{ g.user_played }} vs {{ g.enemy_laner }}</a> 
 		</fieldset>
-		<fieldset>
-			bar
-		</fieldset>
-		<fieldset>
-					
-		</fieldset>
-		<fieldset>
-			
-		</fieldset>
-		<fieldset>
-
-		</fieldset>
-		<input type="submit">
-	</form>	
+	{% endfor %}
 </div>
 {% endblock %}
