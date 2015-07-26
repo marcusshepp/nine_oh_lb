@@ -1,0 +1,19 @@
+{% extends 'match/base_site.html' %}
+{% block userutil %}
+{% endblock %}
+{% block nav %}
+{% endblock %}
+{% block content %}
+<center><h2 class="page-titles">...</h2></center>
+<div class="index-shaper">
+	<fieldset>
+		<a href="{% url 'login' %}">Login</a>
+	</fieldset>
+	<fieldset>
+		<a href="{% url 'register' %}">Register</a>
+	</fieldset>
+	<fieldset>
+		<a href="#">About</a>
+	</fieldset>
+</div>
+{% endblock %}

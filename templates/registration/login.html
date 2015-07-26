@@ -1,4 +1,8 @@
 {% extends 'match/base_site.html' %}
+{% block userutil %}
+{% endblock %}
+{% block nav %}
+{% endblock %}
 {% block content %}
 <center><h2 class="page-titles">Continue Feeding Me Information.</h2></center>
 <div class="form-shaper">
@@ -9,6 +13,7 @@
 		</fieldset>
 		{% endfor %}
 		<input type="submit">
+		<a href="{% url 'register' %}" id="toggle-reg-log">Register</a>
 	</form>	
 </div>
 <script type="text/javascript">

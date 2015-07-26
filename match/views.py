@@ -10,7 +10,7 @@ from .models import QuickGame
 
 class Index(TemplateView):
 
-	template_name = "match/base_site.html"
+	template_name = "match/index.html"
 
 	@method_decorator(login_required)
 	def dispatch(self, *args, **kwargs):

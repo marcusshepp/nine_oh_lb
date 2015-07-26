@@ -11,9 +11,10 @@
 <body>
 	<div class="container">
 		<header>
-				<div class="logo">My League Genius</div>
-				<!-- <span class="chart fa fa-area-chart fa-4x"></span> -->
+			<div class="logo">My League Genius</div>
+			<!-- <span class="chart fa fa-area-chart fa-4x"></span> -->
 		</header>
+		{% block userutil %}
 		<div class="user-util">
 			<!-- user specific functionality -->
 			<h3>
@@ -46,6 +47,8 @@
 				</div>
 			</div>
 		</div>
+		{% endblock %}
+		{% block nav %}
 		{% if user.is_authenticated %}
 		<nav>
 			<a href="#"><i class="fa fa-navicon fa-3x"></i></a>
@@ -88,6 +91,7 @@
 		</nav>
 		{% else %}
 		{% endif %}
+		{% endblock %}
 		<div class="content">
 			<center><h2 class="page-titles">
 			{% block title %}
