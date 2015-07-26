@@ -410,22 +410,45 @@ nav > ul > li > ul > li{
 .game-shaper fieldset{
 	position: relative;
 	top: 25px;
-	width: 40%;
+	width: 75%;
 	left: 35px;
 	height: 50px;
+	font-size: 35px;
+	line-height: 205%;
+	z-index: 1;
 }
 
 .game-shaper fieldset:first-of-type{
 	border-radius: 0px 55px 0px 0px;
 }
 
-.game{
+.game-shaper fieldset p{
 	position: relative;
-	font-size: 15px;
-	line-height: 50%;
-	width: 50%;
-	height: 15px;
-	z-index: 5;
+	background-color: #015C3E;
+	height: 65px;
+	width: 95px;
+	z-index: 2;
+	left: 80%;
+	top: -88px;
+	font-size: 20px;
+	padding-left: 25px;
+	border-radius: 25px 25px 25px 25px;
+}
+
+#register-form{
+	top: 20%;
+}
+
+#register-form > input[type="submit"]{
+	top: 72%;
+}
+
+#login-form{
+	top: 22%;
+}
+
+#login-form > input[type="submit"]{
+	top: 62%;
 }
 
 @keyframes formani{

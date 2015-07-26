@@ -6,7 +6,8 @@ Games Inside Brain.
 <div class="game-shaper">
 	{% for g in games %}
 		<fieldset>
-			<a href="{{ g.get_absolute_url }}">{{ g.user_played }} vs {{ g.enemy_laner }}</a> 
+			<a href="{{ g.get_absolute_url }}">{{ g.user_played }} vs {{ g.enemy_laner }}</a>
+			<p>{{ g.note_prev }} ...</p>
 		</fieldset>
 	{% endfor %}
 </div>

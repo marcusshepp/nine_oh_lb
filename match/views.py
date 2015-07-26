@@ -1,6 +1,8 @@
 from django.shortcuts import render_to_response
+from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView, DetailView
 from django.views.generic.list import MultipleObjectMixin as MOM
+from django.contrib.auth.decorators import login_required
 
 from nine_oh_lb.settings import CHAMPION_STRINGS
 from .models import QuickGame
@@ -9,6 +11,10 @@ from .models import QuickGame
 class Index(TemplateView):
 
 	template_name = "match/base_site.html"
+
+	@method_decorator(login_required)
+	def dispatch(self, *args, **kwargs):
+		return super(Index, self).dispatch(*args, **kwargs)
 
 	def get_unique_names(self):
 		games = QuickGame.objects.all()
@@ -40,20 +46,23 @@ class CreateGame(Index):
 				'notes'],
 			}
 		QuickGame.objects.get_or_create(**obj_data)
+		context = {}
+		context["games"] = QuickGame.objects.all()
 		return render_to_response(
 			"match/games.html",
+			context
 			)
 
 
 class AvailableGames(Index, MOM):
+	""" Gamesr Inside Brain. """
 
 	template_name = "match/games.html"
 
 	def get_context_data(self, *args, **kwargs):
 		context = {}
 		games = QuickGame.objects.all()
-		context['games'] = [x for x in games]
-		# context['names'] = games
+		context['games'] = games
 		return context
 
 	def post(self, request, *args, **kwargs):

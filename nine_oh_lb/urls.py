@@ -19,10 +19,13 @@ from django.contrib import admin
 
 from champ_select import urls as champ_select_urls
 from match import urls as match_urls
+from user_manager import urls as user_urls
+
 
 urlpatterns = [
 	url(r'^$', RedirectView.as_view(url="match/", permanent=False)),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^champ-select/', include(champ_select_urls)),
     url(r'^match/', include(match_urls)),
+    url(r'^user/', include(user_urls)),
 ]

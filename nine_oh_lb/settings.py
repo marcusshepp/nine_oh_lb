@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
+from django.core.urlresolvers import reverse_lazy
+
 from champion_names import CHAMPION_BASE, CHAMPION_STRINGS
 
 CHAMPION_NAMES = CHAMPION_BASE
@@ -92,4 +94,5 @@ STATIC_URL = '/static/'
 
 MATCH_FIXTURES_URL = "champ_select/fixtures/"
 
-
+LOGIN_URL = reverse_lazy("login")
+LOGIN_REDIRECT_URL = reverse_lazy("create_game")

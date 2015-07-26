@@ -22,7 +22,11 @@
 			<div class="util-links">
 				<div id="top">
 					<div id="user">
-						<a href="#">User</a>
+						{% if user.is_authenticated %}
+						<a href="{% url 'games' %}">{{ user.username }}</a>
+						{% else %}
+						<a href="{% url 'register' %}">Register</a>
+						{% endif %}
 					</div>
 					<div id="settings">
 						<a href="#">Settings</a>
@@ -33,11 +37,16 @@
 						<a href="#">Help</a>
 					</div>
 					<div id="log">
-						<a href="#">Log Out</a>
+						{% if user.is_authenticated %}
+						<a href="{% url 'logout' %}">Log Out</a>
+						{% else %}
+						<a href="{% url 'login' %}">Login</a>
+						{% endif %}
 					</div>
 				</div>
 			</div>
 		</div>
+		{% if user.is_authenticated %}
 		<nav>
 			<a href="#"><i class="fa fa-navicon fa-3x"></i></a>
 			<ul>
@@ -77,15 +86,16 @@
 				</li>
 			</ul>
 		</nav>
+		{% else %}
+		{% endif %}
 		<div class="content">
 			<center><h2 class="page-titles">
-				{% block title %}
-				{% endblock %}
+			{% block title %}
+			{% endblock %}
 			</h2></center>
 			{% block content %}
 			{% endblock %}
 		</div>
-
 	</div>
 <script src="{% static 'jquery-1.11.3.min.js' %}"></script>
 <script type="text/javascript">

@@ -1,0 +1,16 @@
+{% extends 'match/base_site.html' %}
+{% block content %}
+<center><h2 class="page-titles">Continue Feeding Me Information.</h2></center>
+<div class="form-shaper">
+	<form action="" method="POST" id="login-form">{% csrf_token %}
+		{% for field in form %}
+		<fieldset>
+		{{ field.label_tag }} {{ field }}
+		</fieldset>
+		{% endfor %}
+		<input type="submit">
+	</form>	
+</div>
+<script type="text/javascript">
+</script>
+{% endblock %}

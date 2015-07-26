@@ -41,8 +41,10 @@ class QuickGame(models.Model):
 	
 	def get_absolute_url(self):
 		return reverse('game', kwargs={'pk': self.pk})
-	
-	
+
+	def note_prev(self):
+		note_prev = self.note[:3]
+		return note_prev
 
 
 class FavoriteChampion(models.Model):
