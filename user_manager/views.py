@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, UserLoginForm
 
 
 class Register(FormView):
@@ -12,14 +12,32 @@ class Register(FormView):
 	success_url = reverse_lazy("games")
 	template_name = "registration/register.html"
 
-	def form_valid(self, form):
+	def post(self, request):
 		user = {
-			"username": form.instance.username,
-			"password": form.instance.username,
+			"username": request.POST['username'],
+			"password": request.POST['password1'],
 		}
-		user_auth = authenticate(**user)
-		user = User.objects.create(**user)
+		user = User.objects.create_user(**user)
+		user = authenticate(user)
 		if user is not None:
 			if user.is_active:
-				login(user)
+				login(request, user)
+				return reverse_lazy("games")
+
+
+class Login(FormView):
+
+	form_class = UserLoginForm
+	success_url = reverse_lazy("games")
+	template_name = "registration/login.html"
+
+	def post(self, request):
+		user = {
+			"username": request.POST['username'],
+			"password": request.POST['password1'],
+		}
+		user = authenticate(user)
+		if user is not None:
+			if user.is_active:
+				login(request, user)
 				return reverse_lazy("games")

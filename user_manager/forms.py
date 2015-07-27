@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.core import validators
-
+from django.forms.widgets import PasswordInput
 
 class CustomUserCreationForm(UserCreationForm):
 	username = forms.CharField(
@@ -16,3 +16,9 @@ class CustomUserCreationForm(UserCreationForm):
 	error_messages={
 	'unique': ("A user with that username already exists."),})
 	password2 = forms.CharField(label=("Password confirmation"), widget=forms.PasswordInput)
+
+
+class UserLoginForm(forms.Form):
+
+	username = forms.CharField(label='Username')
+	password = forms.CharField(label="Password", widget=PasswordInput)
