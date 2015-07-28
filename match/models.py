@@ -2,6 +2,7 @@ from datetime import date
 
 from django.db import models
 from django.core.urlresolvers import reverse
+from django.contrib.auth.models import User
 
 from nine_oh_lb.settings import (
 	CHAMPION_NAMES,
@@ -16,6 +17,7 @@ class QuickGame(models.Model):
 	class Meta:
 		ordering = ["-date_played"]
 
+	user = models.ForeignKey(User)
 	user_played = models.CharField(
 		max_length=25, choices=CHAMPION_NAMES, blank=True)
 	user_played_fav = models.ForeignKey(
@@ -56,6 +58,7 @@ class QuickGame(models.Model):
 
 class FavoriteChampion(models.Model):
 
+	user = models.ForeignKey(User)
 	name = models.CharField(
 		max_length=25, choices=CHAMPION_NAMES)
 	games = models.ManyToManyField(
