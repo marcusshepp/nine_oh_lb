@@ -262,6 +262,7 @@ nav > ul > li > ul > li{
 	position: relative;
 	text-decoration: none;
 	display: none;
+	left: -7px;
 }
 
 .user-util:hover > .util-links{
@@ -272,7 +273,7 @@ nav > ul > li > ul > li{
 	display: table;
 	position: ;
 	/* half of its parent user-util. */
-	width: 195px;
+	width: 209px;
 	height: 180px;
 }
 
@@ -281,7 +282,7 @@ nav > ul > li > ul > li{
 	position: relative;
 	text-decoration: none;
 	/* half of its parent util-links. */
-	width: 97px; 
+	width: 100px; 
 	height: 80.5px;
 	text-align: center;
 	font-size: 19px;
@@ -451,16 +452,37 @@ nav > ul > li > ul > li{
 
 .game-shaper fieldset p{
 	position: relative;
-	background-color: #015C3E;
-	height: 65px;
-	width: 95px;
+	background-color: white;
+	color: #757575;
+	height: 35px;
+	width: 75px;
 	z-index: 2;
-	left: 80%;
-	top: -88px;
+	left: 69%;
+	top: -78px;
 	font-size: 20px;
+	line-height: 220%;
+	padding-left: 25px;
+	border-radius: 5px 5px 5px 5px;
+}
+
+
+.step-links{
+	position: relative;
+	height: 35px;
+	width: 105px;
+	z-index: 2;
+	right: 0%;
+	top: 400px;
+	font-size: 20px;
+	line-height: 220%;
 	padding-left: 25px;
 	border-radius: 25px 25px 25px 25px;
 }
+
+a.blue{
+	color: blue;
+}
+
 
 input[type="submit"]{
 	cursor: pointer;

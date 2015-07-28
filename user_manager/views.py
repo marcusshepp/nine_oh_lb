@@ -18,7 +18,7 @@ class Register(FormView):
 			"password": request.POST['password1'],
 		}
 		user = User.objects.create_user(**user)
-		user = authenticate(user)
+		user = authenticate()
 		if user is not None:
 			if user.is_active:
 				login(request, user)

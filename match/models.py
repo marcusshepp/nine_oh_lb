@@ -46,6 +46,10 @@ class QuickGame(models.Model):
 		note_prev = self.note[:3]
 		return note_prev
 
+	def enemy_laner_prev(self):
+		enemy_laner_prev = self.enemy_laner[:3]
+		return enemy_laner_prev
+
 
 class FavoriteChampion(models.Model):
 

@@ -1,8 +1,9 @@
 from django.shortcuts import render_to_response
 from django.utils.decorators import method_decorator
-from django.views.generic import TemplateView, DetailView
+from django.views.generic import TemplateView, DetailView, View
 from django.views.generic.list import MultipleObjectMixin as MOM
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from nine_oh_lb.settings import CHAMPION_STRINGS
 from .models import QuickGame
@@ -12,18 +13,21 @@ class Index(TemplateView):
 
 	template_name = "match/index.html"
 
-	@method_decorator(login_required)
-	def dispatch(self, *args, **kwargs):
-		return super(Index, self).dispatch(*args, **kwargs)
-
 	def get_unique_names(self):
 		games = QuickGame.objects.all()
 		x = [ i.user_played for i in games ]
 		x = [ i for i in x if i != u"" ]
 		return set(x)
 
+		
+class Common(TemplateView):
 
-class CreateGame(Index):
+	@method_decorator(login_required)
+	def dispatch(self, *args, **kwargs):
+		return super(Common, self).dispatch(*args, **kwargs)
+
+
+class CreateGame(Common):
 
 	template_name = "match/game_form.html"
 
@@ -54,7 +58,7 @@ class CreateGame(Index):
 			)
 
 
-class AvailableGames(Index, MOM):
+class AvailableGames(Common):
 	""" Gamesr Inside Brain. """
 
 	template_name = "match/games.html"
@@ -62,7 +66,16 @@ class AvailableGames(Index, MOM):
 	def get_context_data(self, *args, **kwargs):
 		context = {}
 		games = QuickGame.objects.all()
-		context['games'] = games
+		paginator = Paginator(games, 4)
+		page = self.request.GET.get("page")
+		print page
+		try:
+			games = paginator.page(page)
+		except PageNotAnInteger:
+			games = paginator.page(1)
+		except EmptyPage:
+			games = paginator.page(paginator.num_pages)
+		context["games"] = games
 		return context
 
 	def post(self, request, *args, **kwargs):
@@ -80,7 +93,7 @@ class GameDetail(DetailView):
 	template_name = "match/game_detail.html"
 
 
-class ChampionDetail(Index):
+class ChampionDetail(Common):
 
 	template_name = "match/champion_detail.html"
 
