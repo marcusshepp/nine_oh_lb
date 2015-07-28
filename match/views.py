@@ -31,6 +31,11 @@ class CreateGame(Common):
 
 	template_name = "match/game_form.html"
 
+	def get_context_data(self, *args, **kwargs):
+		context = {}
+		context['champ_names'] = CHAMPION_STRINGS
+		return context
+
 	def post(self, request, *args, **kwargs):
 		obj_data = {}
 		if "winner" in request.POST:
@@ -57,27 +62,19 @@ class AvailableGames(Common):
 	def get_context_data(self, *args, **kwargs):
 		context = {}
 		games = QuickGame.objects.all().filter(user=self.request.user)
+		paginator = Paginator(games, 4)
+		page = self.request.GET.get("page")
+		try:
+			games = paginator.page(page)
+		except PageNotAnInteger:
+			games = paginator.page(1)
+		except EmptyPage:
+			games = paginator.page(paginator.num_pages)
 		if len(games) > 0:
-			paginator = Paginator(games, 4)
-			page = self.request.GET.get("page")
-			try:
-				games = paginator.page(page)
-			except PageNotAnInteger:
-				games = paginator.page(1)
-			except EmptyPage:
-				games = paginator.page(paginator.num_pages)
 			context["games"] = games
-		context["no_games"] = "Brain is empty of Games."
+		else:
+			context["no_games"] = "Brain is empty of Games."
 		return context
-	
-	def get(self, request, *args, **kwargs):
-		games = QuickGame.objects.all().filter(user=request.user)
-		return render_to_response(
-			self.template_name, 
-			{
-			'games': games, 
-			'user': request.user
-			})
 
 	def post(self, request, *args, **kwargs):
 		context = {}

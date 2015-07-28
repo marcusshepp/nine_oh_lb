@@ -4,32 +4,30 @@ Games Inside Brain.
 {% endblock %}
 {% block content %}
 <div class="game-shaper">
-{% if no_games %}
-        <a href="{% url 'create_game' %}">Create A Game</a>
-        <p>You have None</p>
-{% else %}
-        <form action="" method="POST" id="game-search-form">
-            <input type="search"><input type="submit" id="game-search-submit" value="Search">        
-        </form>
-    	{% for g in games %}
-    		<fieldset>
-    			<a href="{{ g.get_absolute_url }}">{{ g.user_played }} vs {{ g.enemy_laner_prev }}</a>
-    			<p>{{ g.note_prev }}...</p>
-    		</fieldset>
-    	{% endfor %}
+    {% if no_games %}
+    <a href="{% url 'create_game' %}">Create A Game</a>
+    <p>You have None</p>
+    {% else %}
+    <form action="" method="POST" id="game-search-form">
+        <input type="search"><input type="submit" id="game-search-submit" value="Search">        
+    </form>
+	{% for g in games %}
+		<fieldset>
+			<a href="{{ g.get_absolute_url }}">{{ g.user_played }} vs {{ g.enemy_laner_prev }}</a>
+			<p>{{ g.note_prev }}...</p>
+		</fieldset>
+	{% endfor %}
     </div>
     <div class="pagination">
         <span class="step-links">
             {% if games.has_previous %}
                 <a class="blue" href="?page={{ games.previous_page_number }}">previous</a>
             {% endif %}
-
             <span class="current">
                 Page {{ games.number }} of {{ games.paginator.num_pages }}.
             </span>
-
             {% if games.has_next %}
-                <a class="blue" href="?page={{ games.next_page_number }}">next</a>
+            <a class="blue" href="?page={{ games.next_page_number }}">next</a>
             {% endif %}
         </span>
     {% endif %}
