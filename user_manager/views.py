@@ -1,7 +1,9 @@
+from django.shortcuts import redirect
 from django.views.generic import FormView
 from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
+from django.template import RequestContext
 
 from .forms import CustomUserCreationForm, UserLoginForm
 
@@ -19,10 +21,8 @@ class Register(FormView):
 		}
 		user = User.objects.create_user(**user)
 		user = authenticate()
-		if user is not None:
-			if user.is_active:
-				login(request, user)
-				return reverse_lazy("games")
+		# login(request, user)
+		return redirect("/match/games/")
 
 
 class Login(FormView):

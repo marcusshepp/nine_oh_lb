@@ -42,6 +42,7 @@ class CreateGame(Common):
 			obj_data["winner"] = True
 		else: obj_data["winner"] = False
 		obj_data = {
+			'user': request.user,
 			'enemy_laner': request.POST['enemy_laner'],
 			'user_played': request.POST['user_played'],
 			'enemy_jungler': request.POST[
@@ -51,7 +52,6 @@ class CreateGame(Common):
 			}
 		QuickGame.objects.get_or_create(**obj_data)
 		context = {}
-		context["games"] = QuickGame.objects.all()
 		return redirect("/match/games/")
 
 
@@ -62,7 +62,7 @@ class AvailableGames(Common):
 
 	def get_context_data(self, *args, **kwargs):
 		context = {}
-		games = QuickGame.objects.all()
+		games = QuickGame.objects.filter(user=self.request.user)
 		paginator = Paginator(games, 4)
 		page = self.request.GET.get("page")
 		try:
