@@ -6,7 +6,7 @@
 		<fieldset>
 			<span class-"form-cutter"></span>
 			<label for="user_played">Played:</label>
-			<select name="user_played">
+			<select name="user_played" class="select" id="played">
 				<option value="">-------</option>
 				{% for name in champ_names %}
 				<option value="{{ name }}">{{ name }}</option>
@@ -15,7 +15,7 @@
 		</fieldset>
 		<fieldset>
 			<label for="enemy_laner">Enemy Laner:</label>
-			<select name="enemy_laner">
+			<select name="enemy_laner" class="select">
 				<option value="">-------</option>
 				{% for name in champ_names %}
 				<option value="{{ name }}">{{ name }}</option>
@@ -28,7 +28,7 @@
 		</fieldset>
 		<fieldset>
 			<label for="enemy_jungler">Enemy Jungler:</label>
-			<select name="enemy_jungler">
+			<select name="enemy_jungler" class="select">
 				<option value="">-------</option>
 				{% for name in champ_names %}
 				<option value="{{ name }}">{{ name }}</option>
@@ -39,7 +39,7 @@
 			<label for="note">Any Notes?</label>
 			<textarea name="notes" placeholder="Optional"></textarea>
 		</fieldset>
-		<input type="submit">
+		<input type="submit" id="game-form-submit">
 	</form>	
 </div>
 <script type="text/javascript">

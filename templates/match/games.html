@@ -4,10 +4,13 @@ Games Inside Brain.
 {% endblock %}
 {% block content %}
 <div class="game-shaper">
+    <form action="" method="POST" id="game-search-form">
+        <input type="search"><input type="submit" id="game-search-submit" value="Search">        
+    </form>
 	{% for g in games %}
 		<fieldset>
-			<a href="{{ g.get_absolute_url }}">{{ g.user_played }} vs {{ g.enemy_laner_prev }} ...</a>
-			<p>{{ g.note_prev }} ...</p>
+			<a href="{{ g.get_absolute_url }}">{{ g.user_played }} vs {{ g.enemy_laner_prev }}</a>
+			<p>{{ g.note_prev }}...</p>
 		</fieldset>
 	{% endfor %}
 </div>

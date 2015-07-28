@@ -13,6 +13,9 @@ class QuickGame(models.Model):
 
 	""" For quickly logging game info. """
 
+	class Meta:
+		ordering = ["-date_played"]
+
 	user_played = models.CharField(
 		max_length=25, choices=CHAMPION_NAMES, blank=True)
 	user_played_fav = models.ForeignKey(

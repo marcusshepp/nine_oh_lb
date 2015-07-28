@@ -424,6 +424,21 @@ nav > ul > li > ul > li{
 	background-color: #D9FFEB;
 }
 
+.form-shaper fieldset select{
+	position: absolute;
+	right: 95px;
+}
+
+.form-shaper fieldset input{
+	position: absolute;
+	right: 70px;
+}
+
+.form-shaper fieldset textarea{
+	position: absolute;
+	right: 65px;
+}
+
 .game-shaper{
 	position: fixed;
 	width: 65%;
@@ -437,16 +452,20 @@ nav > ul > li > ul > li{
 
 .game-shaper fieldset{
 	position: relative;
-	top: 25px;
+	top: 65px;
 	width: 75%;
 	left: 35px;
-	height: 50px;
+	height: 40px;
 	font-size: 35px;
 	line-height: 205%;
 	z-index: 1;
 }
 
 .game-shaper fieldset:first-of-type{
+	border-radius: 0px 55px 0px 0px;
+}
+
+.game-shaper fieldset:first-of-type p{
 	border-radius: 0px 55px 0px 0px;
 }
 
@@ -457,7 +476,7 @@ nav > ul > li > ul > li{
 	height: 35px;
 	width: 75px;
 	z-index: 2;
-	left: 69%;
+	left: 77%;
 	top: -78px;
 	font-size: 20px;
 	line-height: 220%;
@@ -465,14 +484,14 @@ nav > ul > li > ul > li{
 	border-radius: 5px 5px 5px 5px;
 }
 
-
+/*pagination*/
 .step-links{
 	position: relative;
 	height: 35px;
 	width: 105px;
 	z-index: 2;
-	right: 0%;
-	top: 400px;
+	right: -2%;
+	top: 385px;
 	font-size: 20px;
 	line-height: 220%;
 	padding-left: 25px;
@@ -484,16 +503,52 @@ a.blue{
 }
 
 
-input[type="submit"]{
+#game-search-submit{
 	cursor: pointer;
+	position: relative;
+	top: 10px;
+	left: 10px;
+	border: 1px solid black;
+	height: 35px;
+	width: 95px;
+	margin: 5px 0 0 10px;
+	border-radius: 10px;
+	line-height: 18px;
+	box-shadow: 0px 0px 1px 1px;
+}
+
+#game-search-form{
+	position: absolute;
+	font-family: Verdana, Geneva, sans-serif;
+	top: -9px;
+	font-size: 25px;
+	line-height: 205%;
+}
+
+input[type="search"]{
+	position: relative;
+	top: 10px;
+	left: 10px;
+	background-color: white;
+	border: 1px solid black;
+	height: 35px;
+	width: 95px;
+	margin: 5px 0 0 0;
+	border-radius: 10px;
+	line-height: 18px;
+	box-shadow: 0px 0px 1px 1px;
 }
 
 #register-form{
-	top: 20%;
+	top: 10%;
 }
 
 #register-form > input[type="submit"]{
-	top: 72%;
+	position: absolute;
+	top: 53.5%;
+	right: 0px;
+	border-radius: 10px 10px 10px 10px;
+	box-shadow: 0px 0px .5px .5px;
 }
 
 #login-form{
@@ -501,7 +556,11 @@ input[type="submit"]{
 }
 
 #login-form > input[type="submit"]{
-	top: 62%;
+	position: absolute;
+	top: 35.5%;
+	right: 0px;
+	border-radius: 10px 10px 10px 10px;
+	box-shadow: 0px 0px .5px .5px;
 }
 
 #toggle-reg-log{
@@ -536,7 +595,6 @@ form{
 	height: 100%;
 	width: 90%;
 	left: 5%;
-	top: 20px;
 	font-size: 25px;
 	line-height: 205%;
 }
@@ -572,7 +630,6 @@ input{
 
 	margin:0px 1px;
     padding:0px;
-    border:none;
     background-color:#CCC;
     height:36px;
     width:137px;
@@ -580,7 +637,12 @@ input{
     font-size:16px;
 }
 
-input[type="submit"]{
+input[type="text"], input[type="password"]{
+	background-color: white;
+}
+
+
+#game-form-submit{
 	position: fixed;
 	right: 18%;
 	height: 35px;

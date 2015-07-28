@@ -15,7 +15,7 @@ class CustomUserCreationForm(UserCreationForm):
 		],
 	error_messages={
 	'unique': ("A user with that username already exists."),})
-	password2 = forms.CharField(label=("Password confirmation"), widget=forms.PasswordInput)
+	password2 = forms.CharField(label=("Password confirm"), widget=forms.PasswordInput)
 
 
 class UserLoginForm(forms.Form):

@@ -1,4 +1,4 @@
-from django.shortcuts import render_to_response
+from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView, DetailView, View
 from django.views.generic.list import MultipleObjectMixin as MOM
@@ -52,10 +52,7 @@ class CreateGame(Common):
 		QuickGame.objects.get_or_create(**obj_data)
 		context = {}
 		context["games"] = QuickGame.objects.all()
-		return render_to_response(
-			"match/games.html",
-			context
-			)
+		return redirect("/match/games/")
 
 
 class AvailableGames(Common):
@@ -68,7 +65,6 @@ class AvailableGames(Common):
 		games = QuickGame.objects.all()
 		paginator = Paginator(games, 4)
 		page = self.request.GET.get("page")
-		print page
 		try:
 			games = paginator.page(page)
 		except PageNotAnInteger:
