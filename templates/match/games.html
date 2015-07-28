@@ -10,7 +10,7 @@ Games Inside Brain.
     {% else %}
     <form action="" method="POST" id="game-search-form">
         {% csrf_token %}
-        <input type="search" name="c_search"><input type="submit" id="game-search-submit" value="Search">        
+        <input type="search" name="c_search"><input type="submit" id="game-search-submit" value="Filter">        
     </form>
 	{% for g in games %}
 		<fieldset>
