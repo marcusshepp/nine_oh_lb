@@ -9,7 +9,8 @@ Games Inside Brain.
     <p>You have None</p>
     {% else %}
     <form action="" method="POST" id="game-search-form">
-        <input type="search"><input type="submit" id="game-search-submit" value="Search">        
+        {% csrf_token %}
+        <input type="search" name="c_search"><input type="submit" id="game-search-submit" value="Search">        
     </form>
 	{% for g in games %}
 		<fieldset>

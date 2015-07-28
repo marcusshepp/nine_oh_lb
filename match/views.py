@@ -1,4 +1,4 @@
-from django.shortcuts import redirect, render_to_response
+from django.shortcuts import redirect, render_to_response, render
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView, DetailView, View
 from django.views.generic.list import MultipleObjectMixin as MOM
@@ -55,7 +55,7 @@ class CreateGame(Common):
 
 
 class AvailableGames(Common):
-	""" Gamesr Inside Brain. """
+	""" Games Inside Brain. """
 
 	template_name = "match/games.html"
 
@@ -73,16 +73,27 @@ class AvailableGames(Common):
 		if len(games) > 0:
 			context["games"] = games
 		else:
-			context["no_games"] = "Brain is empty of Games."
+			context["no_games"] = True
 		return context
 
 	def post(self, request, *args, **kwargs):
 		context = {}
-		champs = QuickGame.objects.filter(
-			name=request.POST['name'],
-			)
-		context['champs_after_post'] = champs
-		return context
+		games = QuickGame.objects.filter(user=self.request.user)
+		games = games.filter(user_played__istartswith=request.POST["c_search"])
+		paginator = Paginator(games, 4)
+		page = self.request.GET.get("page")
+		try:
+			games = paginator.page(page)
+		except PageNotAnInteger:
+			games = paginator.page(1)
+		except EmptyPage:
+			games = paginator.page(paginator.num_pages)
+		if len(games) > 0:
+			context["games"] = games
+		else:
+			context["no_games"] = True
+		context["user"] = request.user
+		return render(request, "match/games.html", context)
 
 
 class GameDetail(DetailView):
