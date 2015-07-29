@@ -4,7 +4,7 @@ from datetime import date
 
 from django.core.management.base import BaseCommand
 
-from match.models import QuickGame
+from match.models import Game
 
 class Command(BaseCommand):
 
@@ -15,7 +15,7 @@ class Command(BaseCommand):
 
 	def handle(self, *args, **options):
 		if "export" in args:
-			games = QuickGame.objects.all()
+			games = Game.objects.all()
 			file_name = "quick-games-{}.csv".format(date.today())
 			path = os.path.join("match/fixtures/", file_name)
 			with open(path, 'w') as f:
@@ -39,7 +39,7 @@ class Command(BaseCommand):
 						game["winner"] = row[3]
 						game["date_played"] = row[4]
 						game["note"] = row[4]
-						QuickGame.objects.create(**game)
+						Game.objects.create(**game)
 			except IndexError:
 				print "provide path to data"
 		else: print "use args -- `import` or `export`"

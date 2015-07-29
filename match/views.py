@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from nine_oh_lb.settings import CHAMPION_STRINGS
-from .models import QuickGame
+from .models import Game
 
 
 class Index(TemplateView):
@@ -14,7 +14,7 @@ class Index(TemplateView):
 	template_name = "match/index.html"
 
 	def get_unique_names(self):
-		games = QuickGame.objects.all()
+		games = Game.objects.all()
 		x = [ i.user_played for i in games ]
 		x = [ i for i in x if i != u"" ]
 		return set(x)
@@ -43,14 +43,14 @@ class CreateGame(Common):
 		else: obj_data["winner"] = False
 		obj_data = {
 			'user': request.user,
-			'enemy_laner': request.POST['enemy_laner'],
+			'direct_enemy': request.POST['direct_enemy'],
 			'user_played': request.POST['user_played'],
-			'enemy_jungler': request.POST[
-				'enemy_jungler'],
-			'note': request.POST[
-				'notes'],
+			'what_you_did_well': request.POST[
+				'what_you_did_well'],
+			'could_have_done_better': request.POST[
+				'could_have_done_better'],
 			}
-		QuickGame.objects.create(**obj_data)
+		Game.objects.create(**obj_data)
 		return redirect("/match/games/")
 
 
@@ -61,7 +61,7 @@ class AvailableGames(Common):
 
 	def get_context_data(self, *args, **kwargs):
 		context = {}
-		games = QuickGame.objects.all().filter(user=self.request.user)
+		games = Game.objects.all().filter(user=self.request.user)
 		paginator = Paginator(games, 4)
 		page = self.request.GET.get("page")
 		try:
@@ -78,7 +78,7 @@ class AvailableGames(Common):
 
 	def post(self, request, *args, **kwargs):
 		context = {}
-		games = QuickGame.objects.filter(user=self.request.user)
+		games = Game.objects.filter(user=self.request.user)
 		games = games.filter(user_played__istartswith=request.POST["c_search"])
 		paginator = Paginator(games, 4)
 		page = self.request.GET.get("page")
@@ -98,7 +98,7 @@ class AvailableGames(Common):
 
 class GameDetail(DetailView):
 
-	model = QuickGame
+	model = Game
 	template_name = "match/game_detail.html"
 
 

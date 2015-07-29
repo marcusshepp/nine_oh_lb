@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import QuickGame, FavoriteChampion
+from .models import Game, FavoriteChampion
 
 
 class GamesInline(admin.TabularInline):
@@ -8,7 +8,7 @@ class GamesInline(admin.TabularInline):
     model = FavoriteChampion.games.through
 
 
-@admin.register(QuickGame)
+@admin.register(Game)
 class GameAdmin(admin.ModelAdmin):
 
     list_display = (

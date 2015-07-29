@@ -14,8 +14,8 @@
 			</select>
 		</fieldset>
 		<fieldset>
-			<label for="enemy_laner">Enemy Laner:</label>
-			<select name="enemy_laner" class="select">
+			<label for="direct_enemy">Direct Enemy:</label>
+			<select name="direct_enemy" class="select">
 				<option value="">-------</option>
 				{% for name in champ_names %}
 				<option value="{{ name }}">{{ name }}</option>
@@ -24,20 +24,15 @@
 		</fieldset>
 		<fieldset>
 			<label for="winner">Winner:</label>
-			<input type="checkbox" name="winner">			
+			<input type="checkbox" name="winner" id="winner-checkbox">			
 		</fieldset>
-		<fieldset>
-			<label for="enemy_jungler">Enemy Jungler:</label>
-			<select name="enemy_jungler" class="select">
-				<option value="">-------</option>
-				{% for name in champ_names %}
-				<option value="{{ name }}">{{ name }}</option>
-				{% endfor %}
-			</select>			
+		<fieldset class="text-one">
+			<label for="what_you_did_well">Did well:</label>
+			<textarea name="what_you_did_well" placeholder="Optional"></textarea>
 		</fieldset>
-		<fieldset>
-			<label for="note">Any Notes?</label>
-			<textarea name="notes" placeholder="Optional"></textarea>
+		<fieldset  class="text-two">
+			<label for="could_have_done_better">Could have done better:</label>
+			<textarea name="could_have_done_better" placeholder="Optional"></textarea>
 		</fieldset>
 		<input type="submit" id="game-form-submit">
 	</form>	

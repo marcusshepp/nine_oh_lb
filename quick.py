@@ -6,11 +6,11 @@ from datetime import date
 from django.conf import settings
 settings.configure()
 
-from match.models import QuickGame
+from match.models import Game
 
 def handle(*args, **options):
 	if "export" in args:
-		games = QuickGame.objects.all()
+		games = Game.objects.all()
 		file_name = "quick-games-{}.csv".format(date.today())
 		path = os.path.join("match/fixtures/", file_name)
 		with open(path, 'w') as f:
@@ -34,7 +34,7 @@ def handle(*args, **options):
 					game["winner"] = row[3]
 					game["date_played"] = row[4]
 					game["note"] = row[4]
-					QuickGame.objects.create(**game)
+					Game.objects.create(**game)
 		except IndexError:
 			print "provide path to data"
 	else: print "use args -- `import` or `export`"

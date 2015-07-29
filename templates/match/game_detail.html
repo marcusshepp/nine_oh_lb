@@ -1,6 +1,6 @@
 {% extends 'match/base_site.html' %}
 {% block title %}
-{{ object.user_played }} vs. {{ object.enemy_laner }}
+{{ object.user_played }} vs. {{ object.direct_enemy }}
 {% endblock %}
 {% block content %}
 <div class="game-shaper">
@@ -17,9 +17,14 @@
 		{{ object.date_played }}
 	</fieldset>
 	{% endif %}
-	{% if object.note %}
+	{% if object.what_you_did_well %}
 	<fieldset>
-		{{ object.note }}
+		{{ object.what_you_did_well }}
+	</fieldset>
+	{% endif %}
+	{% if object.could_have_done_better %}
+	<fieldset>
+		{{ object.could_have_done_better }}
 	</fieldset>
 	{% endif %}
 </div>
