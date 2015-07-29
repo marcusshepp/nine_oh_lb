@@ -718,3 +718,14 @@ input{
 input[type="text"], input[type="password"]{
 	background-color: white;
 }
+
+.genius-wrapper{
+	position: fixed;
+	width: 65%;
+	height: 450px;
+	top: 195px;
+	left: 20%;
+	border-radius: 0px 55px 0px 0px !important;
+	opacity: 1;
+	background-color: #D9FFEB;
+}

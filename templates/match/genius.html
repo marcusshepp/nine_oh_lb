@@ -1,0 +1,40 @@
+{% extends 'match/base_site.html' %}
+{% block title %}
+Genius
+{% endblock %}
+{% block content %}
+<div class="genius-wrapper">
+	<div id="container" style="width: 90%; height:400px;"></div>
+</div>
+{% endblock %}
+{% block javascript %}
+{{ block.super }}
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script type="text/javascript">
+	$(function () { 
+    $('#container').highcharts({
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: 'CS Per Minute'
+        },
+        xAxis: {
+            categories: ['Apples', 'Bananas', 'Oranges']
+        },
+        yAxis: {
+            title: {
+                text: 'Fruit eaten'
+            }
+        },
+        series: [{
+            name: 'Jane',
+            data: [1, 0, 4]
+        }, {
+            name: 'John',
+            data: [5, 7, 3]
+        }]
+    });
+});
+</script>
+{% endblock %}

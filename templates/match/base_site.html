@@ -77,7 +77,7 @@
 					</ul>
 				</li>
 				<li>
-					<a href="#">Genius</a>
+					<a href="{% url 'genius' %}">Genius</a>
 					<ul>
 						<li>
 							<a href="#">Stats</a>
@@ -101,11 +101,13 @@
 			{% endblock %}
 		</div>
 	</div>
+{% block javascript %}
 <script src="{% static 'jquery-1.11.3.min.js' %}"></script>
 <script type="text/javascript">
 		$("nav > a").click(function(){
 			$("nav > ul").slideToggle();
 		});
 </script>
+{% endblock %}
 </body>
 </html>

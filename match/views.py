@@ -102,19 +102,19 @@ class GameDetail(DetailView):
 	template_name = "match/game_detail.html"
 
 
+
 class ChampionDetail(Common):
 
 	template_name = "match/champion_detail.html"
 
-	def get_context_data(self, *args, **kwargs):
-		context = {}
-		return context
 
-	def post(self, request, *args, **kwargs):
-		context = {}
-		return context
+class Genius(View):
 
+	template_name = "match/genius.html"
 
+	@method_decorator(login_required)
+	def dispatch(self, *args, **kwargs):
+		return super(Genius, self).dispatch(*args, **kwargs)
 
-
-
+	def get(self, request, *args, **kwargs):
+		return render(request, self.template_name)

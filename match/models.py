@@ -87,12 +87,6 @@ class DetailedGame(Game):
 	def __unicode__(self):
 		return self.get_absolute_url()
 
-	def save(self, *args, **kwargs):
-		if self.user_played == "":
-			self.user_played == None
-			return super(Game, self).save(*args, **kwargs)
-		else: return super(Game, self).save(*args, **kwargs)
-
 
 class TeamStats(models.Model):
 	""" ally team stats, used for comparison to user. """
@@ -126,3 +120,4 @@ class FavoriteChampion(models.Model):
 				self.games.add(g)
 			return True
 		return False
+
