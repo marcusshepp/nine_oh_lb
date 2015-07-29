@@ -6,7 +6,11 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from nine_oh_lb.settings import CHAMPION_STRINGS
-from .models import Game
+from pyblanc import LeagueStat, util
+from .models import (
+	Game,
+	DetailedGame,
+)
 
 
 class Index(TemplateView):
@@ -106,6 +110,27 @@ class GameDetail(DetailView):
 class ChampionDetail(Common):
 
 	template_name = "match/champion_detail.html"
+
+
+class CreateGeniusGameData(View):
+
+	def get(self, request, *args, *kwargs):
+		g_data = {}
+		g_data['user']
+		g_data['user_played']
+		g_data['winner']
+		g_data['cs']
+		g_data['cs_per_min']
+		g_data['xp_per_minute']
+		g_data['damage_done']
+		g_data['first_blood']
+		g_data['gold_earned']
+		g_data['killing_spree']
+		g_data['largest_multikill']
+		g_data['dmg_to_champions']
+		g_data['ward_placed']
+		g_data['items']
+		g_data['team_stats']
 
 
 class Genius(View):

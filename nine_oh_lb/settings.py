@@ -48,6 +48,7 @@ INSTALLED_APPS = (
     'django.contrib.postgres',
     'champ_select',
     'match',
+    'pyblanc',
 )
 
 MIDDLEWARE_CLASSES = (

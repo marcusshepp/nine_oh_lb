@@ -3,12 +3,12 @@
 from django.conf.urls import include, url
 from django.contrib import admin
 
-from .views import(
+from .views import (
 	Index,
 	CreateGame,
 	AvailableGames,
 	GameDetail,
-	Genius
+	Genius,
 )
 
 urlpatterns = [

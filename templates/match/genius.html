@@ -11,6 +11,19 @@ Genius
 {{ block.super }}
 <script src="http://code.highcharts.com/highcharts.js"></script>
 <script type="text/javascript">
+	var game_time = new Array();
+	for(var i = 0; i <= 60; i++){
+		game_time.push(i)
+	};
+	var arr = [];
+	for (var i=0, t=60; i<t; i++) {
+	    arr.push(Math.round(Math.random() * t))
+	}
+	var arr2 = [];
+	for (var i=0, t=60; i<t; i++) {
+	    arr2.push(Math.round(Math.random() * t))
+	}
+	console.log(game_time);
 	$(function () { 
     $('#container').highcharts({
         chart: {
@@ -20,19 +33,22 @@ Genius
             text: 'CS Per Minute'
         },
         xAxis: {
-            categories: ['Apples', 'Bananas', 'Oranges']
+            data: game_time,
+            title: {
+            	text: "Minutes"
+            }
         },
         yAxis: {
             title: {
-                text: 'Fruit eaten'
+                text: 'Creeps'
             }
         },
         series: [{
-            name: 'Jane',
-            data: [1, 0, 4]
+            name: 'LeBlanc',
+            data: arr
         }, {
-            name: 'John',
-            data: [5, 7, 3]
+            name: 'Draven',
+            data: arr2
         }]
     });
 });
