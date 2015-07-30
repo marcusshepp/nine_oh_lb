@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from nine_oh_lb.settings import CHAMPION_STRINGS
-from pyblanc import LeagueStat, util
+from pyblanc.pyblanc import LeagueStat
 from .models import (
 	Game,
 	DetailedGame,
@@ -114,23 +114,39 @@ class ChampionDetail(Common):
 
 class CreateGeniusGameData(View):
 
-	def get(self, request, *args, *kwargs):
+	def get(self, request, *args, **kwargs):
+		user_data = {}
+		user_data['api_key'] = "8a9d2c2d-f00d-406b-87b1-810c2312a1ae"
+		user_data['summoner'] = 42008349
+		ls = LeagueStat(**user_data)
+		user_played = ls.all_champions()
+		wsls = ls.winsandloses()
+		total_cs = ls.all_minions_killed()
+		cs_per_min = ls.cs_per_min()
+		xp_per_min = ls.xp_per_min()
+		dmg_to_champions = ls.damage_dealt_to_champions()
+		fb = ls.first_blood()
+		ge = ls.gold_earned()
+		ks = ls.longest_killing_spree()
+		mk = ls.largest_multikill()
+		wp = ls.wards_placed()
 		g_data = {}
-		g_data['user']
-		g_data['user_played']
-		g_data['winner']
-		g_data['cs']
-		g_data['cs_per_min']
-		g_data['xp_per_minute']
-		g_data['damage_done']
-		g_data['first_blood']
-		g_data['gold_earned']
-		g_data['killing_spree']
-		g_data['largest_multikill']
-		g_data['dmg_to_champions']
-		g_data['ward_placed']
-		g_data['items']
-		g_data['team_stats']
+		for i in xrange(10):
+			g_data['user'] = request.user
+			g_data['user_played'] = user_played[i]
+			g_data['winner'] = wsls[i]
+			g_data['cs'] = total_cs[i]
+			g_data['cs_per_min'] = [x for x in cs_per_min[i].iterkeys()]
+			g_data['xp_per_minute'] = [x for x in xp_per_min[i].iterkeys()]
+			g_data['damage_done'] = None
+			g_data['first_blood'] = fb[i]
+			g_data['gold_earned'] = ge[i]
+			g_data['killing_spree'] = ks[i]
+			g_data['largest_multikill'] = mk[i]
+			g_data['dmg_to_champions'] = dmg_to_champions[i]
+			g_data['wards_placed'] = wp[i]
+			DetailedGame.objects.create(**g_data)
+		return redirect("/match/genius")
 
 
 class Genius(View):

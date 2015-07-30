@@ -3,3 +3,11 @@ lane opponent(s)? champion selected? lane?
 http://loldevelopers.de.vu/
 
 http://www.highcharts.com/docs/getting-started/how-to-set-options # also in techops.CDN
+
+filter by:
+- date played with keywords like 'today'
+- enemy laner
+
+more versitile game form:
+or find out info in sections.
+role, lane, played, direct-enemy

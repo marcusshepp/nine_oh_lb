@@ -25,7 +25,7 @@
 				<div id="top">
 					<div id="user">
 						{% if user.is_authenticated %}
-						<a href="{% url 'games' %}">{{ user.username }}</a>
+						<a href="{% url 'games' %}">User</a>
 						{% else %}
 						<a href="{% url 'register' %}">Register</a>
 						{% endif %}

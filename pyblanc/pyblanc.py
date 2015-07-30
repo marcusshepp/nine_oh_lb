@@ -22,6 +22,7 @@ class BackEnd(object):
         """ Initialize obj with debug = False """
         self.api_key = api_key
         self.summoner = summoner
+        self.request_data = self.match_history_request()
 
     def __unicode__(self):
         """ Useful for displaying `LeagueStats` as on obj. """
@@ -100,6 +101,8 @@ class LeagueStat(League):
         winoverlose
         get_champion_id
         all_champion_ids
+        cs_per_min
+        xp_per_min
     """
 
     def __unicode__(self):
@@ -112,7 +115,7 @@ class LeagueStat(League):
         return parsed['matches'][game_number]['participants'][0]['stats'][stat_name]
         
     def all_minions_killed(self):
-        """ Returns an array that can be used for data visualization. """
+        """ Returns an array of minionsKilled. """
         scores = []
         for i in range(0, 10):
             scores.append(self.get_stat(int(i), "minionsKilled"))
@@ -128,6 +131,11 @@ class LeagueStat(League):
             total_creep_count+=total[j]
         return total_creep_count/10
 
+    def winsandloses(self):
+        """ Returns wins and loses. """ 
+        wl = [self.get_stat(x, "winner") for x in xrange(10)]
+        return wl
+
     def winoverlose(self):
         """ Returns the win/lose ratio. """ 
         counter, num_of_wins, num_of_lose = 0, 0, 0
@@ -142,12 +150,98 @@ class LeagueStat(League):
         parsed = self.match_history_request()
         return parsed['matches'][game_number]['participants'][0]['championId']
     
-    def all_champion_ids(self):
-        list_of_champion_ids = []
+    def all_champions(self):
+        container = []
         for game_number in range(10):
-            list_of_champion_ids.append(self.get_champion_id(game_number))
-        return list_of_champion_ids
+            container.append(self.get_champion_id(game_number))
+        for i in xrange(10):
+            container[i] = util_ez.champion_id_to_str(container[i])
+        return container
 
+    def get_timeline(self, game_number, stat_name):
+        """ Returns a `timeline`. """
+        parsed = self.request_data
+        return parsed['matches'][game_number]['participants'][0]['timeline'][stat_name]
+    
+    def cs_per_min(self):
+        """
+        :returns:
+        [{u'zeroToTen': 6.81, u'tenToTwenty': 5.9},...]
+        """
+        x = [self.get_timeline(i, "creepsPerMinDeltas") for i in xrange(10)]
+        return x
+
+    def xp_per_min(self):
+        """
+        :returns:
+        [{u'zeroToTen': 6.81, u'tenToTwenty': 5.9},...]
+        """
+        x = [self.get_timeline(i, "xpPerMinDeltas") for i in xrange(10)]
+        return x
+    
+    def damage_dealt_to_champions(self):
+        """
+        :returns:
+        [21520, 35665, 28709,...]
+        """
+        x = [self.get_stat(i, "totalDamageDealtToChampions") for i in xrange(10)]
+        return x
+    
+    def first_blood(self):
+        """
+        :returns:
+        [False, True,...]
+        """
+        x = [self.get_stat(i, "firstBloodKill") for i in xrange(10)]
+        return x
+    
+    def gold_earned(self):
+        """
+        :returns:
+        [False, True,...]
+        """
+        x = [self.get_stat(i, "goldEarned") for i in xrange(10)]
+        return x
+        
+    def longest_killing_spree(self):
+        """
+        :returns:
+        []
+        """
+        x = [self.get_stat(i, "largestKillingSpree") for i in xrange(10)]
+        return x
+
+    def largest_multikill(self):
+        """
+        :returns:
+        []
+        """
+        x = [self.get_stat(i, "largestMultiKill") for i in xrange(10)]
+        return x
+    
+    def wards_placed(self):
+        """
+        :returns:
+        []
+        """
+        x = [self.get_stat(i, "wardsPlaced") for i in xrange(10)]
+        return x
+    
+    def items(self):
+        """
+        :returns:
+        []
+        """
+        x = [self.get_stat(i, "wardsPlaced") for i in xrange(10)]
+        return x
+
+    def teamkills(self):
+        """
+        :returns:
+        []
+        """
+        x = [self.get_stat(i, "wardsPlaced") for i in xrange(10)]
+        return x
 
 class LeagueTimelineFile(LeagueFile):
     """

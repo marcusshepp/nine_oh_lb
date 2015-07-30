@@ -214,7 +214,7 @@ nav > ul > li > ul > li{
 	border-radius: 0px 0px 1px 5px;
 	top: -10px;
 	right: 0;
-	width: 155px;
+	width: 150px;
 	height: 85px;
 	padding-right: 25px;
 	opacity: .4;
@@ -262,7 +262,7 @@ nav > ul > li > ul > li{
 	position: relative;
 	text-decoration: none;
 	display: none;
-	left: -7px;
+	left: -8px;
 }
 
 .user-util:hover > .util-links{
@@ -282,7 +282,7 @@ nav > ul > li > ul > li{
 	position: relative;
 	text-decoration: none;
 	/* half of its parent util-links. */
-	width: 100px; 
+	width: 101px; 
 	height: 80.5px;
 	text-align: center;
 	font-size: 19px;
@@ -304,7 +304,7 @@ nav > ul > li > ul > li{
 		/* null */
 	}
 	100%{
-		box-shadow: 0px 0px 5px 0px;
+		box-shadow: 0px 0px 2px 0px;
 		border-radius: 0px 0px 1px 5px;
 		background-color: #00BF49;
 		color: white;
@@ -321,7 +321,7 @@ nav > ul > li > ul > li{
 		/* null */
 	}
 	100%{
-		box-shadow: 0px 0px 5px 0px;
+		box-shadow: 0px 0px 2px 0px;
 		border-radius: 5px 0px 1px 0px;
 		background-color: #00BF49;
 		color: white;
@@ -338,7 +338,7 @@ nav > ul > li > ul > li{
 		/* null */
 	}
 	100%{
-		box-shadow: 0px 0px 5px 0px;
+		box-shadow: 0px 0px 2px 0px;
 		border-radius: 3px 0px 1px 1px;
 		background-color: #00BF49;
 		color: white;
@@ -355,7 +355,7 @@ nav > ul > li > ul > li{
 		/* null */
 	}
 	100%{
-		box-shadow: 0px 0px 5px 0px;
+		box-shadow: 0px 0px 2px 0px;
 		border-radius: 3px 0px 1px 1px;
 		background-color: #00BF49;
 		color: white;
@@ -521,7 +521,7 @@ input[type="checkbox"]{
 .game-shaper fieldset p{
 	position: relative;
 	background-color: white;
-	color: #757575;
+	color: #767676;
 	height: 35px;
 	width: 75px;
 	z-index: 2;

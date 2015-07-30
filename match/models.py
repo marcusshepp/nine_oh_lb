@@ -44,13 +44,7 @@ class Game(models.Model):
 
 
 class DetailedGame(Game):
-	""" For detailed game info. """
-	lanes = (
-		('bottom', 'Bottom'),
-	    ('mid', 'Mid'),
-	    ('jungle', 'Jungle'),
-	    ('top', 'Top'),
-	)	
+	""" For detailed game info. """	
 	enemy_jungler = models.CharField(
 		max_length=25, choices=CHAMPION_NAMES, blank=True)
 	enemy_support = models.CharField(
@@ -61,9 +55,9 @@ class DetailedGame(Game):
 		max_length=25, choices=CHAMPION_NAMES, blank=True)
 	enemy_mid = models.CharField(
 		max_length=25, choices=CHAMPION_NAMES, blank=True)
-	lane = models.CharField(max_length=6, choices=lanes, blank=True)
+	lane = models.CharField(max_length=6, blank=True)
 	cs = models.PositiveIntegerField(null=True)
-	cs_per_min = models.DecimalField(decimal_places=1, max_digits=120)
+	cs_per_min = models.CommaSeparatedIntegerField(max_length=80)
 	xp_per_minute = models.PositiveIntegerField(null=True)
 	damage_done = models.PositiveIntegerField(null=True)
 	first_blood = models.BooleanField(default=False)
@@ -80,9 +74,7 @@ class DetailedGame(Game):
 	killing_spree = models.PositiveIntegerField()
 	largest_multikill = models.PositiveIntegerField()
 	dmg_to_champions  = models.PositiveIntegerField()
-	ward_placed = models.PositiveIntegerField()
-	items = models.CommaSeparatedIntegerField(max_length=1000)
-	team_stats = models.ForeignKey('TeamStats')
+	wards_placed = models.PositiveIntegerField()
 	
 	def __unicode__(self):
 		return self.get_absolute_url()
