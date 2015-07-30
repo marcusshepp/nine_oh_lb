@@ -47,6 +47,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.postgres',
     'champ_select',
+    'user_manager',
     'match',
     'pyblanc',
 )

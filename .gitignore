@@ -10,3 +10,5 @@ notes.txt
 /champ_select/fixtures/
 */migrations/
 *.orig
+
+mk_admin.py
