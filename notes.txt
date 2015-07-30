@@ -11,3 +11,9 @@ filter by:
 more versitile game form:
 or find out info in sections.
 role, lane, played, direct-enemy
+
+http://beaker.readthedocs.org/en/latest/configuration.html
+
+http://www.highcharts.com/docs/chart-and-series-types/line-chart
+
+http://requests-cache.readthedocs.org/en/latest/user_guide.html

@@ -129,23 +129,41 @@ class CreateGeniusGameData(View):
 		ge = ls.gold_earned()
 		ks = ls.longest_killing_spree()
 		mk = ls.largest_multikill()
+		minions = ls.all_minions_killed()
 		wp = ls.wards_placed()
+		kills = ls.kills()
+		deaths = ls.deaths()
+		assists = ls.assists()
+		tk = ls.towers_killed()
 		g_data = {}
 		for i in xrange(10):
 			g_data['user'] = request.user
 			g_data['user_played'] = user_played[i]
 			g_data['winner'] = wsls[i]
 			g_data['cs'] = total_cs[i]
-			g_data['cs_per_min'] = [x for x in cs_per_min[i].iterkeys()]
-			g_data['xp_per_minute'] = [x for x in xp_per_min[i].iterkeys()]
-			g_data['damage_done'] = None
+			print cs_per_min[i]
+			cs_per_min = [integ for string, integ in cs_per_min[i].items()]
+			cs_per_min = str(cs_per_min).replace("[", "")
+			cs_per_min = cs_per_min.replace("]", "")
+			cs_per_min = cs_per_min.replace(" ", "")
+			g_data['cs_per_min'] = cs_per_min
+			xp_per_min = [int(x) for x in xp_per_min[i].itervalues()]
+			xp_per_min = str(xp_per_min).replace("[", "")
+			xp_per_min = xp_per_min.replace("]", "")
+			xp_per_min = xp_per_min.replace(" ", "")
+			g_data['xp_per_minute'] = xp_per_min
+			g_data['damage_done'] = dmg_to_champions[i]
 			g_data['first_blood'] = fb[i]
 			g_data['gold_earned'] = ge[i]
 			g_data['killing_spree'] = ks[i]
 			g_data['largest_multikill'] = mk[i]
 			g_data['dmg_to_champions'] = dmg_to_champions[i]
 			g_data['wards_placed'] = wp[i]
-			DetailedGame.objects.create(**g_data)
+			g_data['kill'] = kills[i]
+			g_data['death'] = deaths[i]
+			g_data['assist'] = assists[i]
+			g_data['tower'] = tk[i]
+			DetailedGame.objects.get_or_create(**g_data)
 		return redirect("/match/genius")
 
 

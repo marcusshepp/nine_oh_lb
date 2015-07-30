@@ -42,6 +42,9 @@ class Game(models.Model):
 		direct_enemy = self.direct_enemy[:3]
 		return direct_enemy
 
+	def __unicode__(self):
+		return self.get_absolute_url()
+
 
 class DetailedGame(Game):
 	""" For detailed game info. """	
@@ -58,13 +61,12 @@ class DetailedGame(Game):
 	lane = models.CharField(max_length=6, blank=True)
 	cs = models.PositiveIntegerField(null=True)
 	cs_per_min = models.CommaSeparatedIntegerField(max_length=80)
-	xp_per_minute = models.PositiveIntegerField(null=True)
+	xp_per_minute = models.CommaSeparatedIntegerField(max_length=80)
 	damage_done = models.PositiveIntegerField(null=True)
 	first_blood = models.BooleanField(default=False)
-	creeps = models.PositiveIntegerField()
 	kill = models.PositiveIntegerField()
 	# should be 3 maybe
-	kill_participation = models.DecimalField(decimal_places=1, max_digits=120)
+	kill_participation = models.DecimalField(decimal_places=1, max_digits=120, null=True)
 	death = models.PositiveIntegerField()
 	assist = models.PositiveIntegerField()
 	tower = models.PositiveIntegerField()

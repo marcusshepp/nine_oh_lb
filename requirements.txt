@@ -2,3 +2,5 @@ Django==1.8.2
 psycopg2==2.6.1
 numpy
 pandas
+requests
+requests_cache
