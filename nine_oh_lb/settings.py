@@ -47,7 +47,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.postgres',
     'champ_select',
-    'user_manager',
+    'registration',
     'match',
     'pyblanc',
 )
@@ -96,5 +96,5 @@ STATIC_URL = '/static/'
 
 MATCH_FIXTURES_URL = "champ_select/fixtures/"
 
-LOGIN_URL = reverse_lazy("login")
+LOGIN_URL = reverse_lazy("registration_login")
 LOGIN_REDIRECT_URL = reverse_lazy("create_game")

@@ -19,7 +19,7 @@ from django.contrib import admin
 
 from champ_select import urls as champ_select_urls
 from match import urls as match_urls
-from user_manager import urls as user_urls
+from registration import urls as user_urls
 
 
 urlpatterns = [

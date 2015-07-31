@@ -1,5 +1,3 @@
-from six import iteritems
-
 from django.shortcuts import redirect, render_to_response, render
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView, DetailView, View
@@ -125,8 +123,7 @@ class CreateGeniusGameData(View):
 
 	def get(self, request, *args, **kwargs):
 		user_data 						= {}
-		user_data['api_key'] 			= "8a9d2c2d-f00d-406b-87b1-810c2312a1ae"
-		user_data['summoner'] 			= 42008349
+		user_data['summoner'] 			= "marcusshep"
 		ls 								= LeagueStat(**user_data)
 		user_played 					= ls.all_champions()
 		wsls 							= ls.winsandloses()
@@ -150,7 +147,6 @@ class CreateGeniusGameData(View):
 			g_data['user_played'] 		= user_played[i]
 			g_data['winner'] 			= wsls[i]
 			g_data['cs'] 				= total_cs[i]
-			print cs_per_min[i]
 			g_data['cs_per_min'] 		= self.convert_permin(cs_per_min[i])
 			g_data['xp_per_minute'] 	= self.convert_permin(xp_per_min[i])
 			g_data['damage_done'] 		= dmg_to_champions[i]
