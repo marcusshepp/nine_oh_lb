@@ -9,7 +9,10 @@ import util as util_ez
 
 
 class League(BackEnd):
-    """ Security layer. """
+    """ Base League Object. """
+
+    class Meta:
+        abstract = True
 
     def __init__(self, *args, **kwargs):
         super(League, self).__init__(*args, **kwargs)
@@ -38,7 +41,7 @@ class LeagueStat(League):
      
     def get_stat(self, game_number, stat_name):
         """ Returns a `stat`. """
-        parsed = self.get_data()
+        parsed = self.check_data()
         return parsed['matches'][game_number]['participants'][0]['stats'][stat_name]
         
     def all_minions_killed(self):
@@ -74,7 +77,7 @@ class LeagueStat(League):
         return math.ceil(num_of_lose/num_of_wins)
     
     def get_champion_id(self, game_number):
-        parsed = self.get_data()
+        parsed = self.check_data()
         return parsed['matches'][game_number]['participants'][0]['championId']
     
     def all_champions(self):
@@ -87,7 +90,7 @@ class LeagueStat(League):
 
     def get_timeline(self, game_number, stat_name):
         """ Returns a `timeline`. """
-        parsed = self.get_data()
+        parsed = self.check_data()
         return parsed['matches'][game_number]['participants'][0]['timeline'][stat_name]
     
     def cs_per_min(self):

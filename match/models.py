@@ -79,7 +79,7 @@ class DetailedGame(Game):
 	wards_placed = models.PositiveIntegerField()
 	
 	def __unicode__(self):
-		return self.get_absolute_url()
+		return self.user_played
 
 
 class TeamStats(models.Model):

@@ -17,3 +17,7 @@ http://beaker.readthedocs.org/en/latest/configuration.html
 http://www.highcharts.com/docs/chart-and-series-types/line-chart
 
 http://requests-cache.readthedocs.org/en/latest/user_guide.html
+
+if no direct enemy - take out vs. in detail veiw title
+
+track masteries
