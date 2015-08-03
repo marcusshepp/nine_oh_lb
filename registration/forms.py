@@ -17,12 +17,12 @@ class UserRegistrationForm(ModelForm):
 	class Meta:
 
 		model = User
-		fields = ('summoner_name', 'password', 'password_two')
+		fields = ('username', 'password', 'password_two')
 		widgets = {
 			'password': forms.PasswordInput(),
 		}
 		labels = {
-			'summoner_name': "Summoner",
+			'username': "Summoner",
 		}
 
 	def clean_password_two(self):

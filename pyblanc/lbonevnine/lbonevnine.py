@@ -21,10 +21,11 @@ from settings import (
 requests_cache.install_cache(
     'stat_cache', backend="memory", expire_after=3600) #one hour
 
-def summoner_info(name):
+def summoner_id(name):
+    """ Doesn't need instance of class. """
     url = SUMMONER_INFO_BY_NAME + "{0}?api_key={1}".format(name, API_KEY)
     r = requests.get(url)
-    return r.json()
+    return r.json()[name][u"id"]
 
 
 class BackEnd(object):
@@ -48,7 +49,7 @@ class BackEnd(object):
         If called within same hour, retrieves data from memory cache.
         """
         url = MATCH_HISTORY + "{0}".format(
-            summoner_info(self.summoner)[self.summoner][u'id'])
+            summoner_id(self.summoner))
         url += "?api_key={0}".format(API_KEY)
         request = requests.get(url)
         parsed = request.json()

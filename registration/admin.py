@@ -1,8 +1,8 @@
 from django.contrib import admin
+from django.contrib.auth.models import User
 
-from .models import User
+from .models import PyManager
 
-
-@admin.register(User)
+@admin.register(PyManager)
 class HubAdmin(admin.ModelAdmin):
-    date_hierarchy = 'date_of_registration'
+	pass
