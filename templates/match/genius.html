@@ -11,46 +11,36 @@ Genius
 {{ block.super }}
 <script src="http://code.highcharts.com/highcharts.js"></script>
 <script type="text/javascript">
-	var game_time = new Array();
-	for(var i = 0; i <= 60; i++){
-		game_time.push(i)
-	};
-	var arr = [];
-	for (var i=0, t=60; i<t; i++) {
-	    arr.push(Math.round(Math.random() * t))
-	}
-	var arr2 = [];
-	for (var i=0, t=60; i<t; i++) {
-	    arr2.push(Math.round(Math.random() * t))
-	}
-	console.log(game_time);
-	$(function () { 
-    $('#container').highcharts({
-        chart: {
-            type: 'line'
-        },
-        title: {
-            text: 'CS Per Minute'
-        },
-        xAxis: {
-            data: game_time,
+	$.getJSON("/match/api/kills/", function(data){
+        console.log(data[0]);
+        arr = new Array();
+        for (var i=0; i<10; i++){
+            arr.push(data[i])
+        }
+        var ten = new Array();
+    	for(var i=1; i<11; i++){
+    		ten.push(i)
+    	};
+        $('#container').highcharts({
+            chart: {
+                type: 'bar'
+            },
             title: {
-            	text: "Minutes"
-            }
-        },
-        yAxis: {
-            title: {
-                text: 'Creeps'
-            }
-        },
-        series: [{
-            name: 'LeBlanc',
-            data: arr
-        }, {
-            name: 'Draven',
-            data: arr2
-        }]
+                text: 'Kills From Last 10 Games'
+            },
+            xAxis: {
+                data: ten,
+                title: {
+                	text: "Game #"
+                }
+            },
+            yAxis: {
+                title: {
+                    text: 'Kill #'
+                }
+            },
+            series: [{name:"kills", data: arr}]
+        });
     });
-});
 </script>
 {% endblock %}

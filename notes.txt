@@ -21,3 +21,7 @@ http://requests-cache.readthedocs.org/en/latest/user_guide.html
 if no direct enemy - take out vs. in detail veiw title
 
 track masteries
+
+NOTICE:
+- matchhistory request only returns data for accounts that are playing ranked? or maybe played within a certain amount of time
+- accounts like "leblanc1v9" and "youngbuck13" both return 200 but no data

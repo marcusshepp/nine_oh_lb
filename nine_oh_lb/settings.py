@@ -32,7 +32,7 @@ SECRET_KEY = 'ko%s)^exektl!o5-s*f(tjwt2%s!^ke!gg85r5yt5+0s&y5t(j'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    "40.130.148.7:8000", # my laptop
+    "localhost:8000", # my laptop
     "0.0.0.0:8000"]
 
 
@@ -96,5 +96,5 @@ STATIC_URL = '/static/'
 
 MATCH_FIXTURES_URL = "champ_select/fixtures/"
 
-LOGIN_URL = reverse_lazy("registration_login")
+LOGIN_URL = reverse_lazy("register_login")
 LOGIN_REDIRECT_URL = reverse_lazy("create_game")

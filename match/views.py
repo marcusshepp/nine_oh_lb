@@ -1,9 +1,13 @@
+import json
+
+from django.http import JsonResponse
 from django.shortcuts import redirect, render_to_response, render
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView, DetailView, View
 from django.views.generic.list import MultipleObjectMixin as MOM
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.forms.models import model_to_dict
 
 from nine_oh_lb.settings import CHAMPION_STRINGS
 from pyblanc.pyblanc import LeagueStat
@@ -115,15 +119,12 @@ class ChampionDetail(Common):
 class CreateGeniusGameData(View):
 
 	def convert_permin(self, data):
-			x = [v for k, v in data.items()]
-			x = str(x).replace("[", "")
-			x = x.replace("]", "")
-			x = x.replace(" ", "")
+			x = ",".join(str(i) for k, i in data.items())
 			return x
 
 	def get(self, request, *args, **kwargs):
 		user_data 						= {}
-		user_data['summoner'] 			= "marcusshep"
+		user_data['summoner'] 			= request.user.get_username()
 		ls 								= LeagueStat(**user_data)
 		user_played 					= ls.all_champions()
 		wsls 							= ls.winsandloses()
@@ -161,16 +162,40 @@ class CreateGeniusGameData(View):
 			g_data['assist'] 			= assists[i]
 			g_data['tower'] 			= tk[i]
 			DetailedGame.objects.get_or_create(**g_data)
-		return redirect("/match/games")
+		return redirect("/match/genius")
 
 
-class Genius(View):
-
-	template_name = "match/genius.html"
+class CView(View):
 
 	@method_decorator(login_required)
 	def dispatch(self, *args, **kwargs):
-		return super(Genius, self).dispatch(*args, **kwargs)
+		return super(CView, self).dispatch(*args, **kwargs)
+
+
+class Genius(CView):
+
+	template_name = "match/genius.html"
 
 	def get(self, request, *args, **kwargs):
 		return render(request, self.template_name)
+
+
+class APIKills(CView):
+
+	def get(self, request, *args, **kwargs):
+		dg = DetailedGame.objects.filter(user=request.user)
+		games = {}
+		for i in xrange(10):
+			games[i] = dg[i].kill
+		return JsonResponse(games)
+
+
+class APICSPerMin(CView):
+
+	def get(self, request, *args, **kwargs):
+		dg = DetailedGame.objects.filter(user=request.user)
+		games = {}
+		for i in xrange(10):
+			games[i] = [float(x) for x in dg[i].cs_per_min.split(",")]
+		return JsonResponse(games)
+

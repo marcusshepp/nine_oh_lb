@@ -10,6 +10,8 @@ from .views import (
 	GameDetail,
 	Genius,
 	CreateGeniusGameData,
+	APICSPerMin,
+	APIKills,
 )
 
 urlpatterns = [
@@ -18,5 +20,7 @@ urlpatterns = [
     url(r'^games/$', AvailableGames.as_view(), name="games"),
     url(r'^game/(?P<pk>[0-9]+)/$', GameDetail.as_view(), name="game"),
     url(r'^genius/$', Genius.as_view(), name="genius"),
-    url(r'^genius/create$', CreateGeniusGameData.as_view(), name="create_genius")
+    url(r'^genius/create/$', CreateGeniusGameData.as_view(), name="create_genius"),
+    url(r'^api/games/$', APICSPerMin.as_view(), name="apigames"),
+    url(r'^api/kills/$', APIKills.as_view(), name="apikills")
 ]

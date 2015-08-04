@@ -11,9 +11,7 @@ from nine_oh_lb.settings import (
 
 
 class Game(models.Model):
-	
-	class Meta:
-		ordering = ["-date_played"]	
+
 	user = models.ForeignKey(User)
 	user_played = models.CharField(
 		max_length=25, choices=CHAMPION_NAMES, blank=True)
@@ -26,8 +24,6 @@ class Game(models.Model):
 	direct_enemy = models.CharField(
 		max_length=25, choices=CHAMPION_NAMES, blank=True)
 	winner = models.BooleanField(default=False)
-	date_played = models.DateField(
-		("Date"), default=date.today)
 	what_you_did_well = models.TextField(max_length=250, blank=True)
 	could_have_done_better = models.TextField(max_length=250, blank=True)
 	
