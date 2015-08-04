@@ -150,7 +150,7 @@ class CreateGeniusGameData(View):
 			g_data['cs'] 				= total_cs[i]
 			g_data['cs_per_min'] 		= self.convert_permin(cs_per_min[i])
 			g_data['xp_per_minute'] 	= self.convert_permin(xp_per_min[i])
-			g_data['damage_done'] 		= dmg_to_champions[i]
+			g_data['damage_done'] 		= dmg_to_champions[i] #!!!
 			g_data['first_blood'] 		= fb[i]
 			g_data['gold_earned'] 		= ge[i]
 			g_data['killing_spree'] 	= ks[i]
@@ -198,4 +198,21 @@ class APICSPerMin(CView):
 		for i in xrange(10):
 			games[i] = [float(x) for x in dg[i].cs_per_min.split(",")]
 		return JsonResponse(games)
+
+
+class APIFullGame(CView):
+
+	def get(self, request, *args, **kwargs):
+		dg = DetailedGame.objects.filter(user=request.user).values()[0]
+		return JsonResponse(dg)
+
+
+class APIFullChampion(CView):
+
+	def get(self, request, *args, **kwargs):
+		dg = DetailedGame.objects.filter(user=request.user, user_played__icontains=u"leblanc").values()
+		json_d = [x for x in dg]
+		return JsonResponse(json_d, safe=False)
+
+
 

@@ -4,42 +4,51 @@ Genius
 {% endblock %}
 {% block content %}
 <div class="genius-wrapper">
-	<div id="container" style="width: 90%; height:400px;"></div>
+	<div id="container" style="width: 90%; height:400px; padding: 10px 0px 0px 35px;"></div>
 </div>
 {% endblock %}
 {% block javascript %}
 {{ block.super }}
 <script src="http://code.highcharts.com/highcharts.js"></script>
 <script type="text/javascript">
-	$.getJSON("/match/api/kills/", function(data){
-        console.log(data[0]);
-        arr = new Array();
-        for (var i=0; i<10; i++){
-            arr.push(data[i])
+	$.getJSON("/match/api/leblanc/", function(data){
+        console.log(data);
+        dmg = new Array();
+        for (var i=0, len=data.length; i<len; i++){
+            var lb = data[i]
+            dmg.push(lb.dmg_to_champions)
         }
-        var ten = new Array();
-    	for(var i=1; i<11; i++){
-    		ten.push(i)
-    	};
+        gold = new Array();
+        for (var i=0, len=data.length; i<len; i++){
+            var lb = data[i]
+            gold.push(lb.gold_earned)
+        }
+     //    var ten = new Array();
+    	// for(var i=1; i<11; i++){
+    	// 	ten.push(i)
+    	// };
         $('#container').highcharts({
             chart: {
-                type: 'bar'
+                type: 'line'
             },
             title: {
-                text: 'Kills From Last 10 Games'
+                text: "Leblanc"
             },
             xAxis: {
-                data: ten,
+                data: [0, 1],
                 title: {
                 	text: "Game #"
                 }
             },
             yAxis: {
                 title: {
-                    text: 'Kill #'
+                    text: 'Damage'
                 }
             },
-            series: [{name:"kills", data: arr}]
+            series: [{
+                name: "Damage to Champions", 
+                data: dmg
+            }]
         });
     });
 </script>

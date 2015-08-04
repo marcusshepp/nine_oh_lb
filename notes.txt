@@ -25,3 +25,5 @@ track masteries
 NOTICE:
 - matchhistory request only returns data for accounts that are playing ranked? or maybe played within a certain amount of time
 - accounts like "leblanc1v9" and "youngbuck13" both return 200 but no data
+
+game detail view should send json obj of game to client where they can view charts there

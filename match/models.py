@@ -38,9 +38,6 @@ class Game(models.Model):
 		direct_enemy = self.direct_enemy[:3]
 		return direct_enemy
 
-	def __unicode__(self):
-		return self.get_absolute_url()
-
 
 class DetailedGame(Game):
 	""" For detailed game info. """	
@@ -73,9 +70,6 @@ class DetailedGame(Game):
 	largest_multikill = models.PositiveIntegerField()
 	dmg_to_champions  = models.PositiveIntegerField()
 	wards_placed = models.PositiveIntegerField()
-	
-	def __unicode__(self):
-		return self.user_played
 
 
 class TeamStats(models.Model):
