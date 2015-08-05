@@ -38,6 +38,9 @@ class Game(models.Model):
 		direct_enemy = self.direct_enemy[:3]
 		return direct_enemy
 
+	def __unicode__(self):
+		return "{}".format(self.user_played)
+
 
 class DetailedGame(Game):
 	""" For detailed game info. """	

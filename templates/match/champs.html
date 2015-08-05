@@ -1,0 +1,41 @@
+{% extends 'match/base_site.html' %}
+{% block title %}
+Champs Inside Brain.
+{% endblock %}
+{% block content %}
+<div class="game-shaper">
+    {% if no_games %}
+    <div class="no-games-shaper">
+        <fieldset>
+            <a>No games yet.</a> <br />
+            <a href="{% url 'create_game' %}">Create A Game</a>
+        </fieldset>
+    </div>
+    {% else %}
+    <form action="" method="POST" id="game-search-form">
+        {% csrf_token %}
+        <input type="search" name="c_search"><input type="submit" id="game-search-submit" value="Filter">        
+    </form>
+	{% for c in games %}
+		<fieldset>
+			<a href="#">{{ c }}</a>
+		</fieldset>
+	{% endfor %}
+    </div>
+    <div class="pagination">
+        <span class="step-links">
+            {% if games.has_previous %}
+                <a class="blue" href="?page={{ games.previous_page_number }}">previous</a>
+            {% endif %}
+            {% if games.has_next or games.has_previous %}
+            <span class="current">
+                Page {{ games.number }} of {{ games.paginator.num_pages }}.
+            </span>
+            {% endif %}
+            {% if games.has_next %}
+            <a class="blue" href="?page={{ games.next_page_number }}">next</a>
+            {% endif %}
+        </span>
+    {% endif %}
+</div>
+{% endblock %}

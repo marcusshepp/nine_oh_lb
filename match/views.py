@@ -102,6 +102,50 @@ class AvailableGames(Common):
 		return render(request, "match/games.html", context)
 
 
+class AvailableChamps(Common):
+	""" Champs Inside Brain. """
+
+	template_name = "match/champs.html"
+
+	def get_context_data(self, *args, **kwargs):
+		context = {}
+		games = Game.objects.all().filter(user=self.request.user)
+		games = [x.user_played for x in games]
+		games = list(set(games))
+		paginator = Paginator(games, 4)
+		page = self.request.GET.get("page")
+		try:
+			games = paginator.page(page)
+		except PageNotAnInteger:
+			games = paginator.page(1)
+		except EmptyPage:
+			games = paginator.page(paginator.num_pages)
+		if len(games) > 0:
+			context["games"] = games
+		else:
+			context["no_games"] = True
+		return context
+
+	def post(self, request, *args, **kwargs):
+		context = {}
+		games = Game.objects.filter(user=self.request.user)
+		games = games.filter(user_played__istartswith=request.POST["c_search"])
+		paginator = Paginator(games, 4)
+		page = self.request.GET.get("page")
+		try:
+			games = paginator.page(page)
+		except PageNotAnInteger:
+			games = paginator.page(1)
+		except EmptyPage:
+			games = paginator.page(paginator.num_pages)
+		if len(games) > 0:
+			context["games"] = games
+		else:
+			context["no_games"] = True
+		context["user"] = request.user
+		return render(request, "match/games.html", context)
+
+
 class GameDetail(DetailView):
 
 	model = Game
