@@ -23,9 +23,11 @@ Genius
                 type: 'line'
             },
             title: {
-                text: "Annie"
+                text: data[0].user_played // why the [0] idk.
             },
             xAxis: {
+                min: 0,
+                max: 2,
                 title: {
                 	text: "Game #"
                 }
