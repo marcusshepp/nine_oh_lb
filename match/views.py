@@ -1,13 +1,11 @@
 import json
 
-from django.http import JsonResponse
 from django.shortcuts import redirect, render_to_response, render
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView, DetailView, View
 from django.views.generic.list import MultipleObjectMixin as MOM
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.forms.models import model_to_dict
 
 from nine_oh_lb.settings import CHAMPION_STRINGS
 from pyblanc.pyblanc import LeagueStat
@@ -110,7 +108,6 @@ class GameDetail(DetailView):
 	template_name = "match/game_detail.html"
 
 
-
 class ChampionDetail(Common):
 
 	template_name = "match/champion_detail.html"
@@ -165,54 +162,10 @@ class CreateGeniusGameData(View):
 		return redirect("/match/genius")
 
 
-class CView(View):
-
-	@method_decorator(login_required)
-	def dispatch(self, *args, **kwargs):
-		return super(CView, self).dispatch(*args, **kwargs)
-
-
-class Genius(CView):
+class Genius(Common):
 
 	template_name = "match/genius.html"
 
 	def get(self, request, *args, **kwargs):
 		return render(request, self.template_name)
-
-
-class APIKills(CView):
-
-	def get(self, request, *args, **kwargs):
-		dg = DetailedGame.objects.filter(user=request.user)
-		games = {}
-		for i in xrange(10):
-			games[i] = dg[i].kill
-		return JsonResponse(games)
-
-
-class APICSPerMin(CView):
-
-	def get(self, request, *args, **kwargs):
-		dg = DetailedGame.objects.filter(user=request.user)
-		games = {}
-		for i in xrange(10):
-			games[i] = [float(x) for x in dg[i].cs_per_min.split(",")]
-		return JsonResponse(games)
-
-
-class APIFullGame(CView):
-
-	def get(self, request, *args, **kwargs):
-		dg = DetailedGame.objects.filter(user=request.user).values()[0]
-		return JsonResponse(dg)
-
-
-class APIFullChampion(CView):
-
-	def get(self, request, *args, **kwargs):
-		dg = DetailedGame.objects.filter(user=request.user, user_played__icontains=u"leblanc").values()
-		json_d = [x for x in dg]
-		return JsonResponse(json_d, safe=False)
-
-
 

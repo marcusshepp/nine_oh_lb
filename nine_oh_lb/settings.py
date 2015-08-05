@@ -50,6 +50,7 @@ INSTALLED_APPS = (
     'registration',
     'match',
     'pyblanc',
+    'api',
 )
 
 MIDDLEWARE_CLASSES = (

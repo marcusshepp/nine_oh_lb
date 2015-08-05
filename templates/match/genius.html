@@ -11,31 +11,21 @@ Genius
 {{ block.super }}
 <script src="http://code.highcharts.com/highcharts.js"></script>
 <script type="text/javascript">
-	$.getJSON("/match/api/leblanc/", function(data){
+	$.getJSON("/api/leblanc/", function(data){
         console.log(data);
         dmg = new Array();
         for (var i=0, len=data.length; i<len; i++){
             var lb = data[i]
             dmg.push(lb.dmg_to_champions)
         }
-        gold = new Array();
-        for (var i=0, len=data.length; i<len; i++){
-            var lb = data[i]
-            gold.push(lb.gold_earned)
-        }
-     //    var ten = new Array();
-    	// for(var i=1; i<11; i++){
-    	// 	ten.push(i)
-    	// };
         $('#container').highcharts({
             chart: {
                 type: 'line'
             },
             title: {
-                text: "Leblanc"
+                text: "Annie"
             },
             xAxis: {
-                data: [0, 1],
                 title: {
                 	text: "Game #"
                 }

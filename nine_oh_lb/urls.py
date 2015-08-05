@@ -20,6 +20,7 @@ from django.contrib import admin
 from champ_select import urls as champ_select_urls
 from match import urls as match_urls
 from registration import urls as user_urls
+from api import urls as api_urls
 
 
 urlpatterns = [
@@ -28,4 +29,5 @@ urlpatterns = [
     url(r'^champ-select/', include(champ_select_urls)),
     url(r'^match/', include(match_urls)),
     url(r'^user/', include(user_urls)),
+    url(r'^api/', include(api_urls)),
 ]
