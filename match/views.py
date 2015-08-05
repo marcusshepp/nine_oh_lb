@@ -85,7 +85,7 @@ class AvailableGames(Common):
 	def post(self, request, *args, **kwargs):
 		context = {}
 		games = Game.objects.filter(user=self.request.user)
-		games = games.filter(user_played__istartswith=request.POST["c_search"])
+		games = games.filter(user_played__istartswith=request.POST["name"])
 		paginator = Paginator(games, 4)
 		page = self.request.GET.get("page")
 		try:

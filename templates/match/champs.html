@@ -18,7 +18,10 @@ Champs Inside Brain.
     </form>
 	{% for c in games %}
 		<fieldset>
-			<a href="#">{{ c }}</a>
+            <form action="{% url 'games' %}" method="POST">{% csrf_token %}
+                <input type="hidden" name="name" value="{{c}}">
+                <input type="submit" value="{{ c }}">
+            </form>
 		</fieldset>
 	{% endfor %}
     </div>

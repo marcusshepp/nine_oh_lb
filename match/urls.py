@@ -1,4 +1,5 @@
-"""match URL Configuration
+"""
+match URL Configuration
 """
 from django.conf.urls import include, url
 from django.contrib import admin

@@ -38,6 +38,12 @@ class Game(models.Model):
 		direct_enemy = self.direct_enemy[:3]
 		return direct_enemy
 
+	def display_winner(self):
+		if self.winner:
+			return "Win"
+		else:
+			return "Lose"
+
 	def __unicode__(self):
 		return "{}".format(self.user_played)
 
