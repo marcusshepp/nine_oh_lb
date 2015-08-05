@@ -41,10 +41,11 @@ class APIFullGame(CView):
 		return JsonResponse(dg)
 
 
-class APIFullChampion(CView):
+class APIChampionDMG(CView):
 
 	def get(self, request, *args, **kwargs):
-		dg = DetailedGame.objects.filter(user=request.user, user_played__icontains=u"annie").values()
+		dg = DetailedGame.objects.filter(
+			user=request.user, user_played__icontains=u"nidalee").values()
 		json_d = [x for x in dg]
 		return JsonResponse(json_d, safe=False)
 

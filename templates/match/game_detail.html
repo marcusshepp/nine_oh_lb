@@ -1,6 +1,6 @@
 {% extends 'match/base_site.html' %}
 {% block title %}
-{{ object.user_played }} vs. {{ object.direct_enemy }}
+{{ object.user_played }}
 {% endblock %}
 {% block content %}
 <div class="game-shaper">
@@ -9,7 +9,7 @@
 		Enemy Jungler: {{ object.enemy_jungler }}
 	</fieldset>
 	{% endif %}
-	{% if object.winner %}<fieldset>{{ object.winner }}</fieldset>
+	{% if object.winner %}<fieldset>{{ object.display_winner }}</fieldset>
 	{% else %}<fieldset>Win: False</fieldset>
 	{% endif %}
 	{% if object.date_played %}
@@ -27,5 +27,14 @@
 		{{ object.could_have_done_better }}
 	</fieldset>
 	{% endif %}
+	<fieldset>
+		CS: {{ object.cs }}
+	</fieldset>
+	<fieldset>
+		Damage to Champs: {{ object.dmg_to_champions }}
+	</fieldset>
+	<fieldset>
+		Wards Placed: {{ object.wards_placed }}
+	</fieldset>
 </div>
 {% endblock %}

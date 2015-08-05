@@ -148,7 +148,7 @@ class AvailableChamps(Common):
 
 class GameDetail(DetailView):
 
-	model = Game
+	model = DetailedGame
 	template_name = "match/game_detail.html"
 
 

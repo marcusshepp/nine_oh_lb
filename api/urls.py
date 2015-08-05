@@ -8,12 +8,12 @@ from .views import (
 	APICSPerMin,
 	APIKills,
 	APIFullGame,
-	APIFullChampion,
+	APIChampionDMG,
 )
 
 urlpatterns = [
     url(r'^games/$', APICSPerMin.as_view()),
     url(r'^fullgame/$', APIFullGame.as_view()),
     url(r'^kills/$', APIKills.as_view()),
-    url(r'^leblanc/$', APIFullChampion.as_view())
+    url(r'^dmg/$', APIChampionDMG.as_view(), name="dmg")
 ]
