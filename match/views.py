@@ -68,6 +68,7 @@ class AvailableGames(Common):
 	def get_context_data(self, *args, **kwargs):
 		context = {}
 		games = Game.objects.all().filter(user=self.request.user)
+		count = len(games)
 		paginator = Paginator(games, 4)
 		page = self.request.GET.get("page")
 		try:
@@ -77,6 +78,7 @@ class AvailableGames(Common):
 		except EmptyPage:
 			games = paginator.page(paginator.num_pages)
 		if len(games) > 0:
+			context["count"] = count
 			context["games"] = games
 		else:
 			context["no_games"] = True
@@ -160,7 +162,7 @@ class ChampionDetail(Common):
 class CreateGeniusGameData(View):
 
 	def convert_permin(self, data):
-			x = ",".join(str(i) for k, i in data.items())
+			x = ",".join(str(i) for k, i in data.items()) # thanks Kevin Daum
 			return x
 
 	def get(self, request, *args, **kwargs):
