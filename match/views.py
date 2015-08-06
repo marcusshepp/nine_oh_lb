@@ -210,7 +210,7 @@ class CreateGeniusGameData(View):
 
 class Genius(Common):
 
-	template_name = "match/genius.html"
+	template_name = "match/charts/genius.html"
 
 	def get(self, request, *args, **kwargs):
 		return render(request, self.template_name)
