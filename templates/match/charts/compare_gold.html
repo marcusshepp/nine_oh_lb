@@ -1,0 +1,47 @@
+{% extends 'match/base_site.html' %}
+{% block title %}
+Genius
+{% endblock %}
+{% block content %}
+<div class="genius-wrapper">
+	<div id="container" style="width: 90%; height:400px; padding: 10px 0px 0px 35px;"></div>
+</div>
+{% endblock %}
+{% block javascript %}
+{{ block.super }}
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script type="text/javascript">
+	$.getJSON("{% url 'dmg' %}", function(data){
+        console.log(data);
+        dmg = new Array();
+        for (var i=0, len=data.length; i<len; i++){
+            var lb = data[i]
+            dmg.push(lb.dmg_to_champions)
+        }
+        $('#container').highcharts({
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: data[0].user_played // why the [0] idk.
+            },
+            xAxis: {
+                min: 0,
+                max: 2,
+                title: {
+                	text: "Game #"
+                }
+            },
+            yAxis: {
+                title: {
+                    text: 'Damage'
+                }
+            },
+            series: [{
+                name: "Damage to Champions", 
+                data: dmg
+            }]
+        });
+    });
+</script>
+{% endblock %}

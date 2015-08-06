@@ -49,3 +49,25 @@ class APIChampionDMG(CView):
 		json_d = [x for x in dg]
 		return JsonResponse(json_d, safe=False)
 
+
+class APIChampionGoldComparison(CView):
+
+	def post(self, request, *args, **kwargs):
+		"""
+		post data: champion1 champion2
+		return damage for all games played for each champion. 
+		maybe all damage added together for each champion?
+		this would be good because then this view would only return 
+		four values: name1 dmg1 name2 dmg2
+		"""
+		return JsonResponse(json_d, safe=False)
+
+
+class APIGamesPlayedTopFive(CView):
+
+	def get(self, request, *args, **kwargs):
+		"""
+		return top 5 champions played 
+		and the number of games played with those champs
+		"""
+		return JsonResponse(json_d, safe=False)
