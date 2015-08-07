@@ -54,11 +54,22 @@ class APIFullGame(CView):
 
 class APIChampionDMG(CView):
 
-	def get(self, request, *args, **kwargs):
+	def post(self, request, *args, **kwargs):
 		dg = Game.objects.filter(
-			user=request.user, user_played__icontains=u"jinx").values()
-		json_d = [x for x in dg]
-		return JsonResponse(json_d, safe=False)
+			user=request.user, user_played__icontains=u"{}".format(self.request.POST['c_search'])).values()
+		json_d = {}
+		for i in dg:
+			if i["dmg_to_champions"]:
+				json_d[i["user_played"]] = i["dmg_to_champions"]
+		return JsonResponse(json_d)
+
+
+class ChampionDMG(CView):
+
+	template_name = "charts/champion_dmg.html"
+
+	def get(self, request, *args, **kwargs):
+		return render(request, self.template_name)
 
 
 class APIChampionGoldComparison(CView):

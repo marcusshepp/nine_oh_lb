@@ -1,0 +1,60 @@
+{% extends 'charts/index.html' %}
+{% block title %}
+Genius
+{% endblock %}
+{% block content %}
+<div class="genius-wrapper">
+    <form action="{% url 'json_dmg' %}" method="POST" id="game-search-form">
+        {% csrf_token %}
+        <input id='search' type="search" name="c_search"/>
+        <input type="button" id="game-search-submit" value="Filter">        
+    </form>
+	<div id="container" style="position: relative; width: 90%; height:400px; padding: 10px 0px 0px 35px; top: 50px;"></div>
+</div>
+{% endblock %}
+{% block javascript %}
+{{ block.super }}
+<script type="text/javascript">
+    $('#game-search-submit').on('click', function(){
+        $.ajax({
+            type: "POST",
+            url: "{% url 'json_dmg' %}",
+            data: {
+                'csrfmiddlewaretoken': '{{csrf_token}}',
+                'c_search': $('#search').val(),
+            },
+            success: function(data){
+                var dmg = new Array();
+                for(var i=0, len=data.length; i<len; i++){
+                    dmg.push(data)
+                }
+                console.log(data)
+                $('#container').highcharts({
+                    chart: {
+                        type: 'column'
+                    },
+                    title: {
+                        text: ""
+                    },
+                    xAxis: {
+                        min: 0,
+                        max: 4,
+                        title: {
+                            text: "Champ"
+                        }
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Damage'
+                        }
+                    },
+                    series: [{
+                        name: "Damage Dealt to Champions",
+                        data: data.damage
+                    }]
+                });
+            }
+        });
+    });
+</script>
+{% endblock %}
