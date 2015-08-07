@@ -17,14 +17,13 @@ Champs Inside Brain.
         <input type="search" name="c_search"><input type="submit" id="game-search-submit" value="Filter">        
     </form>
 	{% for c in games %}
-		<fieldset>
-            <form action="{% url 'games' %}" method="POST" class="champion-form">{% csrf_token %}
-                <input type="hidden" name="name" value="{{c}}">
-                <input type="submit" value="{{ c }}">
-            </form>
-		</fieldset>
+	<fieldset>
+        <form action="{% url 'games' %}" method="POST" class="champion-form">{% csrf_token %}
+            <input type="hidden" name="name" value="{{c}}">
+            <input type="submit" value="{{ c }}">
+        </form>
+	</fieldset>
 	{% endfor %}
-    </div>
     <div class="pagination">
         <span class="step-links">
             {% if games.has_previous %}
@@ -39,6 +38,7 @@ Champs Inside Brain.
             <a class="blue" href="?page={{ games.next_page_number }}">next</a>
             {% endif %}
         </span>
+    </div>
     {% endif %}
 </div>
 {% endblock %}
