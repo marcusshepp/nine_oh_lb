@@ -11,7 +11,6 @@ from nine_oh_lb.settings import CHAMPION_STRINGS
 from pyblanc.pyblanc import LeagueStat
 from .models import (
 	Game,
-	DetailedGame,
 )
 
 
@@ -87,7 +86,7 @@ class AvailableGames(Common):
 	def post(self, request, *args, **kwargs):
 		context = {}
 		games = Game.objects.filter(user=self.request.user)
-		games = games.filter(user_played__istartswith=request.POST["name"])
+		games = games.filter(user_played__istartswith=request.POST["c_search"])
 		paginator = Paginator(games, 4)
 		page = self.request.GET.get("page")
 		try:
@@ -111,46 +110,46 @@ class AvailableChamps(Common):
 
 	def get_context_data(self, *args, **kwargs):
 		context = {}
-		games = Game.objects.all().filter(user=self.request.user)
-		games = [x.user_played for x in games]
-		games = list(set(games))
-		paginator = Paginator(games, 4)
+		champs = Game.objects.all().filter(user=self.request.user)
+		champs = [x.user_played for x in champs]
+		champs = list(set(champs))
+		paginator = Paginator(champs, 4)
 		page = self.request.GET.get("page")
 		try:
-			games = paginator.page(page)
+			champs = paginator.page(page)
 		except PageNotAnInteger:
-			games = paginator.page(1)
+			champs = paginator.page(1)
 		except EmptyPage:
-			games = paginator.page(paginator.num_pages)
-		if len(games) > 0:
-			context["games"] = games
+			champs = paginator.page(paginator.num_pages)
+		if len(champs) > 0:
+			context["champs"] = champs
 		else:
-			context["no_games"] = True
+			context["no_champs"] = True
 		return context
 
 	def post(self, request, *args, **kwargs):
 		context = {}
-		games = Game.objects.filter(user=self.request.user)
-		games = games.filter(user_played__istartswith=request.POST["c_search"])
-		paginator = Paginator(games, 4)
+		champs = Game.objects.filter(user=self.request.user)
+		champs = champs.filter(user_played__istartswith=request.POST["c_search"])
+		paginator = Paginator(champs, 4)
 		page = self.request.GET.get("page")
 		try:
-			games = paginator.page(page)
+			champs = paginator.page(page)
 		except PageNotAnInteger:
-			games = paginator.page(1)
+			champs = paginator.page(1)
 		except EmptyPage:
-			games = paginator.page(paginator.num_pages)
-		if len(games) > 0:
-			context["games"] = games
+			champs = paginator.page(paginator.num_pages)
+		if len(champs) > 0:
+			context["champs"] = champs
 		else:
-			context["no_games"] = True
+			context["no_champs"] = True
 		context["user"] = request.user
-		return render(request, "match/games.html", context)
+		return render(request, "match/champs.html", context)
 
 
 class GameDetail(DetailView):
 
-	model = DetailedGame
+	model = Game
 	template_name = "match/game_detail.html"
 
 
@@ -166,52 +165,43 @@ class CreateGeniusGameData(View):
 			return x
 
 	def get(self, request, *args, **kwargs):
-		user_data 						= {}
-		user_data['summoner'] 			= request.user.get_username()
-		ls 								= LeagueStat(**user_data)
-		user_played 					= ls.all_champions()
-		wsls 							= ls.winsandloses()
-		total_cs 						= ls.all_minions_killed()
-		cs_per_min 						= ls.cs_per_min()
-		xp_per_min 						= ls.xp_per_min()
-		dmg_to_champions 				= ls.damage_dealt_to_champions()
-		fb 								= ls.first_blood()
-		ge 								= ls.gold_earned()
-		ks 								= ls.longest_killing_spree()
-		mk 								= ls.largest_multikill()
-		minions 						= ls.all_minions_killed()
-		wp 								= ls.wards_placed()
-		kills 							= ls.kills()
-		deaths 							= ls.deaths()
-		assists 						= ls.assists()
-		tk 								= ls.towers_killed()
-		g_data 							= {}
+		user_data = {}
+		user_data['summoner'] = request.user.get_username()
+		ls = LeagueStat(**user_data)
+		user_played = ls.all_champions()
+		wsls = ls.winsandloses()
+		total_cs = ls.all_minions_killed()
+		cs_per_min = ls.cs_per_min()
+		xp_per_min = ls.xp_per_min()
+		dmg_to_champions = ls.damage_dealt_to_champions()
+		fb = ls.first_blood()
+		ge = ls.gold_earned()
+		ks = ls.longest_killing_spree()
+		mk = ls.largest_multikill()
+		minions = ls.all_minions_killed()
+		wp = ls.wards_placed()
+		kills = ls.kills()
+		deaths = ls.deaths()
+		assists = ls.assists()
+		tk = ls.towers_killed()
+		g_data = {}
 		for i in xrange(10):
-			g_data['user'] 				= request.user
-			g_data['user_played'] 		= user_played[i]
-			g_data['winner'] 			= wsls[i]
-			g_data['cs'] 				= total_cs[i]
-			g_data['cs_per_min'] 		= self.convert_permin(cs_per_min[i])
-			g_data['xp_per_minute'] 	= self.convert_permin(xp_per_min[i])
-			g_data['damage_done'] 		= dmg_to_champions[i] #!!!
-			g_data['first_blood'] 		= fb[i]
-			g_data['gold_earned'] 		= ge[i]
-			g_data['killing_spree'] 	= ks[i]
+			g_data['user'] = request.user
+			g_data['user_played'] = user_played[i]
+			g_data['winner'] = wsls[i]
+			g_data['cs'] = total_cs[i]
+			g_data['cs_per_min'] = self.convert_permin(cs_per_min[i])
+			g_data['xp_per_minute'] = self.convert_permin(xp_per_min[i])
+			g_data['damage_done'] = dmg_to_champions[i] #!!!
+			g_data['first_blood'] = fb[i]
+			g_data['gold_earned'] = ge[i]
+			g_data['killing_spree'] = ks[i]
 			g_data['largest_multikill'] = mk[i]
-			g_data['dmg_to_champions'] 	= dmg_to_champions[i]
-			g_data['wards_placed'] 		= wp[i]
-			g_data['kill'] 				= kills[i]
-			g_data['death'] 			= deaths[i]
-			g_data['assist'] 			= assists[i]
-			g_data['tower'] 			= tk[i]
-			DetailedGame.objects.get_or_create(**g_data)
+			g_data['dmg_to_champions'] = dmg_to_champions[i]
+			g_data['wards_placed'] = wp[i]
+			g_data['kill'] = kills[i]
+			g_data['death'] = deaths[i]
+			g_data['assist'] = assists[i]
+			g_data['tower'] = tk[i]
+			Game.objects.get_or_create(**g_data)
 		return redirect("/match/genius")
-
-
-class Genius(Common):
-
-	template_name = "match/charts/genius.html"
-
-	def get(self, request, *args, **kwargs):
-		return render(request, self.template_name)
-

@@ -17,17 +17,15 @@ from django.conf.urls import include, url
 from django.views.generic import RedirectView
 from django.contrib import admin
 
-from champ_select import urls as champ_select_urls
 from match import urls as match_urls
 from registration import urls as user_urls
-from api import urls as api_urls
+from charts import urls as api_urls
 
 
 urlpatterns = [
 	url(r'^$', RedirectView.as_view(url="match/", permanent=False)),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^champ-select/', include(champ_select_urls)),
     url(r'^match/', include(match_urls)),
     url(r'^user/', include(user_urls)),
-    url(r'^api/', include(api_urls)),
+    url(r'^charts/', include(api_urls)),
 ]

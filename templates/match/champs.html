@@ -16,10 +16,10 @@ Champs Inside Brain.
         {% csrf_token %}
         <input type="search" name="c_search"><input type="submit" id="game-search-submit" value="Filter">        
     </form>
-	{% for c in games %}
+	{% for c in champs %}
 	<fieldset>
         <form action="{% url 'games' %}" method="POST" class="champion-form">{% csrf_token %}
-            <input type="hidden" name="name" value="{{c}}">
+            <input type="hidden" name="c_search" value="{{c}}">
             <input type="submit" value="{{ c }}">
         </form>
 	</fieldset>

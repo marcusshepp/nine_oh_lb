@@ -46,11 +46,10 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.postgres',
-    'champ_select',
     'registration',
     'match',
     'pyblanc',
-    'api',
+    'charts',
 )
 
 MIDDLEWARE_CLASSES = (

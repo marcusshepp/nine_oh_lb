@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Game, FavoriteChampion, DetailedGame
+from .models import Game, FavoriteChampion
 
 
 class GamesInline(admin.TabularInline):
@@ -10,14 +10,6 @@ class GamesInline(admin.TabularInline):
 
 @admin.register(Game)
 class GameAdmin(admin.ModelAdmin):
-
-    list_display = (
-    	'__unicode__',
-	)
-
-
-@admin.register(DetailedGame)
-class DetailedGameAdmin(admin.ModelAdmin):
 
     list_display = (
     	'__unicode__',

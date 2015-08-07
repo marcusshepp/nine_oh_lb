@@ -10,7 +10,6 @@ from .views import (
 	AvailableGames,
 	AvailableChamps,
 	GameDetail,
-	Genius,
 	CreateGeniusGameData,
 )
 
@@ -20,6 +19,5 @@ urlpatterns = [
     url(r'^games/$', AvailableGames.as_view(), name="games"),
     url(r'^champs/$', AvailableChamps.as_view(), name="champs"),
     url(r'^game/(?P<pk>[0-9]+)/$', GameDetail.as_view(), name="game"),
-    url(r'^genius/$', Genius.as_view(), name="genius"),
     url(r'^genius/create/$', CreateGeniusGameData.as_view(), name="create_genius"),
 ]

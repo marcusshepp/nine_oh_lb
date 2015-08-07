@@ -1,0 +1,19 @@
+{% extends 'match/base_site.html' %}
+{% block title %}
+Genius
+{% endblock %}
+{% block content %}
+<div class="genius-wrapper">
+    <h4>Available Visual Data:</h4>
+	<fieldset>
+        <a href="{% url 'top_five' %}">Top 5 Champs Played</a>
+    </fieldset>
+    <fieldset>
+        <a href="{% url 'top_five' %}">Top 5 Champs Played</a>
+    </fieldset>
+</div>
+{% endblock %}
+{% block javascript %}
+{{ block.super }}
+<script src="http://code.highcharts.com/highcharts.js"></script>
+{% endblock %}
