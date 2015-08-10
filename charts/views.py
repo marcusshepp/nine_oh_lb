@@ -1,4 +1,5 @@
 import operator
+import collections
 
 from django.http import JsonResponse
 from django.views.generic import View
@@ -98,8 +99,9 @@ class APIGamesPlayedTopFive(CView):
 			if not value in json_d:
 				json_d[value] = 1
 			else: json_d[value] += 1
-		sorted_json_d = sorted(json_d.items(), key=operator.itemgetter(1))[1:6]
-		return JsonResponse(sorted_json_d, safe=False)
+		sorted_json_d = collections.OrderedDict(sorted(json_d.items(), key=lambda t: t[0]))
+		print sorted_json_d
+		return JsonResponse(sorted_json_d)
 
 
 class TopFiveChampionsPlayed(CView):

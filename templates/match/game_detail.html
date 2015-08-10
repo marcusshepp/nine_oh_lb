@@ -3,7 +3,10 @@
 {{ object.user_played }}
 {% endblock %}
 {% block content %}
-<div class="game-shaper">
+<div class="game-detail-shaper">
+	<fieldset>
+		{{ object.kill }}/{{ object.assist }}/{{ object.death }}
+	</fieldset>
 	{% if object.enemy_jungler %}
 	<fieldset>
 		Enemy Jungler: {{ object.enemy_jungler }}

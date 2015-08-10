@@ -108,7 +108,7 @@ class AvailableChamps(Common):
 
 	template_name = "match/champs.html"
 
-	def get_context_data(self, *args, **kwargs):
+	def get(self, request, *args, **kwargs):
 		context = {}
 		champs = Game.objects.all().filter(user=self.request.user)
 		champs = [x.user_played for x in champs]
@@ -125,7 +125,7 @@ class AvailableChamps(Common):
 			context["champs"] = champs
 		else:
 			context["no_champs"] = True
-		return context
+		return render(request, self.template_name, context)
 
 	def post(self, request, *args, **kwargs):
 		context = {}
@@ -144,7 +144,7 @@ class AvailableChamps(Common):
 		else:
 			context["no_champs"] = True
 		context["user"] = request.user
-		return render(request, "match/champs.html", context)
+		return render(request, self.template_name, context)
 
 
 class GameDetail(DetailView):
@@ -204,4 +204,4 @@ class CreateGeniusGameData(View):
 			g_data['assist'] = assists[i]
 			g_data['tower'] = tk[i]
 			Game.objects.get_or_create(**g_data)
-		return redirect("/games")
+		return redirect("/match/games")

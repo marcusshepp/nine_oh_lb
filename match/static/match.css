@@ -533,6 +533,32 @@ input[type="checkbox"]{
 	border-radius: 5px 5px 5px 5px;
 }
 
+.game-detail-shaper{
+	position: fixed;
+	width: 65%;
+	height: 450px;
+	top: 195px;
+	left: 20%;
+	border-radius: 0px 55px 0px 0px !important;
+	opacity: 1;
+	background-color: #D9FFEB;
+}
+
+.game-detail-shaper fieldset:first-of-type{
+	border-radius: 0px 55px 0px 0px;
+}
+
+.game-detail-shaper fieldset{
+	position: relative;
+	top: 25px;
+	width: 85%;
+	left: 35px;
+	height: 40px;
+	font-size: 35px;
+	line-height: 205%;
+	z-index: 1;
+}
+
 .no-games-shaper fieldset{
 	font-family: Verdana, Geneva, sans-serif;
 	position: relative;
@@ -553,6 +579,19 @@ input[type="checkbox"]{
 	z-index: 2;
 	right: -2%;
 	top: 385px;
+	font-size: 20px;
+	line-height: 220%;
+	padding-left: 25px;
+	border-radius: 25px 25px 25px 25px;
+}
+
+.champs-step-links{
+	position: relative;
+	height: 35px;
+	width: 105px;
+	z-index: 2;
+	right: -2%;
+	top: 85px;
 	font-size: 20px;
 	line-height: 220%;
 	padding-left: 25px;

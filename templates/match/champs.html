@@ -25,17 +25,17 @@ Champs Inside Brain.
 	</fieldset>
 	{% endfor %}
     <div class="pagination">
-        <span class="step-links">
-            {% if games.has_previous %}
-                <a class="blue" href="?page={{ games.previous_page_number }}">previous</a>
+        <span class="champs-step-links">
+            {% if champs.has_previous %}
+                <a class="blue" href="?page={{ champs.previous_page_number }}">previous</a>
             {% endif %}
-            {% if games.has_next or games.has_previous %}
+            {% if champs.has_next or champs.has_previous %}
             <span class="current">
-                Page {{ games.number }} of {{ games.paginator.num_pages }}.
+                Page {{ champs.number }} of {{ champs.paginator.num_pages }}.
             </span>
             {% endif %}
-            {% if games.has_next %}
-            <a class="blue" href="?page={{ games.next_page_number }}">next</a>
+            {% if champs.has_next %}
+            <a class="blue" href="?page={{ champs.next_page_number }}">next</a>
             {% endif %}
         </span>
     </div>
