@@ -7,7 +7,7 @@ from pyblanc.lbonevnine.lbonevnine import summoner_id
 
 
 class PyManager(models.Model):
-	""" Extent Django's user just to add the id param to use for pyblanc. """
+	""" Extend Django's user just to add the id param to use for pyblanc. """
 	
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
 	league_server_id = models.PositiveIntegerField(null=True, blank=True)
