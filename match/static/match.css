@@ -18,7 +18,7 @@ header{
 
 .logo{
 	float: left;
-	position: relative;
+	position: fixed;
 	background-color: black;
 	color: white;
 	font-size: 2em;
@@ -740,4 +740,34 @@ input[type="text"], input[type="password"]{
 	top: -2px;
 	width: 6.7em;
 	height: 3.3em;
+}
+
+.damage-dealt{
+	position: relative;
+	width: 85%;
+	height: 32em;
+	top: 20px;
+	left: 0%;
+	border-radius: 0px 55px 0px 0px !important;
+	opacity: 1;
+	background-color: #D9FFEB;
+}
+
+.damage-dealt > .info{
+	position: relative;
+	top: 80px;
+	left: 35px;
+	width: 80%;
+	height: auto;
+}
+
+#dmg-chart{
+	border-radius: 0px 55px 0px 0px !important;
+	position: relative; 
+	width: 90%; 
+	height:400px; 
+	padding: 10px 0px 0px 35px; 
+	top: 70px;
+	left: -10px;
+
 }

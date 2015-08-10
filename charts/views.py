@@ -56,11 +56,10 @@ class APIChampionDMG(CView):
 
 	def post(self, request, *args, **kwargs):
 		dg = Game.objects.filter(
-			user=request.user, user_played__icontains=u"{}".format(self.request.POST['c_search'])).values()
+			user=request.user, user_played__icontains=u"{}".format(self.request.POST['c_search']))
 		json_d = {}
-		for i in dg:
-			if i["dmg_to_champions"]:
-				json_d[i["user_played"]] = i["dmg_to_champions"]
+		json_d['champions'] = [x.user_played for x in dg if x.dmg_to_champions]
+		json_d['dmg'] = [x.dmg_to_champions for x in dg if x.dmg_to_champions]
 		return JsonResponse(json_d)
 
 

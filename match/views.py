@@ -204,4 +204,4 @@ class CreateGeniusGameData(View):
 			g_data['assist'] = assists[i]
 			g_data['tower'] = tk[i]
 			Game.objects.get_or_create(**g_data)
-		return redirect("/match/genius")
+		return redirect("/games")

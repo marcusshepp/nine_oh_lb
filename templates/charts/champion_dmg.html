@@ -1,21 +1,25 @@
 {% extends 'charts/index.html' %}
 {% block title %}
-Genius
+Damage Dealt
 {% endblock %}
 {% block content %}
-<div class="genius-wrapper">
+<div class="damage-dealt">
     <form action="{% url 'json_dmg' %}" method="POST" id="game-search-form">
         {% csrf_token %}
         <input id='search' type="search" name="c_search"/>
-        <input type="button" id="game-search-submit" value="Filter">        
+        <input type="submit" id="game-search-submit" value="Filter"> 
     </form>
-	<div id="container" style="position: relative; width: 90%; height:400px; padding: 10px 0px 0px 35px; top: 50px;"></div>
+    <fieldset class="info">
+        <p>Search for champions above.</p>
+    </fieldset>
+	<div id="dmg-chart"></div>
 </div>
 {% endblock %}
 {% block javascript %}
 {{ block.super }}
 <script type="text/javascript">
-    $('#game-search-submit').on('click', function(){
+    $('#game-search-form').on('submit', function(e){
+        e.preventDefault();
         $.ajax({
             type: "POST",
             url: "{% url 'json_dmg' %}",
@@ -24,12 +28,8 @@ Genius
                 'c_search': $('#search').val(),
             },
             success: function(data){
-                var dmg = new Array();
-                for(var i=0, len=data.length; i<len; i++){
-                    dmg.push(data)
-                }
-                console.log(data)
-                $('#container').highcharts({
+                $(".info").hide();
+                $('#dmg-chart').highcharts({
                     chart: {
                         type: 'column'
                     },
@@ -37,11 +37,7 @@ Genius
                         text: ""
                     },
                     xAxis: {
-                        min: 0,
-                        max: 4,
-                        title: {
-                            text: "Champ"
-                        }
+                        categories: data.champions
                     },
                     yAxis: {
                         title: {
@@ -50,7 +46,7 @@ Genius
                     },
                     series: [{
                         name: "Damage Dealt to Champions",
-                        data: data.damage
+                        data: data.dmg
                     }]
                 });
             }
