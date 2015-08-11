@@ -74,7 +74,7 @@ class ChampionDMG(CView):
 
 class APIChampionGoldComparison(CView):
 
-	def post(self, request, *args, **kwargs):
+	def get(self, request, *args, **kwargs):
 		"""
 		post data: champion1 champion2
 		return damage for all games played for each champion. 
@@ -82,7 +82,19 @@ class APIChampionGoldComparison(CView):
 		this would be good because then this view would only return 
 		four values: name1 dmg1 name2 dmg2
 		"""
+		dg = Game.objects.filter(user=request.user)
+		json_d = {}
+		json_d['champions'] = [x.user_played for x in dg if x.dmg_to_champions]
+		json_d['gold'] = [x.gold_earned for x in dg if x.gold_earned]
 		return JsonResponse(json_d, safe=False)
+
+
+class ChampionGoldComparison(CView):
+
+	template_name = "charts/compare_gold.html"
+
+	def get(self, request, *args, **kwargs):
+		return render(request, self.template_name)
 
 
 class APIGamesPlayedTopFive(CView):
@@ -100,8 +112,10 @@ class APIGamesPlayedTopFive(CView):
 				json_d[value] = 1
 			else: json_d[value] += 1
 		sorted_json_d = collections.OrderedDict(sorted(json_d.items(), key=lambda t: t[0]))
-		print sorted_json_d
-		return JsonResponse(sorted_json_d)
+		return_obj = {}
+		return_obj["champions"] = [k for k, v in sorted_json_d.items()][:5]
+		return_obj["games_played"] = [v for k, v in sorted_json_d.items()][:5]
+		return JsonResponse(return_obj)
 
 
 class TopFiveChampionsPlayed(CView):

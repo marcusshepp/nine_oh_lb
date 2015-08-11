@@ -10,37 +10,34 @@ Genius
 {% block javascript %}
 {{ block.super }}
 <script type="text/javascript">
-	$.getJSON("{% url 'json_top_five' %}", function(data){
-        console.log(data);
-        dmg = new Array();
-        for (var i=0, len=data.length; i<len; i++){
-            var lb = data[i]
-            dmg.push(lb.dmg_to_champions)
+$(document).ready(function(){
+    $.ajax({
+        type: "GET",
+        url: "{% url 'json_top_five' %}",
+        success: function(data){
+            $('#container').highcharts({
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: "Most Played Champions"
+                },
+                xAxis: {
+                    categories: data.champions
+                },
+                yAxis: {
+                    title: {
+                        text: 'Damage'
+                    }
+                },
+                series: [{
+                    name: "Games Played",
+                    data: data.games_played
+                }]
+            });
         }
-        $('#container').highcharts({
-            chart: {
-                type: 'column'
-            },
-            title: {
-                text: ""
-            },
-            xAxis: {
-                min: 0,
-                max: 4,
-                title: {
-                	text: "Champ"
-                }
-            },
-            yAxis: {
-                title: {
-                    text: 'Games Played'
-                }
-            },
-            series: [{
-                name: "Most Played Champions",
-                data: data
-            }]
-        });
     });
+});
+
 </script>
 {% endblock %}
