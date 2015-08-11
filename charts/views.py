@@ -30,9 +30,11 @@ class APIKills(CView):
 
 	def get(self, request, *args, **kwargs):
 		dg = Game.objects.filter(user=request.user)
+		kills = [x.kill for x in dg]
+		champs = [x.user_played for x in dg]
 		games = {}
-		for i in xrange(10):
-			games[i] = dg[i].kill
+		games['champs'] = champs
+		games['kills'] = kills
 		return JsonResponse(games)
 
 
