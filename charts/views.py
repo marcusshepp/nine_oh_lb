@@ -74,16 +74,9 @@ class ChampionDMG(CView):
 		return render(request, self.template_name)
 
 
-class APIChampionGoldComparison(CView):
+class APIChampionGoldAll(CView):
 
 	def get(self, request, *args, **kwargs):
-		"""
-		post data: champion1 champion2
-		return damage for all games played for each champion. 
-		maybe all damage added together for each champion?
-		this would be good because then this view would only return 
-		four values: name1 dmg1 name2 dmg2
-		"""
 		dg = Game.objects.filter(user=request.user)
 		json_d = {}
 		json_d['champions'] = [x.user_played for x in dg if x.dmg_to_champions]
@@ -91,12 +84,44 @@ class APIChampionGoldComparison(CView):
 		return JsonResponse(json_d, safe=False)
 
 
-class ChampionGoldComparison(CView):
+class ChampionGoldAll(CView):
 
 	template_name = "charts/compare_gold.html"
 
 	def get(self, request, *args, **kwargs):
 		return render(request, self.template_name)
+
+
+class ChampionGoldComparison(CView):
+	
+	template_name = "charts/champ_gold_comparison.html"
+
+	def get(self, request, *args, **kwargs):
+		return render(request, self.template_name)
+
+
+class APIChampionGoldComparison(CView):
+	
+	def post(self, request, *args, **kwargs):
+		"""
+		post data: champion1 champion2
+		return damage for all games played for each champion. 
+		maybe all damage added together for each champion?
+		this would be good because then this view would only return 
+		four values: name1 dmg1 name2 dmg2
+		"""
+		search_one = request.POST['c_search_one']
+		search_two = request.POST['c_search_two']
+		query_one = Game.objects.filter(user=request.user, user_played__istartswith=search_one)
+		query_two = Game.objects.filter(user=request.user, user_played__istartswith=search_two)
+		highest_one = query_one.order_by("gold_earned")[:1]
+		highest_two = query_two.order_by("gold_earned")[:1]
+		json_d = {}
+		json_d['champ_one'] = [v.user_played for v in highest_one if v.gold_earned]
+		json_d['champ_two'] = [v.user_played for v in highest_two if v.gold_earned]
+		json_d['gold_one'] = [v.gold_earned for v in highest_one if v.gold_earned]
+		json_d['gold_two'] = [v.gold_earned for v in highest_two if v.gold_earned]
+		return JsonResponse(json_d)
 
 
 class APIGamesPlayedTopFive(CView):

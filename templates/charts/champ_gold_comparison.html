@@ -1,0 +1,59 @@
+{% extends 'charts/index.html' %}
+{% block title %}
+Gold Comparison
+{% endblock %}
+{% block content %}
+<div class="damage-dealt">
+    <form action="" method="POST" id="game-search-form">
+        {% csrf_token %}
+        <input id='search1' type="search" name="c_search_one"/>
+        <input id='search2' type="search" name="c_search_two"/>
+        <input type="submit" id="game-search-submit" value="Compare"> 
+    </form>
+    <fieldset class="info">
+        <p>Search for champions above. e.g: "annie" or "a"</p>
+    </fieldset>
+	<div id="dmg-chart"></div>
+</div>
+{% endblock %}
+{% block javascript %}
+{{ block.super }}
+<script type="text/javascript">
+    $('#game-search-form').on('click', function(e){
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: "{% url 'json_gold_compare' %}",
+            data: {
+                'csrfmiddlewaretoken': '{{ csrf_token }}',
+                'c_search_one': $('#search1').val(),
+                'c_search_two': $('#search2').val(),
+
+            },
+            success: function(data){
+                $(".info").hide();
+                $('#dmg-chart').highcharts({
+                    chart: {
+                        type: 'column'
+                    },
+                    title: {
+                        text: "Gold Comparison"
+                    },
+                    xAxis: {
+                        categories: data.champ_one, data.champ_two
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Damage'
+                        }
+                    },
+                    series: [{
+                        name: "Damage",
+                        data: data.gold_one, data.gold_two
+                    }]
+                });
+            }
+        });
+    });
+</script>
+{% endblock %}

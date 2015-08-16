@@ -11,8 +11,10 @@ from .views import (
 	ChampionDMG,
 	APIGamesPlayedTopFive,
 	TopFiveChampionsPlayed,
-	APIChampionGoldComparison,
+	APIChampionGoldAll,
+	ChampionGoldAll,
 	ChampionGoldComparison,
+	APIChampionGoldComparison,
 )
 
 urlpatterns = [
@@ -24,6 +26,7 @@ urlpatterns = [
     url(r'^dmg/$', ChampionDMG.as_view(), name="dmg"),
     url(r'^json-top-five/$', APIGamesPlayedTopFive.as_view(), name="json_top_five"),
     url(r'^top-five/$', TopFiveChampionsPlayed.as_view(), name="top_five"),
-	url(r'^json-gold/$', APIChampionGoldComparison.as_view(), name="json_gold"),
-	url(r'^gold/$', ChampionGoldComparison.as_view(), name="gold"),
+	url(r'^json-gold/$', ChampionGoldAll.as_view(), name="json_gold"),
+	url(r'^json-gold-comp/$', APIChampionGoldComparison.as_view(), name="json_gold_compare"),
+	url(r'^gold-comp/$', ChampionGoldComparison.as_view(), name="gold"),
 ]
