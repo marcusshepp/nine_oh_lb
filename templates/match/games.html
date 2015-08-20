@@ -1,6 +1,6 @@
 {% extends 'match/base_site.html' %}
 {% block title %}
-{{ count }} Games Inside Brain.
+{{ champ }} KDA: {{ win_lose }} 
 {% endblock %}
 {% block content %}
 <div class="game-shaper">
@@ -12,9 +12,9 @@
         </fieldset>
     </div>
     {% else %}
-    <form action="" method="POST" id="game-search-form">
-        {% csrf_token %}
-        <input type="search" name="c_search"><input type="submit" id="game-search-submit" value="Filter">        
+    <form action="" method="POST" id="game-search-form">{% csrf_token %}
+        <input type="search" name="c_search">
+        <input type="submit" id="game-search-submit" value="Filter">        
     </form>
 	{% for g in games %}
 		<fieldset>

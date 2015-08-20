@@ -11,7 +11,7 @@ Gold Comparison
         <input type="submit" id="game-search-submit" value="Compare"> 
     </form>
     <fieldset class="info">
-        <p>Search for champions above. e.g: "annie" or "a"</p>
+        <p>Search for champions above. e.g: "annie", "a" or "leblanc"</p>
     </fieldset>
 	<div id="dmg-chart"></div>
 </div>
@@ -19,7 +19,7 @@ Gold Comparison
 {% block javascript %}
 {{ block.super }}
 <script type="text/javascript">
-    $('#game-search-form').on('click', function(e){
+    $('#game-search-form').on('submit', function(e){
         e.preventDefault();
         $.ajax({
             type: "POST",
@@ -32,6 +32,7 @@ Gold Comparison
             },
             success: function(data){
                 $(".info").hide();
+                console.log(data.gold_two[0]);
                 $('#dmg-chart').highcharts({
                     chart: {
                         type: 'column'
@@ -40,17 +41,15 @@ Gold Comparison
                         text: "Gold Comparison"
                     },
                     xAxis: {
-                        categories: data.champ_one, data.champ_two
+                        categories: data.champ_two[0]
                     },
                     yAxis: {
                         title: {
-                            text: 'Damage'
-                        }
-                    },
-                    series: [{
-                        name: "Damage",
-                        data: data.gold_one, data.gold_two
-                    }]
+                            text: 'Gold'
+                        },
+                        units: [data.gold_two[0]],
+
+                    }
                 });
             }
         });

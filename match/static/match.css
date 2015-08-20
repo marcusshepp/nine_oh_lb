@@ -550,10 +550,10 @@ input[type="checkbox"]{
 
 .game-detail-shaper fieldset{
 	position: relative;
-	top: 25px;
+	top: 85px;
 	width: 85%;
 	left: 35px;
-	height: 40px;
+	height: 30px;
 	font-size: 35px;
 	line-height: 205%;
 	z-index: 1;
@@ -809,4 +809,12 @@ input[type="text"], input[type="password"]{
 	top: 70px;
 	left: -10px;
 
+}
+
+#game-detail-form label{
+	position: absolute;
+	top: 0px;
+	width: 80px;
+	height: 80px;
+	font-size: 45px;
 }

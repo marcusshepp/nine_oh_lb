@@ -1,3 +1,4 @@
+from __future__ import division
 import json
 
 from django.shortcuts import redirect, render_to_response, render
@@ -59,6 +60,23 @@ class CreateGame(Common):
 		return redirect("/match/games/")
 
 
+class GameDetail(DetailView):
+
+	model = Game
+	template_name = "match/game_detail.html"
+
+	def get_context_data(self, **kwargs):
+		context = super(GameDetail, self).get_context_data(**kwargs)
+		champ = self.get_object().user_played
+		context["champ"] = champ
+		print champ
+		games = self.model.objects.filter(user_played__istartswith=champ)
+		number_of_games = len(games)
+		number_of_wins = sum([x.winner for x in games])
+		context["win_lose"] = number_of_wins/number_of_games
+		return context
+
+
 class AvailableGames(Common):
 	""" Games Inside Brain. """
 
@@ -90,16 +108,21 @@ class AvailableGames(Common):
 		paginator = Paginator(games, 4)
 		page = self.request.GET.get("page")
 		try:
-			games = paginator.page(page)
+			games_page = paginator.page(page)
 		except PageNotAnInteger:
-			games = paginator.page(1)
+			games_page = paginator.page(1)
 		except EmptyPage:
-			games = paginator.page(paginator.num_pages)
-		if len(games) > 0:
-			context["games"] = games
+			games_page = paginator.page(paginator.num_pages)
+		if len(games_page) > 0:
+			context["games"] = games_page
 		else:
 			context["no_games"] = True
 		context["user"] = request.user
+		number_of_games = len(games)
+		number_of_wins = sum([x.winner for x in games])
+		champ = [x.user_played for x in games][:1]
+		context["champ"] = champ
+		context["win_lose"] = number_of_wins/number_of_games
 		return render(request, "match/games.html", context)
 
 
@@ -134,23 +157,17 @@ class AvailableChamps(Common):
 		paginator = Paginator(champs, 4)
 		page = self.request.GET.get("page")
 		try:
-			champs = paginator.page(page)
+			champs_page = paginator.page(page)
 		except PageNotAnInteger:
-			champs = paginator.page(1)
+			champs_page = paginator.page(1)
 		except EmptyPage:
-			champs = paginator.page(paginator.num_pages)
-		if len(champs) > 0:
-			context["champs"] = champs
+			champs_page = paginator.page(paginator.num_pages)
+		if len(champs_page) > 0:
+			context["champs"] = champs_page
 		else:
 			context["no_champs"] = True
 		context["user"] = request.user
 		return render(request, self.template_name, context)
-
-
-class GameDetail(DetailView):
-
-	model = Game
-	template_name = "match/game_detail.html"
 
 
 class ChampionDetail(Common):

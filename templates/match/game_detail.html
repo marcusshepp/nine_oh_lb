@@ -1,6 +1,6 @@
 {% extends 'match/base_site.html' %}
 {% block title %}
-{{ object.user_played }}
+{{ champ }} KDA: {{ win_lose }}
 {% endblock %}
 {% block content %}
 <div class="game-detail-shaper">
@@ -40,4 +40,8 @@
 		Wards Placed: {{ object.wards_placed }}
 	</fieldset>
 </div>
+<form action="{% url "games" %}" method="POST" id="game-detail-form">{% csrf_token %}
+	<input type="hidden" name="c_search" value="{{ champ }}">
+	<input type="submit" value="{{ champ }} - All">
+</form>
 {% endblock %}

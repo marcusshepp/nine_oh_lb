@@ -2,6 +2,7 @@
 from django.conf.urls import include, url
 from django.contrib import admin
 
+from . import views as chart_views
 from .views import (
 	Genius,
 	APICSPerMin,
@@ -11,10 +12,10 @@ from .views import (
 	ChampionDMG,
 	APIGamesPlayedTopFive,
 	TopFiveChampionsPlayed,
-	APIChampionGoldAll,
-	ChampionGoldAll,
+	# APIChampionGoldAll,
+	# ChampionGoldAll,
 	ChampionGoldComparison,
-	APIChampionGoldComparison,
+	# APIChampionGoldComparison,
 )
 
 urlpatterns = [
@@ -26,7 +27,7 @@ urlpatterns = [
     url(r'^dmg/$', ChampionDMG.as_view(), name="dmg"),
     url(r'^json-top-five/$', APIGamesPlayedTopFive.as_view(), name="json_top_five"),
     url(r'^top-five/$', TopFiveChampionsPlayed.as_view(), name="top_five"),
-	url(r'^json-gold/$', ChampionGoldAll.as_view(), name="json_gold"),
-	url(r'^json-gold-comp/$', APIChampionGoldComparison.as_view(), name="json_gold_compare"),
+	# url(r'^json-gold/$', ChampionGoldAll.as_view(), name="json_gold"),
+	url(r'^json-gold-comp/$', chart_views.json_gold_comparison, name="json_gold_compare"),
 	url(r'^gold-comp/$', ChampionGoldComparison.as_view(), name="gold"),
 ]

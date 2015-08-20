@@ -1,11 +1,14 @@
 import operator
 import collections
+import json
 
 from django.http import JsonResponse
 from django.views.generic import View
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render_to_response, render
+from django.http import HttpResponse
+
 
 from match.models import (
 	Game,
@@ -74,22 +77,22 @@ class ChampionDMG(CView):
 		return render(request, self.template_name)
 
 
-class APIChampionGoldAll(CView):
+# class APIChampionGoldAll(CView):
 
-	def get(self, request, *args, **kwargs):
-		dg = Game.objects.filter(user=request.user)
-		json_d = {}
-		json_d['champions'] = [x.user_played for x in dg if x.dmg_to_champions]
-		json_d['gold'] = [x.gold_earned for x in dg if x.gold_earned]
-		return JsonResponse(json_d, safe=False)
+# 	def get(self, request, *args, **kwargs):
+# 		dg = Game.objects.filter(user=request.user)
+# 		json_d = {}
+# 		json_d['champions'] = [x.user_played for x in dg if x.dmg_to_champions]
+# 		json_d['gold'] = [x.gold_earned for x in dg if x.gold_earned]
+# 		return JsonResponse(json_d, safe=False)
 
 
-class ChampionGoldAll(CView):
+# class ChampionGoldAll(CView):
 
-	template_name = "charts/compare_gold.html"
+# 	template_name = "charts/compare_gold.html"
 
-	def get(self, request, *args, **kwargs):
-		return render(request, self.template_name)
+# 	def get(self, request, *args, **kwargs):
+# 		return render(request, self.template_name)
 
 
 class ChampionGoldComparison(CView):
@@ -100,9 +103,7 @@ class ChampionGoldComparison(CView):
 		return render(request, self.template_name)
 
 
-class APIChampionGoldComparison(CView):
-	
-	def post(self, request, *args, **kwargs):
+def json_gold_comparison(request, *args, **kwargs):
 		"""
 		post data: champion1 champion2
 		return damage for all games played for each champion. 
@@ -121,6 +122,7 @@ class APIChampionGoldComparison(CView):
 		json_d['champ_two'] = [v.user_played for v in highest_two if v.gold_earned]
 		json_d['gold_one'] = [v.gold_earned for v in highest_one if v.gold_earned]
 		json_d['gold_two'] = [v.gold_earned for v in highest_two if v.gold_earned]
+		print json_d
 		return JsonResponse(json_d)
 
 
