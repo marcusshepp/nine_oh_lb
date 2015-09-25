@@ -86,7 +86,7 @@ class AvailableGames(Common):
 		context = {}
 		games = Game.objects.all().filter(user=self.request.user)
 		count = len(games)
-		paginator = Paginator(games, 4)
+		paginator = Paginator(games, 8)
 		page = self.request.GET.get("page")
 		try:
 			games = paginator.page(page)
@@ -105,7 +105,7 @@ class AvailableGames(Common):
 		context = {}
 		games = Game.objects.filter(user=self.request.user)
 		games = games.filter(user_played__istartswith=request.POST["c_search"])
-		paginator = Paginator(games, 4)
+		paginator = Paginator(games, 8)
 		page = self.request.GET.get("page")
 		try:
 			games_page = paginator.page(page)
@@ -136,7 +136,7 @@ class AvailableChamps(Common):
 		champs = Game.objects.all().filter(user=self.request.user)
 		champs = [x.user_played for x in champs]
 		champs = list(set(champs))
-		paginator = Paginator(champs, 4)
+		paginator = Paginator(champs, 8)
 		page = self.request.GET.get("page")
 		try:
 			champs = paginator.page(page)
@@ -154,7 +154,7 @@ class AvailableChamps(Common):
 		context = {}
 		champs = Game.objects.filter(user=self.request.user)
 		champs = champs.filter(user_played__istartswith=request.POST["c_search"])
-		paginator = Paginator(champs, 4)
+		paginator = Paginator(champs, 8)
 		page = self.request.GET.get("page")
 		try:
 			champs_page = paginator.page(page)

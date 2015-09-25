@@ -5,14 +5,15 @@ import math
 import operator
 from datetime import date
 
-import numpy as np
-
 from lbonevnine.lbonevnine import BackEnd
 import util as util_ez
 
 
 class League(BackEnd):
-    """ Security layer. """
+    """ Base League Object. """
+
+    class Meta:
+        abstract = True
 
     def __init__(self, *args, **kwargs):
         super(League, self).__init__(*args, **kwargs)
@@ -51,11 +52,8 @@ class LeagueStat(League):
 
     def average_cs(self):
         """ Returns the average creep score for the last ten games. """
-        total_creep_count = 0
-        total = [self.get_stat(int(i), "minionsKilled") for i in xrange(10)]
-        for j in xrange(10):
-            total_creep_count += total[j]
-        return total_creep_count / 10
+        total = sum([self.get_stat(int(i), "minionsKilled") for i in xrange(10)])
+        return total / 10
 
     def winsandloses(self):
         """ Returns wins and loses. """ 
@@ -190,3 +188,8 @@ class LeagueStat(League):
         """
         x = [self.get_stat(i, "towerKills") for i in xrange(10)]
         return x 
+    def items(self):
+        pass
+
+    def teamkills(self):
+        pass

@@ -28,11 +28,10 @@ Gold Comparison
                 'csrfmiddlewaretoken': '{{ csrf_token }}',
                 'c_search_one': $('#search1').val(),
                 'c_search_two': $('#search2').val(),
-
             },
             success: function(data){
                 $(".info").hide();
-                console.log(data.gold_two[0]);
+                console.log(data.gold_one);
                 $('#dmg-chart').highcharts({
                     chart: {
                         type: 'column'
@@ -40,16 +39,14 @@ Gold Comparison
                     title: {
                         text: "Gold Comparison"
                     },
-                    xAxis: {
-                        categories: data.champ_two[0]
+                    series: [{
+                        name: data.champ_one,
+                        data: data.gold_one,
                     },
-                    yAxis: {
-                        title: {
-                            text: 'Gold'
-                        },
-                        units: [data.gold_two[0]],
-
-                    }
+                    {
+                      name: data.champ_two,
+                      data: data.gold_two,                      
+                    }]
                 });
             }
         });

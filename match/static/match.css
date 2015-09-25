@@ -489,9 +489,8 @@ input[type="checkbox"]{
 }
 
 .game-shaper{
-	position: fixed;
 	width: 65%;
-	height: 450px;
+	height: 725px;
 	top: 195px;
 	left: 20%;
 	border-radius: 0px 55px 0px 0px !important;
@@ -578,7 +577,7 @@ input[type="checkbox"]{
 	width: 105px;
 	z-index: 2;
 	right: -2%;
-	top: 385px;
+	top: -35px;
 	font-size: 20px;
 	line-height: 220%;
 	padding-left: 25px;
